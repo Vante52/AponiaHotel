@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aponia – Hotel & Experiencias</title>
-  <meta name="description" content="Aponia: tu escape perfecto. Habitaciones de lujo, spa, gastronomía y experiencias únicas." />
-  <!-- Tailwin en modo de prueba, cambiar mas adelante a modo de produccion -->
+  <meta name="description"
+    content="Aponia: tu escape perfecto. Habitaciones de lujo, spa, gastronomía y experiencias únicas." />
+
+  <!-- Tailwind (modo prueba). Pásalo a build en producción -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,10 +16,10 @@
         extend: {
           colors: {
             aponia: {
-              primary: '#0A3D62',       
-              secondary: '#CFA15A',  
-              beige: '#F4E3C1',      
-              neutral: '#F5F5F5',    
+              primary: '#0A3D62',
+              secondary: '#CFA15A',
+              beige: '#F4E3C1',
+              neutral: '#F5F5F5',
               white: '#FFFFFF'
             }
           },
@@ -26,24 +29,44 @@
           },
           boxShadow: {
             soft: "0 10px 30px rgba(0,0,0,0.08)",
+            lift: "0 12px 40px rgba(10,61,98,0.15)"
           }
         }
       }
     };
   </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
   <style>
-    html{scroll-behavior:smooth}
+    html {
+      scroll-behavior: smooth
+    }
+
+    .mask-fade {
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    #xpCarousel {
+      scrollbar-width: none;
+    }
+
+    #xpCarousel::-webkit-scrollbar {
+      display: none;
+    }
   </style>
 </head>
-<body class="bg-aponia-white text-slate-800">
+
+<body class="bg-aponia-white text-slate-800 font-sans">
   <!-- Header / Nav -->
   <header class="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200 select-none">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
       <a href="#home" class="flex items-center gap-2">
-        <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-aponia-primary text-white font-bold">A</span>
+        <img src="../img/logo_aponia.png" class="h-10 w-10" alt="logo">
         <span class="font-display text-xl tracking-wide text-aponia-primary">Aponia</span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -55,13 +78,18 @@
         <a href="#contact" class="hover:text-aponia-primary">Contacto</a>
       </nav>
       <div class="hidden md:flex items-center gap-3">
-        <a href="/login" class="px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5">Iniciar sesión</a>
+        <a href="./login.html"
+          class="px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5">Iniciar
+          sesión</a>
         <a href="/signup" class="px-4 py-2 rounded-lg bg-aponia-secondary text-white hover:opacity-90">Crear cuenta</a>
       </div>
       <!-- Mobile Menu Button -->
-      <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-300">
-        <span class="sr-only">Abrir menú</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      <button id="menuBtn"
+        class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-300"
+        aria-label="Abrir menú">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+          <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
       </button>
     </div>
     <!-- Mobile Menu -->
@@ -74,8 +102,11 @@
         <a href="#testimonials" class="py-2">Opiniones</a>
         <a href="#contact" class="py-2">Contacto</a>
         <div class="flex gap-2 pt-2">
-          <a href="/login" class="flex-1 px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary text-center">Iniciar sesión</a>
-          <a href="/signup" class="flex-1 px-4 py-2 rounded-lg bg-aponia-secondary text-white text-center">Crear cuenta</a>
+          <a href="/login"
+            class="flex-1 px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary text-center">Iniciar
+            sesión</a>
+          <a href="/signup" class="flex-1 px-4 py-2 rounded-lg bg-aponia-secondary text-white text-center">Crear
+            cuenta</a>
         </div>
       </nav>
     </div>
@@ -84,14 +115,27 @@
   <!-- Presentación del hotel -->
   <main id="home" class="pt-16">
     <section class="relative min-h-[80vh] grid place-items-center overflow-hidden">
-      <img src="../img/lobby-hotel.jpg" alt="Lobby elegante" class="absolute inset-0 h-full w-full object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
+      <img src="../img/lobby_hotel4.jpg" alt="Lobby elegante" class="absolute inset-0 h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/70"></div>
       <div class="relative z-10 mx-auto max-w-4xl px-6 text-center text-white">
         <h1 class="font-display text-4xl sm:text-5xl md:text-6xl leading-tight">Aponia: tu escape perfecto</h1>
-        <p class="mt-4 text-lg md:text-xl text-white/90">Confort inigualable, gastronomía de autor y experiencias diseñadas para desconectar.</p>
+        <p class="mt-4 text-lg md:text-xl text-white/90">Confort inigualable, gastronomía de autor y experiencias
+          diseñadas para desconectar.</p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a href="/login" class="px-6 py-3 rounded-xl bg-aponia-secondary text-white shadow-soft hover:opacity-90">Reservar ahora</a>
-          <a href="#rooms" class="px-6 py-3 rounded-xl bg-white/10 border border-white/30 text-white hover:bg-white/20">Ver habitaciones</a>
+          <a href="./login.html"
+            class="px-6 py-3 rounded-xl bg-aponia-secondary text-white shadow-lift hover:opacity-90">Reservar ahora</a>
+          <a href="#rooms"
+            class="px-6 py-3 rounded-xl bg-white/10 border border-white/30 text-white hover:bg-white/20">Ver
+            habitaciones</a>
+        </div>
+        <!-- mini trust bar -->
+        <div class="mt-8 flex justify-center gap-6 text-sm text-white/80">
+          <div class="flex items-center gap-2"><span
+              class="inline-block h-2 w-2 rounded-full bg-aponia-secondary"></span> Cancelación flexible</div>
+          <div class="flex items-center gap-2"><span
+              class="inline-block h-2 w-2 rounded-full bg-aponia-secondary"></span> Mejor precio garantizado</div>
+          <div class="flex items-center gap-2"><span
+              class="inline-block h-2 w-2 rounded-full bg-aponia-secondary"></span> Desayuno incluido</div>
         </div>
       </div>
     </section>
@@ -101,15 +145,21 @@
       <div class="mx-auto max-w-7xl px-6 grid md:grid-cols-2 gap-10 items-center">
         <div>
           <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">Sobre Aponia</h2>
-          <p class="mt-4 text-slate-700 leading-relaxed">En Aponia cuidamos cada detalle para que vivas un descanso pleno. Nuestro hotel combina diseño contemporáneo, servicio excepcional y una oferta de experiencias dentro y fuera de nuestras instalaciones.</p>
+          <p class="mt-4 text-slate-700 leading-relaxed">En Aponia cuidamos cada detalle para que vivas un descanso
+            pleno. Nuestro hotel combina diseño contemporáneo, servicio excepcional y una oferta de experiencias dentro
+            y fuera de nuestras instalaciones.</p>
           <ul class="mt-6 grid gap-3 text-slate-700">
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span> Spa & Wellness</li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span> Restaurante gourmet</li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span> Tours y experiencias</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span>
+              Spa & Wellness</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span>
+              Restaurante gourmet</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-aponia-secondary"></span>
+              Tours y experiencias</li>
           </ul>
         </div>
         <div class="relative">
-          <img src="../img/suite-lujo.jpg" alt="Suite de lujo" class="rounded-2xl shadow-soft object-cover w-full h-[360px]" />
+          <img src="../img/suite-lujo.jpg" alt="Suite de lujo"
+            class="rounded-2xl shadow-soft object-cover w-full h-[360px]" />
           <div class="absolute -bottom-6 -left-6 hidden sm:block h-28 w-28 rounded-2xl bg-aponia-secondary/20"></div>
         </div>
       </div>
@@ -120,117 +170,271 @@
       <div class="mx-auto max-w-7xl px-6">
         <div class="flex items-end justify-between gap-6">
           <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">Habitaciones & Suites</h2>
-          <a href="/login" class="hidden sm:inline-block px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5">Reservar</a>
+          <a href="./login.html"
+            class="hidden sm:inline-block px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5">Reservar</a>
         </div>
         <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <!-- Card base -->
-          <article class="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
-            <img src="https://www.es.kayak.com/rimg/himg/4b/8c/9a/ice-19524-112687993-589722.jpg?width=1366&height=768&crop=true" alt="Habitación Normal" class="h-44 w-full object-cover" />
+          <article
+            class="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+            <div class="relative h-44 w-full overflow-hidden">
+              <img
+                src="https://www.es.kayak.com/rimg/himg/4b/8c/9a/ice-19524-112687993-589722.jpg?width=1366&height=768&crop=true"
+                alt="Habitación Normal" class="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+              <span class="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur px-2 py-1 rounded">Desde
+                $210.000</span>
+            </div>
             <div class="p-5">
               <h3 class="font-semibold text-lg">Normal</h3>
               <p class="mt-2 text-sm text-slate-600">Funcional y cómoda para estancias cortas.</p>
-              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver detalles</a>
+              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver
+                detalles</a>
             </div>
           </article>
-          <article class="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
-            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=900&auto=format&fit=crop" alt="Habitación Executive" class="h-44 w-full object-cover" />
+
+          <article
+            class="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+            <div class="relative h-44 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=900&auto=format&fit=crop"
+                alt="Habitación Executive"
+                class="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+              <span class="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur px-2 py-1 rounded">Desde
+                $290.000</span>
+            </div>
             <div class="p-5">
               <h3 class="font-semibold text-lg">Executive</h3>
               <p class="mt-2 text-sm text-slate-600">Espacio adicional y escritorio de trabajo.</p>
-              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver detalles</a>
+              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver
+                detalles</a>
             </div>
           </article>
-          <article class="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
-            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop" alt="Suite VIP" class="h-44 w-full object-cover" />
+
+          <article
+            class="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+            <div class="relative h-44 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=900&auto=format&fit=crop"
+                alt="Suite VIP" class="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+              <span class="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur px-2 py-1 rounded">Desde
+                $380.000</span>
+            </div>
             <div class="p-5">
               <h3 class="font-semibold text-lg">VIP</h3>
               <p class="mt-2 text-sm text-slate-600">Amenidades premium y vista privilegiada.</p>
-              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver detalles</a>
+              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver
+                detalles</a>
             </div>
           </article>
-          <article class="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
-            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=900&auto=format&fit=crop" alt="Suite Luxury" class="h-44 w-full object-cover" />
+
+          <article
+            class="group rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+            <div class="relative h-44 w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=900&auto=format&fit=crop"
+                alt="Suite Luxury" class="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+              <span class="absolute top-3 right-3 text-xs bg-white/90 backdrop-blur px-2 py-1 rounded">Desde
+                $520.000</span>
+            </div>
             <div class="p-5">
               <h3 class="font-semibold text-lg">Luxury</h3>
               <p class="mt-2 text-sm text-slate-600">Máximo confort, sala privada y terraza.</p>
-              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver detalles</a>
+              <a href="#" class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline">Ver
+                detalles</a>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Servicios -->
-    <section id="services" class="py-20 bg-aponia-neutral">
+    <!-- Servicios mejorados -->
+    <section id="services" class="py-20 bg-gradient-to-b from-aponia-neutral to-white">
       <div class="mx-auto max-w-7xl px-6">
-        <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">Servicios</h2>
-        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <!-- Servicio item -->
-          <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft">
-            <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
-              <span class="text-aponia-secondary font-bold">S</span>
+        <div class="flex items-end justify-between gap-6">
+          <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">Servicios</h2>
+        </div>
+
+        <!-- Grid + destacado -->
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <!-- Destacado grande -->
+          <div class="lg:col-span-1 relative overflow-hidden rounded-3xl bg-aponia-primary text-white p-8 shadow-lift">
+            <img src="../img/spa.jpg" alt="Spa" class="absolute inset-0 h-full w-full object-cover opacity-30">
+            <div class="relative">
+              <span
+                class="inline-flex items-center gap-2 text-xs uppercase tracking-wide bg-white/20 px-3 py-1 rounded-full">Destacado</span>
+              <h3 class="mt-4 text-2xl font-semibold">Spa & Wellness</h3>
+              <p class="mt-2 text-white/90">Masajes, sauna, circuito de hidroterapia y rituales de relajación.</p>
+              <ul class="mt-4 space-y-2 text-sm text-white/90">
+                <li class="flex items-center gap-2">🧖‍♀️ Aromaterapia</li>
+                <li class="flex items-center gap-2">🛁 Jacuzzi privado</li>
+                <li class="flex items-center gap-2">🧊 Sauna & turco</li>
+              </ul>
+              <a href="#"
+                class="mt-6 inline-flex items-center gap-2 bg-white text-aponia-primary px-4 py-2 rounded-xl">Ver carta
+                de tratamientos</a>
             </div>
-            <h3 class="font-semibold">Spa & Wellness</h3>
-            <p class="mt-2 text-sm text-slate-600">Masajes, sauna y rituales de relajación.</p>
           </div>
-          <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft">
-            <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
-              <span class="text-aponia-secondary font-bold">R</span>
+
+          <!-- Tarjetas -->
+          <div class="lg:col-span-2 grid gap-6 sm:grid-cols-2">
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+              <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
+                <img src="../img/restaurante.jpg" alt="restaurante" class="w-12 h-12 rounded-xl">
+              </div>
+              <h3 class="font-semibold">Restaurante 🧑‍🍳</h3>
+              <p class="mt-2 text-sm text-slate-600">Gastronomía de autor con ingredientes locales. Opción vegana/veg.
+              </p>
             </div>
-            <h3 class="font-semibold">Restaurante</h3>
-            <p class="mt-2 text-sm text-slate-600">Gastronomía de autor con ingredientes locales.</p>
-          </div>
-          <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft">
-            <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
-              <span class="text-aponia-secondary font-bold">T</span>
+
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+              <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
+                <img src="../img/tours.jpg" alt="restaurante" class="w-12 h-12 rounded-xl">
+              </div>
+              <h3 class="font-semibold">Tours 🏖️</h3>
+              <p class="mt-2 text-sm text-slate-600">Senderismo, buceo y experiencias culturales con guías certificados.
+              </p>
             </div>
-            <h3 class="font-semibold">Tours</h3>
-            <p class="mt-2 text-sm text-slate-600">Senderismo, buceo y experiencias culturales.</p>
-          </div>
-          <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft">
-            <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
-              <span class="text-aponia-secondary font-bold">P</span>
+
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+              <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
+                <img src="../img/transporte.jpg" alt="restaurante" class="w-12 h-12 rounded-xl">
+              </div>
+              <h3 class="font-semibold">Transporte 🚘</h3>
+              <p class="mt-2 text-sm text-slate-600">Traslados al aeropuerto y chofer privado a demanda.</p>
             </div>
-            <h3 class="font-semibold">Transporte</h3>
-            <p class="mt-2 text-sm text-slate-600">Traslados al aeropuerto y chofer privado.</p>
+
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow">
+              <div class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4">
+                <img src="../img/cowork.jpg" class="w-12 h-12 rounded-xl" alt="">
+              </div>
+              <h3 class="font-semibold">Wi‑Fi & Cowork 🛜</h3>
+              <p class="mt-2 text-sm text-slate-600">Internet de alta velocidad y salas de reuniones.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Experiencias -->
+    <!-- Experiencias (Carrusel scroll-snap) -->
     <section id="experiences" class="py-20">
       <div class="mx-auto max-w-7xl px-6">
         <div class="flex items-center justify-between">
           <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">Experiencias</h2>
-          <a href="/login" class="hidden sm:inline-block px-4 py-2 rounded-lg bg-aponia-primary text-white hover:opacity-90">Personaliza tu plan</a>
+          <a href="./login.html"
+            class="hidden sm:inline-block px-4 py-2 rounded-lg bg-aponia-primary text-white hover:opacity-90">Personaliza
+            tu plan</a>
         </div>
-        <div class="mt-10 grid gap-6 md:grid-cols-3">
-          <img src="https://images.unsplash.com/photo-1554797589-7241bb691973?q=80&w=1200&auto=format&fit=crop" alt="Spa" class="rounded-2xl h-56 w-full object-cover" />
-          <img src="https://s3-us-west-2.amazonaws.com/wp-divingyucatan/wp-content/uploads/2020/04/15110254/tipos-trajes-buceo.jpg" alt="Buceo" class="rounded-2xl h-56 w-full object-cover" />
-          <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1200&auto=format&fit=crop" alt="Montaña" class="rounded-2xl h-56 w-full object-cover" />
+
+        <div class="mt-8 relative">
+          <div class="mask-fade">
+            <div id="xpCarousel" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2"
+              aria-label="Carrusel de experiencias">
+              <!-- Slide -->
+              <figure
+                class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
+                <img src="https://images.unsplash.com/photo-1554797589-7241bb691973?q=80&w=1200&auto=format&fit=crop"
+                  alt="Spa" class="h-56 w-full object-cover">
+                <figcaption class="p-5">
+                  <h3 class="font-semibold">Spa de autor</h3>
+                  <p class="text-sm text-slate-600 mt-1">Rituales con esencias locales. 60–120 min.</p>
+                </figcaption>
+              </figure>
+
+              <figure
+                class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
+                <img
+                  src="https://s3-us-west-2.amazonaws.com/wp-divingyucatan/wp-content/uploads/2020/04/15110254/tipos-trajes-buceo.jpg"
+                  alt="Buceo" class="h-56 w-full object-cover">
+                <figcaption class="p-5">
+                  <h3 class="font-semibold">Buceo en arrecife</h3>
+                  <p class="text-sm text-slate-600 mt-1">Para principiantes y avanzados. Equipo incluido.</p>
+                </figcaption>
+              </figure>
+
+              <figure
+                class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
+                <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1200&auto=format&fit=crop"
+                  alt="Montaña" class="h-56 w-full object-cover">
+                <figcaption class="p-5">
+                  <h3 class="font-semibold">Trekking al amanecer</h3>
+                  <p class="text-sm text-slate-600 mt-1">Panorámicas únicas y picnic gourmet.</p>
+                </figcaption>
+              </figure>
+
+              <figure
+                class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
+                  alt="Cata de café" class="h-56 w-full object-cover">
+                <figcaption class="p-5">
+                  <h3 class="font-semibold">Cata de café de origen</h3>
+                  <p class="text-sm text-slate-600 mt-1">Aprende con baristas certificados.</p>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+          <!-- Controles -->
+          <div class="flex items-center justify-center gap-3 mt-6">
+            <button id="xpPrev"
+              class="h-10 w-10 rounded-full border border-slate-300 grid place-items-center hover:bg-slate-50"
+              aria-label="Anterior">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5">
+                <path fill="currentColor" d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z" />
+              </svg>
+            </button>
+            <button id="xpNext"
+              class="h-10 w-10 rounded-full border border-slate-300 grid place-items-center hover:bg-slate-50"
+              aria-label="Siguiente">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5">
+                <path fill="currentColor" d="M8.59 16.59L10 18l6-6l-6-6l-1.41 1.41L13.17 12z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Opiniones -->
+    <!-- Opiniones con estrellas -->
     <section id="testimonials" class="py-20 bg-aponia-primary text-white">
       <div class="mx-auto max-w-7xl px-6">
         <h2 class="font-display text-3xl md:text-4xl">Opiniones de huéspedes</h2>
         <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <!-- Testimonial card -->
           <blockquote class="rounded-2xl bg-white/10 p-6 border border-white/20">
-            <p>“Servicio impecable y habitaciones hermosas. Volveré.”</p>
+            <div class="flex items-center gap-1" aria-label="5 estrellas">
+              <h3 class="font-bold text-2xl font-display">Habitaciones</h3>
+            </div>
+            <div class="flex items-center gap-1" aria-label="5 estrellas">
+              <!-- 5 estrellas -->
+              <span class="text-aponia-secondary">★★★★★</span>
+            </div>
+            <p class="mt-3 text-slate-300">“Servicio impecable y habitaciones hermosas. Volveré.”</p>
             <footer class="mt-4 text-sm text-white/80">— Camila G.</footer>
           </blockquote>
           <blockquote class="rounded-2xl bg-white/10 p-6 border border-white/20">
-            <p>“El spa es espectacular y la comida deliciosa.”</p>
+            <div class="flex items-center gap-1" aria-label="5 estrellas">
+              <h3 class="font-bold text-2xl font-display">Spa y Piscina</h3>
+            </div>
+            <div class="flex items-center gap-1" aria-label="4 estrellas y media">
+              <span class="text-aponia-secondary">★★★★☆</span>
+            </div>
+            <p class="mt-3">“El spa es espectacular y la comida deliciosa.”</p>
             <footer class="mt-4 text-sm text-white/80">— Andrés R.</footer>
           </blockquote>
           <blockquote class="rounded-2xl bg-white/10 p-6 border border-white/20">
-            <p>“Experiencias únicas, valió cada minuto.”</p>
+            <div class="flex items-center gap-1" aria-label="5 estrellas">
+              <h3 class="font-bold text-2xl font-display">Experiencias</h3>
+            </div>
+            <div class="flex items-center gap-1" aria-label="5 estrellas">
+              <span class="text-aponia-secondary">★★★★★</span>
+            </div>
+            <p class="mt-3">“Experiencias únicas, valió cada minuto.”</p>
             <footer class="mt-4 text-sm text-white/80">— Valentina P.</footer>
           </blockquote>
         </div>
+        <!-- CTA de reviews -->
+        <div class="mt-8 text-white/90 text-sm">Puntuación media <span class="font-semibold">4.8/5</span> basada en 320
+          reseñas.</div>
       </div>
     </section>
 
@@ -240,23 +444,30 @@
         <h2 class="font-display text-3xl md:text-4xl text-aponia-primary text-center">Reserva fácil en 3 pasos</h2>
         <div class="mt-10 grid gap-6 md:grid-cols-3">
           <div class="rounded-2xl bg-white p-6 border border-slate-200 text-center shadow-soft">
-            <div class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">1</div>
+            <div
+              class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">1
+            </div>
             <h3 class="mt-4 font-semibold">Crea tu cuenta</h3>
             <p class="mt-1 text-sm text-slate-600">Regístrate o inicia sesión.</p>
           </div>
           <div class="rounded-2xl bg-white p-6 border border-slate-200 text-center shadow-soft">
-            <div class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">2</div>
+            <div
+              class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">2
+            </div>
             <h3 class="mt-4 font-semibold">Elige fechas y tipo</h3>
             <p class="mt-1 text-sm text-slate-600">Busca disponibilidad en segundos.</p>
           </div>
           <div class="rounded-2xl bg-white p-6 border border-slate-200 text-center shadow-soft">
-            <div class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">3</div>
+            <div
+              class="mx-auto h-12 w-12 grid place-items-center rounded-full bg-aponia-secondary text-white font-bold">3
+            </div>
             <h3 class="mt-4 font-semibold">Confirma y disfruta</h3>
             <p class="mt-1 text-sm text-slate-600">Recibe tu confirmación al instante.</p>
           </div>
         </div>
         <div class="text-center mt-8">
-          <a href="/login" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-aponia-primary text-white hover:opacity-90">Comenzar</a>
+          <a href="./login.html"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-aponia-primary text-white hover:opacity-90">Comenzar</a>
         </div>
       </div>
     </section>
@@ -268,7 +479,8 @@
         <h2 class="font-display text-3xl md:text-4xl">Vive la experiencia Aponia</h2>
         <p class="mt-3 text-white/90">Despierta en un lugar que lo tiene todo.</p>
         <div class="mt-8">
-          <a href="/signup" class="px-6 py-3 rounded-xl bg-aponia-secondary text-white hover:opacity-90">Crear cuenta</a>
+          <a href="/signup" class="px-6 py-3 rounded-xl bg-aponia-secondary text-white hover:opacity-90">Crear
+            cuenta</a>
         </div>
       </div>
     </section>
@@ -279,7 +491,7 @@
     <div class="mx-auto max-w-7xl px-6 py-12 grid gap-8 md:grid-cols-4">
       <div>
         <div class="flex items-center gap-2">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-aponia-primary text-white font-bold">A</span>
+          <img src="../img/logo_aponia.png" class="h-10 w-10" alt="logo">
           <span class="font-display text-xl text-aponia-primary">Aponia</span>
         </div>
         <p class="mt-4 text-sm text-slate-600">Hotel & Experiencias</p>
@@ -297,29 +509,135 @@
         <h4 class="font-semibold mb-3">Contacto</h4>
         <ul class="space-y-2 text-sm">
           <li>+57 (000) 000 0000</li>
-          <li>reservas@aponiahotel.com</li>
+          <li><a href="mailto:reservas@aponiahotel.com" class="hover:underline">reservas@aponiahotel.com</a></li>
           <li>Calle 00 # 00-00, Ciudad</li>
         </ul>
       </div>
       <div>
         <h4 class="font-semibold mb-3">Síguenos</h4>
         <div class="flex gap-3 text-slate-500">
-          <a href="#" aria-label="Instagram" class="hover:text-aponia-primary">IG</a>
-          <a href="#" aria-label="Facebook" class="hover:text-aponia-primary">FB</a>
-          <a href="#" aria-label="X" class="hover:text-aponia-primary">X</a>
+          <img src="../img/instagram.png" class="w-8 h-8" alt="Instagram">
+          <img src="../img/facebook.png" class="w-8 h-8" alt="Facebook">
+          <img src="../img/x.png" class="w-8 h-8" alt="X/Twitter">
         </div>
       </div>
     </div>
-    <div class="border-t border-slate-200 py-6 text-center text-sm text-slate-600">© <span id="year"></span> Aponia. Todos los derechos reservados.</div>
+    <div class="border-t border-slate-200 py-6 text-center text-sm text-slate-600">© <span id="year"></span> Aponia.
+      Todos los derechos reservados.</div>
   </footer>
 
+  <!-- Scripts -->
   <script>
     // Mobile menu toggle
     const btn = document.getElementById('menuBtn');
     const menu = document.getElementById('mobileMenu');
-    btn?.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+    btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
+
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Carrusel infinito (Experiencias) =====
+    const xp = document.getElementById('xpCarousel');
+    const prev = document.getElementById('xpPrev');
+    const next = document.getElementById('xpNext');
+
+    // Paso de scroll por click
+    const step = () => Math.min((xp?.clientWidth || 0) * 0.9, 600);
+
+    // Para hacer “saltos” sin animación cuando reubicamos al centro
+    const jumpTo = (pos) => {
+      if (!xp) return;
+      const prevBehavior = xp.style.scrollBehavior;
+      xp.style.scrollBehavior = 'auto';
+      xp.scrollLeft = pos;
+      // pequeño truco para que el navegador aplique el cambio inmediato
+      requestAnimationFrame(() => {
+        xp.style.scrollBehavior = prevBehavior || 'smooth';
+      });
+    };
+
+    // Inicializa el loop infinito clonando los slides al inicio y final
+    const initInfiniteCarousel = () => {
+      if (!xp) return;
+
+      // Evitar doble init
+      if (xp.dataset.loopReady === '1') return;
+
+      // Tomamos los hijos originales
+      const originals = Array.from(xp.children);
+      if (originals.length === 0) return;
+
+      // Ancho total de los originales (incluye gap)
+      const originalsWidth = xp.scrollWidth;
+
+      // Clonar al final
+      originals.forEach(el => {
+        const clone = el.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.dataset.clone = '1';
+        xp.appendChild(clone);
+      });
+
+      // Clonar al inicio (en orden inverso para mantener continuidad visual)
+      for (let i = originals.length - 1; i >= 0; i--) {
+        const clone = originals[i].cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.dataset.clone = '1';
+        xp.insertBefore(clone, xp.firstChild);
+      }
+
+      // Posicionarnos al comienzo del bloque “original” (en el centro)
+      jumpTo(originalsWidth);
+
+      // Guardamos datos para cálculos posteriores
+      xp.dataset.originalsWidth = String(originalsWidth);
+      xp.dataset.loopReady = '1';
+    };
+
+    // Reubicar cuando se sale de los clones
+    const handleLoopScroll = () => {
+      if (!xp || xp.dataset.loopReady !== '1') return;
+
+      const ow = parseFloat(xp.dataset.originalsWidth || '0');
+      if (!ow) return;
+
+      // Cuando se va muy a la izquierda, nos movemos +ow
+      if (xp.scrollLeft <= 0) {
+        jumpTo(xp.scrollLeft + ow);
+        return;
+      }
+
+      // Cuando se va muy a la derecha (más allá del bloque duplicado)
+      // Limite derecha ≈ ow (inicio originales) + ow (final originales) = 2*ow
+      // Restamos el viewport para permitir snap sin “pegarnos” al borde
+      const rightLimit = ow * 2;
+      if (xp.scrollLeft >= rightLimit) {
+        jumpTo(xp.scrollLeft - ow);
+      }
+    };
+
+    // Controles
+    prev?.addEventListener('click', () => xp.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => xp.scrollBy({ left: step(), behavior: 'smooth' }));
+
+    // Loop handlers
+    xp?.addEventListener('scroll', handleLoopScroll);
+    window.addEventListener('load', initInfiniteCarousel);
+    window.addEventListener('resize', () => {
+      // Recalcular en resize: limpiamos clones y reiniciamos
+      if (!xp) return;
+      if (xp.dataset.loopReady === '1') {
+        // Eliminar clones
+        Array.from(xp.querySelectorAll('[data-clone="1"]')).forEach(n => n.remove());
+        delete xp.dataset.loopReady;
+        delete xp.dataset.originalsWidth;
+      }
+      // Esperar a que el layout se estabilice
+      clearTimeout(window.__xpResizeTimer);
+      window.__xpResizeTimer = setTimeout(initInfiniteCarousel, 150);
+    });
   </script>
+
 </body>
+
 </html>
