@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Servicios</title>
+</head>
+<body>
+<h1>Lista de Servicios</h1>
+
+<a th:href="@{/servicios/nuevo}">Nuevo servicio</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Precio</th>
+    <th>Moneda</th>
+    <th>Público</th>
+    <th>Activo</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="s : ${servicios}">
+    <td th:text="${s.nombre}"></td>
+    <td th:text="${s.descripcion}"></td>
+    <td th:text="${s.precioBaseAmount}"></td>
+    <td th:text="${s.precioBaseCurrency}"></td>
+    <td th:text="${s.publico}"></td>
+    <td th:text="${s.activo}"></td>
+    <td>
+      <a th:href="@{|/servicios/${s.id}/editar|}">Editar</a>
+      <form th:action="@{|/servicios/${s.id}/eliminar|}" method="post" style="display:inline">
+        <button type="submit">Eliminar</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
