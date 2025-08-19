@@ -62,4 +62,11 @@ public class ServicioController {
         service.eliminar(id);
         return "redirect:/servicios";
     }
+
+    @GetMapping("/cards")
+    public String listarCards(Model model) {
+        model.addAttribute("servicios", service.listar());
+        return "servicios/cards"; // templates/servicios/cards.html
+    }
+
 }

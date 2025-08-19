@@ -3,13 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <title>Servicios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f9fa;
+    }
+    h1 {
+      color: #333;
+    }
+    a.boton {
+      display: inline-block;
+      padding: 8px 12px;
+      margin-bottom: 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    a.boton:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    thead {
+      background-color: #007bff;
+      color: white;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    td form {
+      display: inline;
+    }
+    td a {
+      margin-right: 10px;
+      color: #007bff;
+      text-decoration: none;
+    }
+    td a:hover {
+      text-decoration: underline;
+    }
+    button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a71d2a;
+    }
+  </style>
 </head>
 <body>
 <h1>Lista de Servicios</h1>
 
-<a th:href="@{/servicios/nuevo}">Nuevo servicio</a>
+<a class="boton" th:href="@{/servicios/nuevo}">Nuevo servicio</a>
 
-<table border="1" cellpadding="5" cellspacing="0">
+<table>
   <thead>
   <tr>
     <th>Nombre</th>
@@ -31,7 +93,7 @@
     <td th:text="${s.activo}"></td>
     <td>
       <a th:href="@{|/servicios/${s.id}/editar|}">Editar</a>
-      <form th:action="@{|/servicios/${s.id}/eliminar|}" method="post" style="display:inline">
+      <form th:action="@{|/servicios/${s.id}/eliminar|}" method="post">
         <button type="submit">Eliminar</button>
       </form>
     </td>
