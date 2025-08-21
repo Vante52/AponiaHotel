@@ -1,4 +1,4 @@
-package com.aponia.aponia_hotel.controller;
+package com.aponia.aponia_hotel.controller.servicios;
 
 import com.aponia.aponia_hotel.entities.servicios.Servicio;
 import com.aponia.aponia_hotel.service.ServicioService;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Controller
@@ -21,22 +22,21 @@ public class ServicioController {
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("servicios", service.listar());
-        return "servicios/list"; // templates/servicios/list.html
+        return "servicios/list";
     }
 
     @GetMapping("/nuevo")
     public String nuevoForm(Model model) {
-        var s = new Servicio();
-        s.setActivo(true);
-        s.setPublico(true);
-        s.setPrecioBaseCurrency("COP"); // valor por defecto
-        model.addAttribute("servicio", s);
-        return "servicios/form"; // templates/servicios/form.html
+        Servicio servicio = new Servicio();
+        servicio.setActivo(true);
+        servicio.setPrecioPorPersona(BigDecimal.ZERO);
+        servicio.setDuracionMinutos(0);
+        model.addAttribute("servicio", servicio);
+        return "servicios/form";
     }
 
     @PostMapping
     public String crear(@ModelAttribute Servicio servicio) {
-        // si usas CHAR(36) en DB, genera un UUID string:
         if (servicio.getId() == null || servicio.getId().isBlank()) {
             servicio.setId(UUID.randomUUID().toString());
         }
@@ -66,7 +66,6 @@ public class ServicioController {
     @GetMapping("/cards")
     public String listarCards(Model model) {
         model.addAttribute("servicios", service.listar());
-        return "servicios/cards"; // templates/servicios/cards.html
+        return "servicios/cards";
     }
-
 }
