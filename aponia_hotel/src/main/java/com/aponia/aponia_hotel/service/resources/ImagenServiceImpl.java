@@ -1,8 +1,8 @@
-package com.aponia.aponia_hotel.service.servicios;
+package com.aponia.aponia_hotel.service.resources;
 
-import com.aponia.aponia_hotel.entities.imagenes.Imagen;
-import com.aponia.aponia_hotel.repository.ImagenRepository;
-import com.aponia.aponia_hotel.service.ImagenService;
+import com.aponia.aponia_hotel.entities.resources.Imagen;
+import com.aponia.aponia_hotel.repository.resources.ImagenRepository;
+import com.aponia.aponia_hotel.service.resources.ImagenService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

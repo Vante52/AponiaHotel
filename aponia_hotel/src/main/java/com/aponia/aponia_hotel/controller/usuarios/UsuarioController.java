@@ -1,7 +1,7 @@
 package com.aponia.aponia_hotel.controller.usuarios;
 
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
-import com.aponia.aponia_hotel.service.UsuarioService;
+import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

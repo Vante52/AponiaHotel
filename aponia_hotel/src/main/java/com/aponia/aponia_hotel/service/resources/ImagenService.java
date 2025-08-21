@@ -1,6 +1,6 @@
 package com.aponia.aponia_hotel.service.resources;
 
-import com.aponia.aponia_hotel.entities.imagenes.Imagen;
+import com.aponia.aponia_hotel.entities.resources.Imagen;
 import java.util.List;
 import java.util.Optional;
 

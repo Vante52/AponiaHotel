@@ -1,4 +1,4 @@
-package com.aponia.aponia_hotel.controller.resources.ImagenesController;
+package com.aponia.aponia_hotel.controller.resources;
 
 import com.aponia.aponia_hotel.entities.resources.Imagen;
 import com.aponia.aponia_hotel.service.resources.ImagenService;

@@ -1,8 +1,8 @@
 package com.aponia.aponia_hotel.service.usuarios;
 
 import com.aponia.aponia_hotel.entities.usuarios.ClientePerfil;
-import com.aponia.aponia_hotel.repository.ClientePerfilRepository;
-import com.aponia.aponia_hotel.service.ClientePerfilService;
+import com.aponia.aponia_hotel.repository.usuarios.ClientePerfilRepository;
+import com.aponia.aponia_hotel.service.usuarios.ClientePerfilService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

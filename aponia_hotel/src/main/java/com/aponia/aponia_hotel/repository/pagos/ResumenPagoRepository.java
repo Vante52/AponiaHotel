@@ -4,7 +4,7 @@ import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 

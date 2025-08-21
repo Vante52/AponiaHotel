@@ -1,7 +1,7 @@
 package com.aponia.aponia_hotel.controller.habitaciones;
 
 import com.aponia.aponia_hotel.entities.habitaciones.HabitacionTipo;
-import com.aponia.aponia_hotel.service.HabitacionTipoService;
+import com.aponia.aponia_hotel.service.habitaciones.HabitacionTipoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

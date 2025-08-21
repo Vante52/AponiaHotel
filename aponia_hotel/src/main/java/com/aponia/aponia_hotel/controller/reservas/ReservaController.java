@@ -1,7 +1,7 @@
 package com.aponia.aponia_hotel.controller.reservas;
 
 import com.aponia.aponia_hotel.entities.reservas.Reserva;
-import com.aponia.aponia_hotel.service.ReservaService;
+import com.aponia.aponia_hotel.service.reservas.ReservaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

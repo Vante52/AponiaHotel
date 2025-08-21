@@ -1,8 +1,8 @@
 package com.aponia.aponia_hotel.service.servicios;
 
 import com.aponia.aponia_hotel.entities.servicios.ServicioDisponibilidad;
-import com.aponia.aponia_hotel.repository.ServicioDisponibilidadRepository;
-import com.aponia.aponia_hotel.service.ServicioDisponibilidadService;
+import com.aponia.aponia_hotel.repository.servicios.ServicioDisponibilidadRepository;
+import com.aponia.aponia_hotel.service.servicios.ServicioDisponibilidadService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

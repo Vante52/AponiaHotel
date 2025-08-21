@@ -1,7 +1,7 @@
 package com.aponia.aponia_hotel.controller.pagos;
 
 import com.aponia.aponia_hotel.entities.pagos.Pago;
-import com.aponia.aponia_hotel.service.PagoService;
+import com.aponia.aponia_hotel.service.pagos.PagoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

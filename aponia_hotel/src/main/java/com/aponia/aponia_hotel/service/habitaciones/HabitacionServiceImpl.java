@@ -1,8 +1,8 @@
 package com.aponia.aponia_hotel.service.habitaciones;
 
 import com.aponia.aponia_hotel.entities.habitaciones.Habitacion;
-import com.aponia.aponia_hotel.repository.HabitacionRepository;
-import com.aponia.aponia_hotel.service.HabitacionService;
+import com.aponia.aponia_hotel.repository.habitaciones.HabitacionRepository;
+import com.aponia.aponia_hotel.service.habitaciones.HabitacionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

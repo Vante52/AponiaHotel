@@ -1,4 +1,4 @@
-package com.aponia.aponia_hotel.controller.servicios.ServicioController;
+package com.aponia.aponia_hotel.controller.servicios;
 
 import com.aponia.aponia_hotel.entities.servicios.Servicio;
 import com.aponia.aponia_hotel.service.servicios.ServicioService;

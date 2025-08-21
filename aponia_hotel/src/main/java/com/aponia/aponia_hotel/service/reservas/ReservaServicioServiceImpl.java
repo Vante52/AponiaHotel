@@ -1,8 +1,8 @@
 package com.aponia.aponia_hotel.service.reservas;
 
 import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
-import com.aponia.aponia_hotel.repository.ReservaServicioRepository;
-import com.aponia.aponia_hotel.service.ReservaServicioService;
+import com.aponia.aponia_hotel.repository.reservas.ReservaServicioRepository;
+import com.aponia.aponia_hotel.service.reservas.ReservaServicioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

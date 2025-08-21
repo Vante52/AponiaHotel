@@ -1,6 +1,6 @@
-package com.aponia.aponia_hotel.repository;
+package com.aponia.aponia_hotel.repository.resources;
 
-import com.aponia.aponia_hotel.entities.imagenes.Imagen;
+import com.aponia.aponia_hotel.entities.resources.Imagen;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,8 @@
-package com.aponia.aponia_hotel.service.impl;
+package com.aponia.aponia_hotel.service.pagos;
 
 import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
-import com.aponia.aponia_hotel.repository.ResumenPagoRepository;
-import com.aponia.aponia_hotel.service.ResumenPagoService;
+import com.aponia.aponia_hotel.repository.pagos.ResumenPagoRepository;
+import com.aponia.aponia_hotel.service.pagos.ResumenPagoService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
