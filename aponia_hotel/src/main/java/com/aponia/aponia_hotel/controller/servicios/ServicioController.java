@@ -1,7 +1,7 @@
-package com.aponia.aponia_hotel.controller.servicios;
+package com.aponia.aponia_hotel.controller.servicios.ServicioController;
 
 import com.aponia.aponia_hotel.entities.servicios.Servicio;
-import com.aponia.aponia_hotel.service.ServicioService;
+import com.aponia.aponia_hotel.service.servicios.ServicioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

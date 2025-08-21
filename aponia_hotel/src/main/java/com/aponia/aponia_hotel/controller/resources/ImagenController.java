@@ -1,7 +1,7 @@
-package com.aponia.aponia_hotel.controller.imagenes;
+package com.aponia.aponia_hotel.controller.resources.ImagenesController;
 
-import com.aponia.aponia_hotel.entities.imagenes.Imagen;
-import com.aponia.aponia_hotel.service.ImagenService;
+import com.aponia.aponia_hotel.entities.resources.Imagen;
+import com.aponia.aponia_hotel.service.resources.ImagenService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
