@@ -1,4 +1,4 @@
-package com.aponia.aponia_hotel.service;
+package com.aponia.aponia_hotel.service.usuarios;
 
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
 import java.util.List;

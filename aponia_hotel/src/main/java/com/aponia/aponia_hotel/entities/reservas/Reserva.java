@@ -1,6 +1,9 @@
 package com.aponia.aponia_hotel.entities.reservas;
 
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
+import com.aponia.aponia_hotel.entities.pagos.Pago;
+import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface ServicioService {
     List<Servicio> listar();
     Servicio crear(Servicio servicio);
-    Optional<Servicio> obtener(String id);
+    Optional <Servicio> obtener(String id); //porque puede devolver null
     Servicio actualizar(Servicio servicio);
     void eliminar(String id);
     List<Servicio> findByActivo(boolean activo);

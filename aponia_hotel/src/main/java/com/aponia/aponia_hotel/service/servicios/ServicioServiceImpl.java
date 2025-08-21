@@ -6,6 +6,7 @@ import com.aponia.aponia_hotel.service.servicios.ServicioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServicioServiceImpl implements ServicioService {
@@ -23,21 +24,31 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     public Servicio crear(Servicio servicio) {
-        return repository.save(servicio);
-    }
-
-    @Override
-    public Servicio obtener(String id) {
-        return repository.findById(id).orElse(null);
+        repository.save(servicio);
+        return servicio; // devolvemos el mismo objeto
     }
 
     @Override
     public Servicio actualizar(Servicio servicio) {
-        return repository.save(servicio);
+        repository.update(servicio);
+        return servicio; // idem
     }
+
+    @Override
+    public Optional<Servicio> obtener(String id) {
+        return repository.findById(id); // optional porque puede ser null
+    }
+
+
 
     @Override
     public void eliminar(String id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Servicio> findByActivo(boolean activo) {
+        return repository.findByActivo(activo);
+    }
 }
+

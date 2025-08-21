@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.aponia.aponia_hotel.entities.resources.Imagen;
+import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
+
+
 
 import java.math.BigDecimal;
 import java.util.List;
