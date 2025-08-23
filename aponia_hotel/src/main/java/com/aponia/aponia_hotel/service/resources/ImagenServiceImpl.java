@@ -2,13 +2,14 @@ package com.aponia.aponia_hotel.service.resources;
 
 import com.aponia.aponia_hotel.entities.resources.Imagen;
 import com.aponia.aponia_hotel.repository.resources.ImagenRepository;
-import com.aponia.aponia_hotel.service.resources.ImagenService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ImagenServiceImpl implements ImagenService {
 
     private final ImagenRepository repository;
@@ -18,39 +19,41 @@ public class ImagenServiceImpl implements ImagenService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Imagen> listar() {
         return repository.findAll();
     }
 
     @Override
-    public Imagen crear(Imagen imagen) {
-        repository.save(imagen);
-        return imagen;
+    @Transactional(readOnly = true)
+    public List<Imagen> listarPorServicio(String servicioId) {
+        return repository.findByServicioId(servicioId);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Imagen> listarPorTipoHabitacion(String tipoHabitacionId) {
+        return repository.findByTipoHabitacionId(tipoHabitacionId);
+    }
+
+    @Override
+    public Imagen crear(Imagen imagen) {
+        return repository.save(imagen);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<Imagen> obtener(String id) {
         return repository.findById(id);
     }
 
     @Override
     public Imagen actualizar(Imagen imagen) {
-        repository.update(imagen);
-        return imagen;
+        return repository.save(imagen);
     }
 
     @Override
     public void eliminar(String id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public List<Imagen> findByServicioId(String servicioId) {
-        return repository.findByServicioId(servicioId);
-    }
-
-    @Override
-    public List<Imagen> findByTipoHabitacionId(String tipoHabitacionId) {
-        return repository.findByTipoHabitacionId(tipoHabitacionId);
     }
 }

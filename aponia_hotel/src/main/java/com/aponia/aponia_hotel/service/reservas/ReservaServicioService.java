@@ -1,15 +1,50 @@
 package com.aponia.aponia_hotel.service.reservas;
 
 import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface ReservaServicioService {
+    /**
+     * Lista todas las reservas de servicios
+     */
     List<ReservaServicio> listar();
+
+    /**
+     * Lista las reservas de servicios por reserva
+     */
+    List<ReservaServicio> listarPorReserva(String reservaId);
+
+    /**
+     * Lista las reservas de servicios por servicio y fecha
+     */
+    List<ReservaServicio> listarPorServicioYFecha(String servicioId, LocalDate fecha);
+
+    /**
+     * Crea una nueva reserva de servicio
+     */
     ReservaServicio crear(ReservaServicio reservaServicio);
+
+    /**
+     * Obtiene una reserva de servicio por su ID
+     */
     Optional<ReservaServicio> obtener(String id);
+
+    /**
+     * Actualiza una reserva de servicio existente
+     */
     ReservaServicio actualizar(ReservaServicio reservaServicio);
+
+    /**
+     * Elimina una reserva de servicio por su ID
+     */
     void eliminar(String id);
-    List<ReservaServicio> findByReservaId(String reservaId);
-    List<ReservaServicio> findByServicioId(String servicioId);
+
+    // Métodos deprecados o no utilizados
+    // @deprecated Usar listarPorServicioYFecha() en su lugar
+    // List<ReservaServicio> findByServicioIdAndFecha(String servicioId, LocalDate fecha);
+
+    // @deprecated Usar listarPorReserva() en su lugar
+    // List<ReservaServicio> findByReservaId(String reservaId);
 }

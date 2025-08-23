@@ -2,13 +2,16 @@ package com.aponia.aponia_hotel.service.servicios;
 
 import com.aponia.aponia_hotel.entities.servicios.ServicioDisponibilidad;
 import com.aponia.aponia_hotel.repository.servicios.ServicioDisponibilidadRepository;
-import com.aponia.aponia_hotel.service.servicios.ServicioDisponibilidadService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ServicioDisponibilidadServiceImpl implements ServicioDisponibilidadService {
 
     private final ServicioDisponibilidadRepository repository;
@@ -18,25 +21,32 @@ public class ServicioDisponibilidadServiceImpl implements ServicioDisponibilidad
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ServicioDisponibilidad> listar() {
         return repository.findAll();
     }
 
     @Override
-    public ServicioDisponibilidad crear(ServicioDisponibilidad disponibilidad) {
-        repository.save(disponibilidad);
-        return disponibilidad;
+    @Transactional(readOnly = true)
+    public List<ServicioDisponibilidad> listarDisponibles(String servicioId, LocalDate fecha, int capacidadRequerida) {
+        return repository.findByServicioIdAndFechaAndCapacidadDisponibleGreaterThan(
+            servicioId, fecha, capacidadRequerida - 1);
     }
 
     @Override
+    public ServicioDisponibilidad crear(ServicioDisponibilidad disponibilidad) {
+        return repository.save(disponibilidad);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<ServicioDisponibilidad> obtener(String id) {
         return repository.findById(id);
     }
 
     @Override
     public ServicioDisponibilidad actualizar(ServicioDisponibilidad disponibilidad) {
-        repository.update(disponibilidad);
-        return disponibilidad;
+        return repository.save(disponibilidad);
     }
 
     @Override
@@ -45,12 +55,9 @@ public class ServicioDisponibilidadServiceImpl implements ServicioDisponibilidad
     }
 
     @Override
-    public List<ServicioDisponibilidad> findByServicioId(String servicioId) {
-        return repository.findByServicioId(servicioId);
-    }
-
-    @Override
-    public List<ServicioDisponibilidad> findByServicioIdAndFecha(String servicioId, String fecha) {
-        return repository.findByServicioIdAndFecha(servicioId, fecha);
+    @Transactional(readOnly = true)
+    public Optional<ServicioDisponibilidad> buscarDisponibilidad(
+            String servicioId, LocalDate fecha, LocalTime horaInicio) {
+        return Optional.ofNullable(repository.findByServicioAndFechaAndHora(servicioId, fecha, horaInicio));
     }
 }

@@ -2,13 +2,14 @@ package com.aponia.aponia_hotel.service.servicios;
 
 import com.aponia.aponia_hotel.entities.servicios.Servicio;
 import com.aponia.aponia_hotel.repository.servicios.ServicioRepository;
-import com.aponia.aponia_hotel.service.servicios.ServicioService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ServicioServiceImpl implements ServicioService {
 
     private final ServicioRepository repository;
@@ -18,37 +19,38 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Servicio> listar() {
         return repository.findAll();
     }
 
     @Override
     public Servicio crear(Servicio servicio) {
-        repository.save(servicio);
-        return servicio; // devolvemos el mismo objeto
+        if (repository.existsByNombre(servicio.getNombre())) {
+            throw new IllegalArgumentException("Ya existe un servicio con ese nombre");
+        }
+        return repository.save(servicio);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Servicio> obtener(String id) {
+        return repository.findById(id);
     }
 
     @Override
     public Servicio actualizar(Servicio servicio) {
-        repository.update(servicio);
-        return servicio; // idem
+        Optional<Servicio> existente = repository.findById(servicio.getId());
+        if (existente.isPresent() && !existente.get().getNombre().equals(servicio.getNombre())) {
+            if (repository.existsByNombre(servicio.getNombre())) {
+                throw new IllegalArgumentException("Ya existe un servicio con ese nombre");
+            }
+        }
+        return repository.save(servicio);
     }
-
-    @Override
-    public Optional<Servicio> obtener(String id) {
-        return repository.findById(id); // optional porque puede ser null
-    }
-
-
 
     @Override
     public void eliminar(String id) {
         repository.deleteById(id);
     }
-
-    @Override
-    public List<Servicio> findByActivo(boolean activo) {
-        return repository.findByActivo(activo);
-    }
 }
-

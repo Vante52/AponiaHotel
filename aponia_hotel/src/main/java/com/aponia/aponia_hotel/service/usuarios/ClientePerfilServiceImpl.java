@@ -2,13 +2,14 @@ package com.aponia.aponia_hotel.service.usuarios;
 
 import com.aponia.aponia_hotel.entities.usuarios.ClientePerfil;
 import com.aponia.aponia_hotel.repository.usuarios.ClientePerfilRepository;
-import com.aponia.aponia_hotel.service.usuarios.ClientePerfilService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ClientePerfilServiceImpl implements ClientePerfilService {
 
     private final ClientePerfilRepository repository;
@@ -18,29 +19,29 @@ public class ClientePerfilServiceImpl implements ClientePerfilService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClientePerfil> listar() {
         return repository.findAll();
     }
 
     @Override
     public ClientePerfil crear(ClientePerfil clientePerfil) {
-        repository.save(clientePerfil);
-        return clientePerfil;
+        return repository.save(clientePerfil);
     }
 
     @Override
-    public Optional<ClientePerfil> obtener(String usuarioId) {
-        return repository.findById(usuarioId);
+    @Transactional(readOnly = true)
+    public Optional<ClientePerfil> obtener(String id) {
+        return repository.findById(id);
     }
 
     @Override
     public ClientePerfil actualizar(ClientePerfil clientePerfil) {
-        repository.update(clientePerfil);
-        return clientePerfil;
+        return repository.save(clientePerfil);
     }
 
     @Override
-    public void eliminar(String usuarioId) {
-        repository.deleteById(usuarioId);
+    public void eliminar(String id) {
+        repository.deleteById(id);
     }
 }

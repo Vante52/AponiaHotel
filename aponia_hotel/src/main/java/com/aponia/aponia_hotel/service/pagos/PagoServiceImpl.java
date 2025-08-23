@@ -1,15 +1,15 @@
-    package com.aponia.aponia_hotel.service.pagos;
+package com.aponia.aponia_hotel.service.pagos;
 
 import com.aponia.aponia_hotel.entities.pagos.Pago;
 import com.aponia.aponia_hotel.repository.pagos.PagoRepository;
-import com.aponia.aponia_hotel.service.pagos.PagoService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PagoServiceImpl implements PagoService {
 
     private final PagoRepository repository;
@@ -19,25 +19,37 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pago> listar() {
         return repository.findAll();
     }
 
     @Override
-    public Pago crear(Pago pago) {
-        repository.save(pago);
-        return pago;
+    @Transactional(readOnly = true)
+    public List<Pago> listarPorReserva(String reservaId) {
+        return repository.findByReservaId(reservaId);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Pago> listarPorReservaYEstado(String reservaId, String estado) {
+        return repository.findByReservaIdAndEstado(reservaId, estado);
+    }
+
+    @Override
+    public Pago crear(Pago pago) {
+        return repository.save(pago);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<Pago> obtener(String id) {
         return repository.findById(id);
     }
 
     @Override
     public Pago actualizar(Pago pago) {
-        repository.update(pago);
-        return pago;
+        return repository.save(pago);
     }
 
     @Override
@@ -46,17 +58,13 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
-    public List<Pago> findByReservaId(String reservaId) {
-        return repository.findByReservaId(reservaId);
-    }
-
-    @Override
-    public void completarPago(String id) {
-        repository.updateEstado(id, "completado");
-    }
-
-    @Override
-    public BigDecimal obtenerTotalPagado(String reservaId) {
-        return repository.sumMontoByReservaIdAndEstado(reservaId, "completado");
+    public Pago completarPago(String id) {
+        Optional<Pago> pagoOpt = repository.findById(id);
+        if (pagoOpt.isPresent()) {
+            Pago pago = pagoOpt.get();
+            pago.setEstado("completado");
+            return repository.save(pago);
+        }
+        throw new IllegalArgumentException("No se encontró el pago con ID: " + id);
     }
 }

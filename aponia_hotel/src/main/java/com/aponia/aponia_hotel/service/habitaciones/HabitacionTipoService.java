@@ -5,9 +5,33 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HabitacionTipoService {
+    /**
+     * Lista todos los tipos de habitación
+     */
     List<HabitacionTipo> listar();
-    HabitacionTipo crear(HabitacionTipo habitacionTipo);
+
+    /**
+     * Lista los tipos de habitación activos
+     */
+    List<HabitacionTipo> listarActivos();
+
+    /**
+     * Crea un nuevo tipo de habitación
+     */
+    HabitacionTipo crear(HabitacionTipo tipo);
+
+    /**
+     * Obtiene un tipo de habitación por su ID
+     */
     Optional<HabitacionTipo> obtener(String id);
-    HabitacionTipo actualizar(HabitacionTipo habitacionTipo);
+
+    /**
+     * Actualiza un tipo de habitación existente
+     */
+    HabitacionTipo actualizar(HabitacionTipo tipo);
+
+    /**
+     * Elimina un tipo de habitación por su ID
+     */
     void eliminar(String id);
 }

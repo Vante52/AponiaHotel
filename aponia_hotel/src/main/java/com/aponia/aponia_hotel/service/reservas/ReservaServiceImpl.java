@@ -2,13 +2,14 @@ package com.aponia.aponia_hotel.service.reservas;
 
 import com.aponia.aponia_hotel.entities.reservas.Reserva;
 import com.aponia.aponia_hotel.repository.reservas.ReservaRepository;
-import com.aponia.aponia_hotel.service.reservas.ReservaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ReservaServiceImpl implements ReservaService {
 
     private final ReservaRepository repository;
@@ -18,25 +19,46 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Reserva> listar() {
         return repository.findAll();
     }
 
     @Override
-    public Reserva crear(Reserva reserva) {
-        repository.save(reserva);
-        return reserva;
+    @Transactional(readOnly = true)
+    public List<Reserva> listarPorCliente(String clienteId) {
+        return repository.findByClienteId(clienteId);
     }
 
     @Override
+    public Reserva crear(Reserva reserva) {
+        if (repository.existsByCodigo(reserva.getCodigo())) {
+            throw new IllegalArgumentException("Ya existe una reserva con ese código");
+        }
+        return repository.save(reserva);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<Reserva> obtener(String id) {
         return repository.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<Reserva> obtenerPorCodigo(String codigo) {
+        return repository.findByCodigo(codigo);
+    }
+
+    @Override
     public Reserva actualizar(Reserva reserva) {
-        repository.update(reserva);
-        return reserva;
+        Optional<Reserva> existente = repository.findById(reserva.getId());
+        if (existente.isPresent() && !existente.get().getCodigo().equals(reserva.getCodigo())) {
+            if (repository.existsByCodigo(reserva.getCodigo())) {
+                throw new IllegalArgumentException("Ya existe una reserva con ese código");
+            }
+        }
+        return repository.save(reserva);
     }
 
     @Override
@@ -45,22 +67,21 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public List<Reserva> findByClienteId(String clienteId) {
-        return repository.findByClienteId(clienteId);
-    }
-
-    @Override
-    public Optional<Reserva> findByCodigo(String codigo) {
-        return repository.findByCodigo(codigo);
-    }
-
-    @Override
     public void confirmarReserva(String id) {
-        repository.updateEstado(id, "confirmada");
+
     }
 
     @Override
-    public void cancelarReserva(String id) {
-        repository.updateEstado(id, "cancelada");
+    public Reserva cancelarReserva(String id) {
+        Optional<Reserva> reservaOpt = repository.findById(id);
+        if (reservaOpt.isPresent()) {
+            Reserva reserva = reservaOpt.get();
+            if ("completada".equals(reserva.getEstado())) {
+                throw new IllegalStateException("No se puede cancelar una reserva completada");
+            }
+            reserva.setEstado("cancelada");
+            return repository.save(reserva);
+        }
+        throw new IllegalArgumentException("No se encontró la reserva con ID: " + id);
     }
 }
