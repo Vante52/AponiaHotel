@@ -49,4 +49,29 @@ public class Estancia {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacion_asignada")
     private Habitacion habitacionAsignada;
+
+    @PrePersist
+    @PreUpdate
+    public void validate() {
+        if (checkIn == null) {
+            throw new IllegalStateException("La fecha de check-in es requerida");
+        }
+        if (checkOut == null) {
+            throw new IllegalStateException("La fecha de check-out es requerida");
+        }
+        if (!checkOut.isAfter(checkIn)) {
+            throw new IllegalStateException("La fecha de check-out debe ser posterior a la de check-in");
+        }
+        if (numeroHuespedes == null || numeroHuespedes <= 0) {
+            throw new IllegalStateException("El número de huéspedes debe ser positivo");
+        }
+        if (precioPorNoche == null || precioPorNoche.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalStateException("El precio por noche debe ser no negativo");
+        }
+        if (totalEstadia == null || totalEstadia.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalStateException("El total de la estadía debe ser no negativo");
+        }
+        if (tipoHabitacion == null) {
+        }
+    }
 }

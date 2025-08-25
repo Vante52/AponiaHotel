@@ -25,8 +25,16 @@ public class Usuario {
     private String passwordHash;
 
     @Column(name = "rol", nullable = false, length = 50)
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private UserRole rol = UserRole.CLIENTE; // Default value
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ClientePerfil clientePerfil;
+
+    public enum UserRole {
+        ADMIN,
+        CLIENTE,
+        STAFF,
+        RECEPCIONISTA
+    }
 }

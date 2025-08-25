@@ -10,7 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "servicio_disponibilidad")
+@Table(name = "servicio_disponibilidad",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"servicio_id", "fecha", "hora_inicio"})
+    })
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,4 +39,15 @@ public class ServicioDisponibilidad {
 
     @Column(name = "capacidad_disponible", nullable = false)
     private Integer capacidadDisponible;
+
+    @PrePersist
+    @PreUpdate
+    public void validateTimes() {
+        if (horaInicio != null && horaFin != null && !horaFin.isAfter(horaInicio)) {
+            throw new IllegalStateException("hora_fin must be after hora_inicio");
+        }
+        if (capacidadDisponible < 0) {
+            throw new IllegalStateException("capacidad_disponible must be non-negative");
+        }
+    }
 }

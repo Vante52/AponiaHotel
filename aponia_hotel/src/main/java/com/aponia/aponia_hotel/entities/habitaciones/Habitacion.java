@@ -22,9 +22,18 @@ public class Habitacion {
     @JoinColumn(name = "tipo_id", nullable = false)
     private HabitacionTipo tipo;
 
+
     @Column(name = "numero", nullable = false, unique = true)
     private Integer numero;
 
     @Column(name = "activa", nullable = false)
-    private Boolean activa;
+    private Boolean activa = true;
+
+    @PrePersist
+    @PreUpdate
+    public void validate() {
+        if (numero <= 0) {
+            throw new IllegalStateException("numero must be positive");
+        }
+    }
 }

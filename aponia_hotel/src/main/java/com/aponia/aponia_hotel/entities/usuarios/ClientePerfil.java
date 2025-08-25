@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class ClientePerfil {
     @Column(name = "telefono", length = 25)
     private String telefono;
 
-    @Column(name = "fecha_registro", nullable = false)
+    @CreationTimestamp
+    @Column(name = "fecha_registro", nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
-}   
+}

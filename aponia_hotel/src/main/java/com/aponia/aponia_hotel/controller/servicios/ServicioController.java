@@ -28,7 +28,7 @@ public class ServicioController {
     @GetMapping("/nuevo")
     public String nuevoForm(Model model) {
         Servicio servicio = new Servicio();
-        servicio.setActivo(true);
+
         servicio.setPrecioPorPersona(BigDecimal.ZERO);
         servicio.setDuracionMinutos(0);
         model.addAttribute("servicio", servicio);

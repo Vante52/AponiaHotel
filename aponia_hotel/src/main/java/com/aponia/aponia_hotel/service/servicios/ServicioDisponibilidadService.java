@@ -18,6 +18,11 @@ public interface ServicioDisponibilidadService {
     List<ServicioDisponibilidad> listarDisponibles(String servicioId, LocalDate fecha, int capacidadRequerida);
 
     /**
+     * Lista las disponibilidades de un servicio en un rango de fechas
+     */
+    List<ServicioDisponibilidad> listarPorRangoFechas(String servicioId, LocalDate fechaInicio, LocalDate fechaFin);
+
+    /**
      * Crea una nueva disponibilidad
      */
     ServicioDisponibilidad crear(ServicioDisponibilidad disponibilidad);
@@ -28,6 +33,16 @@ public interface ServicioDisponibilidadService {
     Optional<ServicioDisponibilidad> obtener(String id);
 
     /**
+     * Busca una disponibilidad específica por servicio, fecha y hora
+     */
+    Optional<ServicioDisponibilidad> buscarDisponibilidad(String servicioId, LocalDate fecha, LocalTime horaInicio);
+
+    /**
+     * Verifica si existe una disponibilidad para un servicio en una fecha y hora específicas
+     */
+    boolean existeDisponibilidad(String servicioId, LocalDate fecha, LocalTime horaInicio);
+
+    /**
      * Actualiza una disponibilidad existente
      */
     ServicioDisponibilidad actualizar(ServicioDisponibilidad disponibilidad);
@@ -36,16 +51,4 @@ public interface ServicioDisponibilidadService {
      * Elimina una disponibilidad por su ID
      */
     void eliminar(String id);
-
-    /**
-     * Busca una disponibilidad específica por servicio, fecha y hora
-     */
-    Optional<ServicioDisponibilidad> buscarDisponibilidad(String servicioId, LocalDate fecha, LocalTime horaInicio);
-
-    // Métodos deprecados o no utilizados
-    // @deprecated Usar listarDisponibles() en su lugar
-    // List<ServicioDisponibilidad> findByServicioIdAndFecha(String servicioId, LocalDate fecha);
-
-    // @deprecated Usar buscarDisponibilidad() en su lugar
-    // Optional<ServicioDisponibilidad> findByServicioAndFechaAndHora(String servicioId, LocalDate fecha, LocalTime horaInicio);
 }

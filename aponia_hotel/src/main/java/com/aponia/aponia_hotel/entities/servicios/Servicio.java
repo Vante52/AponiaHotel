@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import com.aponia.aponia_hotel.entities.resources.Imagen;
 import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
 
-
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,21 +29,17 @@ public class Servicio {
     @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
 
-    @Column(name = "lugar", length = 120)
+    @Column(name = "lugar", nullable = false, length = 120)
     private String lugar;
 
     @Column(name = "precio_por_persona", nullable = false, precision = 12, scale = 2)
     private BigDecimal precioPorPersona;
-
 
     @Column(name = "duracion_minutos", nullable = false)
     private Integer duracionMinutos;
 
     @Column(name = "capacidad_maxima")
     private Integer capacidadMaxima;
-
-    @Column(name = "activo", nullable = false)
-    private Boolean activo;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ServicioDisponibilidad> disponibilidades;

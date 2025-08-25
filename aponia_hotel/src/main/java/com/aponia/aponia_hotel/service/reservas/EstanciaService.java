@@ -17,6 +17,31 @@ public interface EstanciaService {
     List<Estancia> listarPorReserva(String reservaId);
 
     /**
+     * Lista las estancias que tienen check-in en una fecha específica
+     */
+    List<Estancia> listarCheckinsDelDia(String tipoHabitacionId, LocalDate fecha);
+
+    /**
+     * Lista las estancias que tienen check-out en una fecha específica
+     */
+    List<Estancia> listarCheckoutsDelDia(String tipoHabitacionId, LocalDate fecha);
+
+    /**
+     * Verifica si hay habitaciones disponibles del tipo solicitado para las fechas dadas
+     */
+    boolean verificarDisponibilidad(String tipoHabitacionId, LocalDate checkIn, LocalDate checkOut, int numeroHuespedes);
+
+    /**
+     * Asigna una habitación disponible a la estancia
+     */
+    Estancia asignarHabitacion(String estanciaId);
+
+    /**
+     * Cuenta las habitaciones ocupadas de un tipo para un rango de fechas
+     */
+    long contarHabitacionesOcupadas(String tipoHabitacionId, LocalDate checkIn, LocalDate checkOut);
+
+    /**
      * Crea una nueva estancia
      */
     Estancia crear(Estancia estancia);
@@ -36,10 +61,8 @@ public interface EstanciaService {
      */
     void eliminar(String id);
 
-    // Métodos deprecados o no utilizados
-    // @deprecated Usar listarPorReserva() en su lugar
-    // List<Estancia> findByReservaId(String reservaId);
-
-    // @deprecated No implementado actualmente
-    // List<Estancia> findByHabitacionAsignadaAndFechas(String habitacionId, LocalDate checkIn, LocalDate checkOut);
+    /**
+     * Verifica si hay conflictos de fechas para una habitación
+     */
+    List<Estancia> buscarConflictosFechas(String habitacionId, LocalDate checkIn, LocalDate checkOut);
 }

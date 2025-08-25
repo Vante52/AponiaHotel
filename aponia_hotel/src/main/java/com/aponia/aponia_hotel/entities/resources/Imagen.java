@@ -30,4 +30,13 @@ public class Imagen {
 
     @Column(name = "url", nullable = false, length = 500)
     private String url;
+
+    @PrePersist
+    @PreUpdate
+    public void validate() {
+        if ((servicio != null && tipoHabitacion != null) ||
+            (servicio == null && tipoHabitacion == null)) {
+            throw new IllegalStateException("Exactly one of servicio or tipoHabitacion must be set");
+        }
+    }
 }

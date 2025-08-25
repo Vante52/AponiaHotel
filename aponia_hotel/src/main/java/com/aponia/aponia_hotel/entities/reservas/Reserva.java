@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,11 +33,13 @@ public class Reserva {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Usuario cliente;
 
-    @Column(name = "fecha_creacion", nullable = false)
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(name = "estado", nullable = false, length = 32)
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoReserva estado = EstadoReserva.PENDIENTE;
 
     @Column(name = "notas", columnDefinition = "TEXT")
     private String notas;
@@ -52,4 +55,11 @@ public class Reserva {
 
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ResumenPago resumenPago;
+
+    public enum EstadoReserva {
+        PENDIENTE,
+        CONFIRMADA,
+        CANCELADA,
+        COMPLETADA
+    }
 }

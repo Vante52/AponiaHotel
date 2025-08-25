@@ -1,6 +1,8 @@
 package com.aponia.aponia_hotel.service.reservas;
 
 import com.aponia.aponia_hotel.entities.reservas.Reserva;
+import com.aponia.aponia_hotel.entities.reservas.Reserva.EstadoReserva;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,16 @@ public interface ReservaService {
      * Lista las reservas por cliente
      */
     List<Reserva> listarPorCliente(String clienteId);
+
+    /**
+     * Lista las reservas por estado
+     */
+    List<Reserva> listarPorEstado(EstadoReserva estado);
+
+    /**
+     * Lista las reservas activas (no canceladas ni completadas) por cliente
+     */
+    List<Reserva> listarReservasActivas(String clienteId);
 
     /**
      * Crea una nueva reserva
@@ -40,14 +52,28 @@ public interface ReservaService {
      */
     void eliminar(String id);
 
-    void confirmarReserva(String id);
+    /**
+     * Confirma una reserva y asigna habitaciones
+     */
+    Reserva confirmarReserva(String id);
 
+    /**
+     * Cancela una reserva
+     */
     Reserva cancelarReserva(String id);
 
-    // Métodos deprecados o no utilizados
-    // @deprecated Usar obtenerPorCodigo() en su lugar
-    // Optional<Reserva> findByCodigo(String codigo);
+    /**
+     * Marca una reserva como completada
+     */
+    Reserva completarReserva(String id);
 
-    // @deprecated Usar listarPorCliente() en su lugar
-    // List<Reserva> findByClienteId(String clienteId);
+    /**
+     * Verifica si hay disponibilidad para las fechas y tipos de habitación solicitados
+     */
+    boolean verificarDisponibilidad(String tipoHabitacionId, LocalDate checkIn, LocalDate checkOut, int numeroHuespedes);
+
+    /**
+     * Calcula el total de una reserva (habitaciones + servicios)
+     */
+    double calcularTotalReserva(String id);
 }

@@ -45,4 +45,30 @@ public class ReservaServicio {
 
     @Column(name = "total_servicio", nullable = false, precision = 12, scale = 2)
     private BigDecimal totalServicio;
+
+    @PrePersist
+    @PreUpdate
+    public void validate() {
+        if (fecha == null) {
+            throw new IllegalStateException("La fecha es requerida");
+        }
+        if (horaInicio == null) {
+            throw new IllegalStateException("La hora de inicio es requerida");
+        }
+        if (numeroPersonas == null || numeroPersonas <= 0) {
+            throw new IllegalStateException("El número de personas debe ser positivo");
+        }
+        if (precioPorPersona == null || precioPorPersona.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalStateException("El precio por persona debe ser no negativo");
+        }
+        if (totalServicio == null || totalServicio.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalStateException("El total del servicio debe ser no negativo");
+        }
+        if (servicio == null) {
+            throw new IllegalStateException("El servicio es requerido");
+        }
+        if (reserva == null) {
+            throw new IllegalStateException("La reserva es requerida");
+        }
+    }
 }

@@ -12,13 +12,29 @@ import java.util.List;
 
 @Repository
 public interface ServicioDisponibilidadRepository extends JpaRepository<ServicioDisponibilidad, String> {
+
     List<ServicioDisponibilidad> findByServicioIdAndFechaAndCapacidadDisponibleGreaterThan(
         String servicioId, LocalDate fecha, int minCapacidad);
 
-    @Query("SELECT sd FROM ServicioDisponibilidad sd WHERE sd.servicio.id = :servicioId " +
-           "AND sd.fecha = :fecha AND sd.horaInicio = :horaInicio")
-    ServicioDisponibilidad findByServicioAndFechaAndHora(
+    @Query("SELECT sd FROM ServicioDisponibilidad sd " +
+           "WHERE sd.servicio.id = :servicioId " +
+           "AND sd.fecha = :fecha " +
+           "AND sd.horaInicio = :hora")
+    ServicioDisponibilidad findByServicioIdAndFechaAndHoraInicio(
         @Param("servicioId") String servicioId,
         @Param("fecha") LocalDate fecha,
-        @Param("horaInicio") LocalTime horaInicio);
+        @Param("hora") LocalTime hora);
+
+    @Query("SELECT sd FROM ServicioDisponibilidad sd " +
+           "WHERE sd.servicio.id = :servicioId " +
+           "AND sd.fecha >= :fechaInicio " +
+           "AND sd.fecha <= :fechaFin " +
+           "ORDER BY sd.fecha, sd.horaInicio")
+    List<ServicioDisponibilidad> findDisponibilidadesByServicioAndRangoFechas(
+        @Param("servicioId") String servicioId,
+        @Param("fechaInicio") LocalDate fechaInicio,
+        @Param("fechaFin") LocalDate fechaFin);
+
+    boolean existsByServicioIdAndFechaAndHoraInicio(
+        String servicioId, LocalDate fecha, LocalTime horaInicio);
 }

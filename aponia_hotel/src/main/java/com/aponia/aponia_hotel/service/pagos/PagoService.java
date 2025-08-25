@@ -1,6 +1,8 @@
 package com.aponia.aponia_hotel.service.pagos;
 
 import com.aponia.aponia_hotel.entities.pagos.Pago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.EstadoPago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.TipoPago;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +20,12 @@ public interface PagoService {
     /**
      * Lista los pagos por reserva y estado
      */
-    List<Pago> listarPorReservaYEstado(String reservaId, String estado);
+    List<Pago> listarPorReservaYEstado(String reservaId, EstadoPago estado);
+
+    /**
+     * Lista los pagos por tipo
+     */
+    List<Pago> listarPorTipo(TipoPago tipo);
 
     /**
      * Crea un nuevo pago
@@ -40,12 +47,23 @@ public interface PagoService {
      */
     void eliminar(String id);
 
+    /**
+     * Completa un pago pendiente
+     */
     Pago completarPago(String id);
 
-    // Métodos deprecados o no utilizados
-    // @deprecated Usar listarPorReserva() en su lugar
-    // List<Pago> findByReservaId(String reservaId);
+    /**
+     * Marca un pago como fallido
+     */
+    Pago marcarPagoFallido(String id);
 
-    // @deprecated Usar listarPorReservaYEstado() en su lugar
-    // List<Pago> findByReservaIdAndEstado(String reservaId, String estado);
+    /**
+     * Procesa un reembolso
+     */
+    Pago procesarReembolso(String id);
+
+    /**
+     * Calcula el total de pagos completados para una reserva
+     */
+    double calcularTotalPagosCompletados(String reservaId);
 }
