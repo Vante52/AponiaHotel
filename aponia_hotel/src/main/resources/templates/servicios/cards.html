@@ -1,83 +1,436 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Servicios - Tarjetas</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aponia – Servicios & Experiencias</title>
+    <meta
+      name="description"
+      content="Explora los servicios y experiencias de Aponia."
+    />
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            padding: 15px;
-        }
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.2em;
-            color: #007bff;
-        }
-        .card p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .acciones {
-            margin-top: 10px;
-        }
-        .acciones a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .acciones a:hover {
-            text-decoration: underline;
-        }
-        .acciones form {
-            display: inline;
-        }
-        .acciones button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .acciones button:hover {
-            background-color: #a71d2a;
-        }
+      :root {
+        /* Paleta Aponia */
+        --ap-primary: #0a3d62;
+        --ap-secondary: #cfa15a;
+        --ap-beige: #f4e3c1;
+        --ap-neutral: #f5f5f5;
+        --ap-white: #ffffff;
+
+        /* Neutros/UI */
+        --ink: #243444;
+        --muted: #6b7280;
+        --line: #e8edf1;
+        --radius: 20px;
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--ap-white);
+        color: var(--ink);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* Header simple */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.92),
+          rgba(255, 255, 255, 0.86)
+        );
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .nav {
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand__name {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        color: var(--ap-primary);
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 260px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          120deg,
+          rgba(10, 61, 98, 0.08),
+          rgba(207, 161, 90, 0.1)
+        );
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-inner {
+        padding: 42px 0;
+        text-align: center;
+      }
+      .title {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        color: var(--ap-primary);
+        letter-spacing: 0.3px;
+      }
+      .subtitle {
+        margin: 8px 0 0;
+        color: #4b5563;
+      }
+
+      /* Toolbar (buscador opcional) */
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin: 18px 0 8px;
+        flex-wrap: wrap;
+      }
+      .search {
+        position: relative;
+        flex: 1 1 280px;
+        max-width: 460px;
+      }
+      .search input {
+        width: 100%;
+        padding: 12px 14px 12px 40px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        font: inherit;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .search input:focus {
+        outline: none;
+        border-color: #b6c6d6;
+        box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.12);
+      }
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.6;
+      }
+      .counter {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      /* Grid de tarjetas */
+      .grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      }
+      .card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        transition: box-shadow 0.25s ease, transform 0.1s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .card:hover {
+        box-shadow: var(--shadow-lift);
+        transform: translateY(-1px);
+      }
+      .cover {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+      }
+      .cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 12px;
+        padding: 6px 8px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--line);
+      }
+      .body {
+        padding: 14px 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .name {
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .desc {
+        color: #334155;
+        font-size: 14px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 40px;
+      }
+      .meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+      }
+      .pill {
+        background: var(--ap-neutral);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        color: #334155;
+      }
+      .cta {
+        margin-top: auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--ap-primary);
+        color: var(--ap-primary);
+        background: #fff;
+      }
+      .btn:hover {
+        background: rgba(10, 61, 98, 0.06);
+      }
+      .price {
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      /* Empty */
+      .empty {
+        margin: 24px 0;
+        text-align: center;
+        color: #64748b;
+        border: 1px dashed var(--line);
+        border-radius: 16px;
+        padding: 28px;
+      }
     </style>
-</head>
-<body>
-<h1>Servicios en Tarjetas</h1>
-
-<div class="grid">
-    <div class="card" th:each="s : ${servicios}">
-        <h2 th:text="${s.nombre}"></h2>
-        <p th:text="${s.descripcion}"></p>
-        <p><strong>Precio:</strong> <span th:text="${s.precioBaseAmount}"></span> <span th:text="${s.precioBaseCurrency}"></span></p>
-        <p><strong>Público:</strong> <span th:text="${s.publico}"></span></p>
-        <p><strong>Activo:</strong> <span th:text="${s.activo}"></span></p>
-
-        <div class="acciones">
-            <a th:href="@{|/servicios/${s.id}/editar|}">Editar</a>
-            <form th:action="@{|/servicios/${s.id}/eliminar|}" method="post">
-                <button type="submit">Eliminar</button>
-            </form>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="wrap">
+        <div class="nav">
+          <a th:href="@{/}" class="brand">
+            <img
+              src="/img/logo_aponia.png"
+              alt="Aponia"
+              width="40"
+              height="40"
+              style="border-radius: 10px"
+            />
+            <span class="brand__name">Aponia</span>
+          </a>
+          <nav class="navlinks" style="display: none"></nav>
         </div>
-    </div>
-</div>
-</body>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <h1 class="title">Servicios & Experiencias</h1>
+        <p class="subtitle">
+          Relájate, explora y disfruta. Elige tu plan ideal.
+        </p>
+      </div>
+    </section>
+
+    <main class="wrap">
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <!-- Buscador local (opcional; filtra en el cliente) -->
+        <div class="search">
+          <svg
+            class="search-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="7"
+              stroke="currentColor"
+              stroke-width="2"
+            ></circle>
+            <path
+              d="M20 20L17 17"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <input
+            id="q"
+            type="search"
+            placeholder="Buscar servicio, lugar o palabra clave…"
+            aria-label="Buscar servicios"
+          />
+        </div>
+        <div class="counter">
+          <span th:text="'Encontrados: ' + ${#lists.size(servicios)}"
+            >Encontrados: 0</span
+          >
+        </div>
+      </div>
+
+      <!-- Grid de tarjetas -->
+      <section class="grid" id="cards">
+        <article
+          th:each="s : ${servicios}"
+          class="card"
+          data-card
+          th:attr="data-name=${s.nombre}, data-place=${s.lugar}, data-desc=${s.descripcion}"
+        >
+          <div class="cover">
+            <img
+              th:src="${#lists.isEmpty(s.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${s.imagenes.get(0).url}"
+              alt="Imagen servicio"
+            />
+            <span class="badge">
+              <span
+                th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')}|"
+                >$ 0,00</span
+              >
+              COP
+            </span>
+          </div>
+          <div class="body">
+            <h3 class="name" th:text="${s.nombre}">Nombre del servicio</h3>
+            <div class="muted" th:text="${s.lugar}">Lugar</div>
+            <p class="desc" th:text="${s.descripcion}">Descripción breve…</p>
+            <div class="meta">
+              <span class="pill" th:text="|⏱ ${s.duracionMinutos} min|"
+                >⏱ 0 min</span
+              >
+              <span class="pill"
+                >👥
+                <span
+                  th:text="${s.capacidadMaxima != null ? s.capacidadMaxima : '-'}"
+                  >-</span
+                ></span
+              >
+            </div>
+            <div class="cta">
+              <a class="btn" th:href="@{|/servicios/${s.id}|}">Ver detalle</a>
+              <span
+                class="price"
+                th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')} COP|"
+                >$ 0,00 COP</span
+              >
+            </div>
+          </div>
+        </article>
+
+        <!-- Estado vacío -->
+        <div th:if="${#lists.isEmpty(servicios)}" class="empty">
+          No hay servicios publicados por ahora. Vuelve pronto.
+        </div>
+      </section>
+
+      <div style="height: 20px"></div>
+    </main>
+
+    <footer
+      style="
+        border-top: 1px solid var(--line);
+        color: #64748b;
+        text-align: center;
+        padding: 16px;
+      "
+    >
+      © <span id="year"></span> Aponia. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Filtro rápido en cliente (buscador)
+      const q = document.getElementById("q");
+      const cards = Array.from(document.querySelectorAll("[data-card]"));
+      q?.addEventListener("input", () => {
+        const term = q.value.trim().toLowerCase();
+        cards.forEach((c) => {
+          const hay =
+            (c.dataset.name || "").toLowerCase().includes(term) ||
+            (c.dataset.place || "").toLowerCase().includes(term) ||
+            (c.dataset.desc || "").toLowerCase().includes(term);
+          c.style.display = hay ? "" : "none";
+        });
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aponia – Hotel & Experiencias</title>
+    <meta
+      name="description"
+      content="Aponia: tu escape perfecto. Habitaciones de lujo, spa, gastronomía y experiencias únicas."
+    />
+    <!-- Tailwin en modo de prueba, cambiar mas adelante a modo de produccion -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              aponia: {
+                primary: "#0A3D62",
+                secondary: "#CFA15A",
+                beige: "#F4E3C1",
+                neutral: "#F5F5F5",
+                white: "#FFFFFF",
+              },
+            },
+            fontFamily: {
+              display: ["Playfair Display", "serif"],
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 10px 30px rgba(0,0,0,0.08)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[url('../img/lobby-hotel.jpg')] text-slate-800 bg-no-repeat bg-cover bg-center h-screen"
+  >
+    <div class="flex">
+      <div class="bg-transparent flex-1 h-screen"></div>
+      <div
+        class="bg-aponia-neutral flex-[.8] h-screen flex items-center justify-center"
+      >
+        <div class="p-8 rounded-2xl max-w-md w-full">
+          <h2 class="text-2xl font-bold text-center mb-2 text-aponia-primary">
+            Iniciar sesión
+          </h2>
+          <span class="text-sm text-center text-gray-500 block mx-auto mb-6"
+            >Ingresa tu correo y contraseña para inciar sesión</span
+          >
+          <form th:action="@{/login}" method="post" class="space-y-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700"
+                >Correo electrónico</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="mt-1 px-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-aponia-primary focus:ring-aponia-primary outline-none"
+                placeholder="correo@email.com"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700"
+                >Contraseña</label
+              >
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-aponia-primary focus:ring-aponia-primary px-4 outline-none"
+                placeholder="*******"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-aponia-secondary text-white py-2 px-4 rounded-md hover:bg-aponia-secondary/80"
+            >
+              Iniciar sesión
+            </button>
+            <span class="text-sm text-center text-gray-500 block mx-auto mb-6"
+              >No tienes una cuenta?
+              <a
+                href="/signup"
+                class="text-aponia-secondary hover:text-aponia-secondary/80"
+                >Registrate</a
+              ></span
+            >
+            <div
+              th:if="${error}"
+              class="text-red-700 bg-red-100 rounded-md px-3 py-2 text-sm"
+              th:text="${error}"
+            ></div>
+            <div
+              th:if="${ok}"
+              class="text-emerald-700 bg-emerald-100 rounded-md px-3 py-2 text-sm"
+              th:text="${ok}"
+            ></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

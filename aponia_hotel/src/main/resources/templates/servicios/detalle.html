@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title th:text="|Aponia – ${servicio.nombre}|">Aponia – Servicio</title>
+    <meta name="description" th:content="${servicio.descripcion}" />
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --ap-primary: #0a3d62;
+        --ap-secondary: #cfa15a;
+        --ap-beige: #f4e3c1;
+        --ap-neutral: #f5f5f5;
+        --ap-white: #ffffff;
+
+        --ink: #243444;
+        --muted: #6b7280;
+        --line: #e8edf1;
+
+        --radius: 20px;
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--ap-white);
+        color: var(--ink);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Header mini */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.92),
+          rgba(255, 255, 255, 0.86)
+        );
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand__name {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        color: var(--ap-primary);
+      }
+
+      /* Encabezado */
+      .pagehead {
+        padding: 22px 0 10px;
+      }
+      .breadcrumbs {
+        font-size: 13px;
+        color: #64748b;
+      }
+      .breadcrumbs a {
+        color: var(--ap-primary);
+      }
+      .title {
+        margin: 6px 0 0;
+        font-family: "Playfair Display", serif;
+        font-size: 34px;
+        color: var(--ap-primary);
+      }
+      .subtitle {
+        margin: 6px 0 0;
+        color: #4b5563;
+      }
+
+      /* Layout contenido */
+      .grid {
+        display: grid;
+        gap: 22px;
+      }
+      @media (min-width: 1024px) {
+        .grid {
+          grid-template-columns: 1.2fr 0.8fr;
+        }
+      }
+
+      /* Galería */
+      .gallery {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-soft);
+        padding: 10px;
+      }
+      .hero-img {
+        height: 420px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #f3f4f6;
+        display: grid;
+        place-items: center;
+      }
+      .hero-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .thumbs {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        overflow: auto;
+        padding-bottom: 2px;
+      }
+      .thumb {
+        width: 92px;
+        height: 68px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        flex: 0 0 auto;
+        background: #fff;
+      }
+      .thumb.active {
+        border-color: var(--ap-secondary);
+      }
+      .thumbs::-webkit-scrollbar {
+        height: 8px;
+      }
+      .thumbs::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 10px;
+      }
+
+      /* Panel info / booking */
+      .panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-soft);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: sticky;
+        top: 92px;
+        height: fit-content;
+      }
+      .price {
+        font-weight: 800;
+        font-size: 22px;
+        color: #111827;
+      }
+      .meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .pill {
+        background: var(--ap-neutral);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        color: #334155;
+      }
+      .cta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid var(--ap-primary);
+        color: #fff;
+        background: var(--ap-primary);
+        box-shadow: var(--shadow-soft);
+      }
+      .btn:hover {
+        box-shadow: var(--shadow-lift);
+      }
+      .btn.ghost {
+        background: #fff;
+        color: var(--ap-primary);
+      }
+      .alert {
+        font-size: 13px;
+        color: #64748b;
+      }
+
+      /* Secciones */
+      .section {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-soft);
+        padding: 18px;
+      }
+      .section h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+      .text {
+        color: #334155;
+        line-height: 1.65;
+      }
+
+      /* Footer mini */
+      .footer {
+        border-top: 1px solid var(--line);
+        color: #64748b;
+        text-align: center;
+        padding: 16px;
+        margin-top: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="wrap">
+        <div class="nav">
+          <a th:href="@{/}" class="brand">
+            <img
+              src="/img/logo_aponia.png"
+              alt="Aponia"
+              width="40"
+              height="40"
+              style="border-radius: 10px"
+            />
+            <span class="brand__name">Aponia</span>
+          </a>
+          <a
+            th:href="@{/servicios/cards}"
+            style="color: var(--ap-primary); font-weight: 600"
+            >↩ Volver a servicios</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Head -->
+      <div class="pagehead">
+        <div class="breadcrumbs">
+          <a th:href="@{/}">Inicio</a> ·
+          <a th:href="@{/servicios/cards}">Servicios</a> ·
+          <span th:text="${servicio.nombre}">Servicio</span>
+        </div>
+        <h1 class="title" th:text="${servicio.nombre}">Nombre Servicio</h1>
+        <p class="subtitle" th:text="${servicio.lugar}">Lugar</p>
+      </div>
+
+      <!-- Contenido -->
+      <div class="grid">
+        <!-- Galería -->
+        <section class="gallery">
+          <div class="hero-img" id="hero">
+            <img
+              th:src="${#lists.isEmpty(servicio.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${servicio.imagenes.get(0).url}"
+              alt="Imagen principal del servicio"
+              id="heroImg"
+            />
+          </div>
+
+          <!-- Thumbs -->
+          <div class="thumbs" id="thumbs">
+            <!-- Si hay imágenes -->
+            <img
+              class="thumb active"
+              th:if="${!#lists.isEmpty(servicio.imagenes)}"
+              th:each="img, it : ${servicio.imagenes}"
+              th:src="${img.url}"
+              th:alt="|Imagen ${it.index + 1}|"
+              th:attr="data-src=${img.url}"
+            />
+            <!-- Si no hay imágenes, mostramos solo el placeholder (sin thumbs extra) -->
+          </div>
+        </section>
+
+        <!-- Panel reserva/info -->
+        <aside class="panel">
+          <div
+            class="price"
+            th:text="|$ ${#numbers.formatDecimal(servicio.precioPorPersona,0,'POINT',2,'COMMA')} COP|"
+          >
+            $ 0,00 COP
+          </div>
+
+          <div class="meta">
+            <span class="pill" th:text="|⏱ ${servicio.duracionMinutos} min|"
+              >⏱ 0 min</span
+            >
+            <span class="pill"
+              >👥
+              <span
+                th:text="${servicio.capacidadMaxima != null ? servicio.capacidadMaxima : '-'}"
+                >-</span
+              ></span
+            >
+            <span class="pill" th:text="|📍 ${servicio.lugar}|">📍 Lugar</span>
+          </div>
+
+          <div class="cta">
+            <!-- Ajusta la URL de reservar según tu flujo -->
+            <a
+              class="btn"
+              th:href="@{|/reservas/nueva?servicioId=${servicio.id}|}"
+              >Reservar ahora</a
+            >
+            <a class="btn ghost" th:href="@{/servicios/cards}"
+              >Seguir explorando</a
+            >
+          </div>
+
+          <div class="alert">
+            Cancelación flexible · Mejor precio garantizado
+          </div>
+        </aside>
+      </div>
+
+      <!-- Descripción -->
+      <section class="section" style="margin-top: 22px">
+        <h2>Descripción</h2>
+        <div class="text" th:text="${servicio.descripcion}">
+          Texto descriptivo del servicio…
+        </div>
+      </section>
+
+      <!-- Información adicional (opcional) -->
+      <!--
+    <section class="section" style="margin-top:16px">
+      <h2>Detalles y condiciones</h2>
+      <ul class="text" style="padding-left:18px">
+        <li>Recomendado llegar 15 minutos antes.</li>
+        <li>Traer documento de identidad.</li>
+      </ul>
+    </section>
+    --></main>
+
+    <footer class="footer">
+      © <span id="year"></span> Aponia. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Galería: cambiar imagen principal al hacer click en una miniatura
+      (function () {
+        const heroImg = document.getElementById("heroImg");
+        const thumbs = document.querySelectorAll("#thumbs .thumb");
+        thumbs.forEach((t) => {
+          t.addEventListener("click", () => {
+            const src = t.getAttribute("data-src") || t.getAttribute("src");
+            if (!src) return;
+            heroImg.src = src;
+            thumbs.forEach((x) => x.classList.remove("active"));
+            t.classList.add("active");
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

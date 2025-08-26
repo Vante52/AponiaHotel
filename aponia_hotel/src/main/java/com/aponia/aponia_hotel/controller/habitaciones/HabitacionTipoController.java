@@ -5,6 +5,7 @@ import com.aponia.aponia_hotel.service.habitaciones.HabitacionTipoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -20,7 +21,9 @@ public class HabitacionTipoController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,
+                         @ModelAttribute("ok") String ok,
+                         @ModelAttribute("error") String error) {
         model.addAttribute("tiposHabitacion", service.listar());
         return "habitaciones-tipos/list";
     }
@@ -31,35 +34,63 @@ public class HabitacionTipoController {
         tipo.setActiva(true);
         tipo.setPrecioPorNoche(BigDecimal.ZERO);
         tipo.setAforoMaximo(1);
+        // Por si tu validación exige ambos rangos:
+        tipo.setRangoInicio(1);
+        tipo.setRangoFin(2);
         model.addAttribute("tipoHabitacion", tipo);
         return "habitaciones-tipos/form";
     }
 
     @PostMapping
-    public String crear(@ModelAttribute HabitacionTipo tipoHabitacion) {
-        if (tipoHabitacion.getId() == null || tipoHabitacion.getId().isBlank()) {
-            tipoHabitacion.setId(UUID.randomUUID().toString());
+    public String crear(@ModelAttribute("tipoHabitacion") HabitacionTipo tipoHabitacion,
+                        RedirectAttributes ra) {
+        try {
+            if (tipoHabitacion.getId() == null || tipoHabitacion.getId().isBlank()) {
+                tipoHabitacion.setId(UUID.randomUUID().toString());
+            }
+            service.crear(tipoHabitacion);
+            ra.addFlashAttribute("ok", "Tipo de habitación creado");
+            return "redirect:/habitaciones-tipos";
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "No se pudo crear: " + e.getMessage());
+            return "redirect:/habitaciones-tipos/nuevo";
         }
-        service.crear(tipoHabitacion);
-        return "redirect:/habitaciones-tipos";
     }
 
     @GetMapping("/{id}/editar")
-    public String editarForm(@PathVariable String id, Model model) {
-        model.addAttribute("tipoHabitacion", service.obtener(id));
-        return "habitaciones-tipos/form";
+    public String editarForm(@PathVariable String id, Model model, RedirectAttributes ra) {
+        return service.obtener(id).map(tipo -> {
+            model.addAttribute("tipoHabitacion", tipo);
+            return "habitaciones-tipos/form";
+        }).orElseGet(() -> {
+            ra.addFlashAttribute("error", "No existe el tipo solicitado");
+            return "redirect:/habitaciones-tipos";
+        });
     }
 
     @PostMapping("/{id}")
-    public String actualizar(@PathVariable String id, @ModelAttribute HabitacionTipo tipoHabitacion) {
-        tipoHabitacion.setId(id);
-        service.actualizar(tipoHabitacion);
-        return "redirect:/habitaciones-tipos";
+    public String actualizar(@PathVariable String id,
+                             @ModelAttribute("tipoHabitacion") HabitacionTipo tipoHabitacion,
+                             RedirectAttributes ra) {
+        try {
+            tipoHabitacion.setId(id);
+            service.actualizar(tipoHabitacion);
+            ra.addFlashAttribute("ok", "Tipo de habitación actualizado");
+            return "redirect:/habitaciones-tipos";
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "No se pudo actualizar: " + e.getMessage());
+            return "redirect:/habitaciones-tipos/" + id + "/editar";
+        }
     }
 
     @PostMapping("/{id}/eliminar")
-    public String eliminar(@PathVariable String id) {
-        service.eliminar(id);
+    public String eliminar(@PathVariable String id, RedirectAttributes ra) {
+        try {
+            service.eliminar(id);
+            ra.addFlashAttribute("ok", "Tipo de habitación eliminado");
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "No se pudo eliminar: " + e.getMessage());
+        }
         return "redirect:/habitaciones-tipos";
     }
 }
