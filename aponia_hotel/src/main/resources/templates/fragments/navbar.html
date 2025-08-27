@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <nav th:fragment="navbar" class="navbar">
+      <div class="nav-left">
+        <a th:href="@{/}" class="logo">Aponia Hotel</a>
+        <a th:href="@{/servicios/cards}">Servicios</a>
+        <a th:href="@{/habitaciones-tipos}">Habitaciones</a>
+      </div>
+
+      <!-- Invitado -->
+      <div class="nav-right" th:if="${session.AUTH_USER_ID} == null">
+        <a class="btn" th:href="@{/login}">Iniciar sesión</a>
+        <a class="btn btn-sec" th:href="@{/registro}">Crear cuenta</a>
+      </div>
+
+      <!-- Usuario logueado -->
+      <div class="nav-right" th:if="${session.AUTH_USER_ID} != null">
+        <div class="user-menu">
+          <button class="avatar" aria-haspopup="true">
+            <!-- Foto si existe -->
+            <img
+              th:if="${session.AUTH_USER_PHOTO != null}"
+              th:src="${session.AUTH_USER_PHOTO}"
+              alt="Foto de perfil"
+            />
+            <!-- Inicial si no hay foto -->
+            <span
+              th:if="${session.AUTH_USER_PHOTO == null}"
+              th:text="${(session.AUTH_USER_NAME != null ? #strings.substring(session.AUTH_USER_NAME,0,1) : #strings.substring(session.AUTH_USER_EMAIL,0,1)).toUpperCase()}"
+              >U</span
+            >
+          </button>
+          <div class="dropdown">
+            <div class="user-line">
+              <strong
+                th:text="${session.AUTH_USER_NAME != null ? session.AUTH_USER_NAME : session.AUTH_USER_EMAIL}"
+                >Usuario</strong
+              >
+              <small th:text="${session.AUTH_USER_ROLE}">ROL</small>
+            </div>
+            <a th:href="@{/perfil}">Mi perfil</a>
+            <a th:href="@{/reservas/mias}">Mis reservas</a>
+            <hr />
+            <a th:href="@{/logout}">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <style>
+      :root {
+        --primary: #0a3d62;
+        --secondary: #cfa15a;
+        --ink: #243444;
+        --muted: #6b7a89;
+        --line: #e8edf1;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 28px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 4px 12px rgba(10, 61, 98, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-right: 24px;
+        text-decoration: none;
+      }
+
+      .nav-left a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--ink);
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+      .nav-left a:hover {
+        color: var(--secondary);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .btn:hover {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-sec {
+        border-color: var(--secondary);
+        color: var(--secondary);
+      }
+      .btn-sec:hover {
+        background: var(--secondary);
+        color: #fff;
+      }
+
+      /* Menú usuario */
+      .user-menu {
+        position: relative;
+      }
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 2px solid var(--secondary);
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+        font-weight: 600;
+        transition: transform 0.1s ease;
+      }
+      .avatar:hover {
+        transform: scale(1.05);
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .dropdown {
+        position: absolute;
+        right: 0;
+        top: 50px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        box-shadow: 0 12px 32px rgba(10, 61, 98, 0.12);
+        padding: 8px;
+        display: none;
+        min-width: 220px;
+        z-index: 50;
+      }
+      .user-menu:hover .dropdown {
+        display: block;
+        animation: fadeIn 0.2s ease;
+      }
+      .dropdown a {
+        display: block;
+        padding: 10px 14px;
+        color: var(--ink);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.2s ease;
+      }
+      .dropdown a:hover {
+        background: #f7f9fb;
+      }
+      .user-line {
+        padding: 10px 14px;
+        border-bottom: 1px solid #eef2f6;
+        margin-bottom: 6px;
+      }
+      .user-line strong {
+        display: block;
+        color: var(--primary);
+      }
+      .user-line small {
+        display: block;
+        color: var(--muted);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </body>
+</html>
