@@ -1,14 +1,18 @@
 package com.aponia.aponia_hotel.controller.auth;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
 import com.aponia.aponia_hotel.service.auth.RegistroAppService;
 import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -35,7 +39,7 @@ public class AuthController {
                         HttpSession session,
                         Model model) {
 
-        Optional<Usuario> opt = usuarioService.obtenerPorEmail(email);
+        Optional<Usuario> opt = usuarioService.findByEmail(email);
 
         if (opt.isPresent() && matchesPlain(password, opt.get().getPasswordHash())) {
             session.setAttribute("AUTH_USER_ID", opt.get().getId());

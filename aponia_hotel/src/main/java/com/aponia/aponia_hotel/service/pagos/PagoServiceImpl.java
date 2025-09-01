@@ -1,20 +1,20 @@
 package com.aponia.aponia_hotel.service.pagos;
 
-import com.aponia.aponia_hotel.entities.pagos.Pago;
-import com.aponia.aponia_hotel.entities.pagos.Pago.EstadoPago;
-import com.aponia.aponia_hotel.entities.pagos.Pago.TipoPago;
-import com.aponia.aponia_hotel.repository.pagos.PagoRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.aponia.aponia_hotel.entities.pagos.Pago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.EstadoPago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.TipoPago;
+import com.aponia.aponia_hotel.repository.pagos.PagoRepository;
+
 @Service
 @Transactional
 public class PagoServiceImpl implements PagoService {
-
     private final PagoRepository repository;
 
     public PagoServiceImpl(PagoRepository repository) {
@@ -72,17 +72,26 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
-    public Pago completarPago(String id) {
-        return actualizarEstadoPago(id, EstadoPago.COMPLETADO);
+    public void completarPago(String id) {
+        Pago pago = obtenerYValidar(id);
+        pago.setEstado(EstadoPago.COMPLETADO);
+        repository.save(pago);
+    }
+
+    private Pago obtenerYValidar(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el pago con ID: " + id));
     }
 
     @Override
-    public Pago marcarPagoFallido(String id) {
-        return actualizarEstadoPago(id, EstadoPago.FALLIDO);
+    public void marcarPagoFallido(String id) {
+        Pago pago = obtenerYValidar(id);
+        pago.setEstado(EstadoPago.FALLIDO);
+        repository.save(pago);
     }
 
     @Override
-    public Pago procesarReembolso(String id) {
+    public void procesarReembolso(String id) {
         Pago pago = obtenerYValidar(id);
         if (pago.getEstado() != EstadoPago.COMPLETADO) {
             throw new IllegalStateException("Solo se pueden reembolsar pagos completados");
@@ -97,11 +106,25 @@ public class PagoServiceImpl implements PagoService {
 
         pago.setEstado(EstadoPago.REEMBOLSADO);
         repository.save(pago);
+        repository.save(reembolso);
+    }
 
-        return repository.save(reembolso);
+
+    @Transactional(readOnly = true)
+    public List<Pago> findByReservaId(String reservaId) {
+        return repository.findByReservaId(reservaId);
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal obtenerTotalPagado(String reservaId) {
+        return repository.findByReservaIdAndEstado(reservaId, EstadoPago.COMPLETADO)
+                .stream()
+                .map(Pago::getMonto)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public double calcularTotalPagosCompletados(String reservaId) {
         return repository.findByReservaIdAndEstado(reservaId, EstadoPago.COMPLETADO)
                 .stream()
@@ -110,26 +133,16 @@ public class PagoServiceImpl implements PagoService {
                 .doubleValue();
     }
 
-    private Pago actualizarEstadoPago(String id, EstadoPago nuevoEstado) {
-        Pago pago = obtenerYValidar(id);
-        pago.setEstado(nuevoEstado);
-        return repository.save(pago);
-    }
-
-    private Pago obtenerYValidar(String id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró el pago con ID: " + id));
-    }
 
     private void validarPago(Pago pago) {
-        if (pago.getMonto().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("El monto del pago debe ser positivo");
+        if (pago == null) {
+            throw new IllegalArgumentException("El pago no puede ser nulo");
         }
-        if (pago.getTipo() == null) {
-            throw new IllegalArgumentException("El tipo de pago es requerido");
+        if (pago.getMonto() == null || pago.getMonto().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor a cero");
         }
         if (pago.getReserva() == null) {
-            throw new IllegalArgumentException("La reserva es requerida");
+            throw new IllegalArgumentException("El pago debe estar asociado a una reserva");
         }
     }
 }

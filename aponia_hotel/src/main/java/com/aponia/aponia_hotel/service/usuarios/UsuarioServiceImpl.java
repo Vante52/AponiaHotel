@@ -1,12 +1,13 @@
 package com.aponia.aponia_hotel.service.usuarios;
 
-import com.aponia.aponia_hotel.entities.usuarios.Usuario;
-import com.aponia.aponia_hotel.repository.usuarios.UsuarioRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.aponia.aponia_hotel.entities.usuarios.Usuario;
+import com.aponia.aponia_hotel.repository.usuarios.UsuarioRepository;
 
 @Service
 @Transactional
@@ -47,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Usuario> obtenerPorEmail(String email) {
+    public Optional<Usuario> findByEmail(String email) {
         return repository.findByEmail(email);
     }
 }

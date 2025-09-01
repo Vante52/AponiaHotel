@@ -1,13 +1,14 @@
 package com.aponia.aponia_hotel.service.auth;
 
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aponia.aponia_hotel.entities.usuarios.ClientePerfil;
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
 import com.aponia.aponia_hotel.service.usuarios.ClientePerfilService;
 import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 public class RegistroAppService {
@@ -27,7 +28,7 @@ public class RegistroAppService {
         if (email == null || email.isBlank()) throw new IllegalArgumentException("El email es obligatorio.");
         if (password == null || password.isBlank()) throw new IllegalArgumentException("La contraseña es obligatoria.");
         if (nombreCompleto == null || nombreCompleto.isBlank()) throw new IllegalArgumentException("El nombre completo es obligatorio.");
-        if (usuarioService.obtenerPorEmail(email).isPresent()) throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+        if (usuarioService.findByEmail(email).isPresent()) throw new IllegalArgumentException("Ya existe un usuario con ese email.");
 
         // 1) Usuario
         var u = new Usuario();

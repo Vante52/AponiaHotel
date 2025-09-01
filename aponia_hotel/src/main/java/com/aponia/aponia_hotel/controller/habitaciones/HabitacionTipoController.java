@@ -35,8 +35,6 @@ public class HabitacionTipoController {
         tipo.setPrecioPorNoche(BigDecimal.ZERO);
         tipo.setAforoMaximo(1);
         // Por si tu validación exige ambos rangos:
-        tipo.setRangoInicio(1);
-        tipo.setRangoFin(2);
         model.addAttribute("tipoHabitacion", tipo);
         return "habitaciones-tipos/form";
     }

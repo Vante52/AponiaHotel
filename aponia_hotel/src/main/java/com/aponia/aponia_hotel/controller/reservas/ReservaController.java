@@ -29,7 +29,7 @@ public class ReservaController {
     public String nuevoForm(Model model) {
         Reserva reserva = new Reserva();
         reserva.setFechaCreacion(LocalDateTime.now());
-        reserva.setEstado("pendiente");
+        reserva.setEstado(Reserva.EstadoReserva.valueOf("pendiente"));
         model.addAttribute("reserva", reserva);
         return "reservas/form";
     }

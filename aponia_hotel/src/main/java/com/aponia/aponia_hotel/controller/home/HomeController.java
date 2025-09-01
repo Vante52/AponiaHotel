@@ -1,7 +1,5 @@
 package com.aponia.aponia_hotel.controller.home;
 
-import jakarta.servlet.http.HttpSession;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.aponia.aponia_hotel.entities.usuarios.ClientePerfil;
 import com.aponia.aponia_hotel.entities.usuarios.Usuario;
 import com.aponia.aponia_hotel.service.usuarios.ClientePerfilService;
 import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -48,7 +46,7 @@ public class HomeController {
     // }    
     @GetMapping("/user_info/{email}")
     public String userInfo(Model model, @PathVariable String email) {
-        Optional<Usuario> opt = usuarioService.obtenerPorEmail(email);
+        Optional<Usuario> opt = usuarioService.findByEmail(email);
         if (opt.isEmpty()) {
             return "redirect:/usuarios";
         }

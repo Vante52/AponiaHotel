@@ -1,14 +1,19 @@
 package com.aponia.aponia_hotel.controller.usuarios;
 
-import com.aponia.aponia_hotel.entities.usuarios.Usuario;
-import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.aponia.aponia_hotel.entities.usuarios.Usuario;
+import com.aponia.aponia_hotel.service.usuarios.UsuarioService;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -50,7 +55,7 @@ public String crear(@ModelAttribute Usuario usuario,
             return "redirect:/usuarios/nuevo";
         }
 
-        if (service.obtenerPorEmail(usuario.getEmail()).isPresent()) {
+        if (service.findByEmail(usuario.getEmail()).isPresent()) {
             ra.addFlashAttribute("error", "Ya existe un usuario con ese email.");
             return "redirect:/usuarios/nuevo";
         }
@@ -95,7 +100,7 @@ public String actualizar(@PathVariable String id,
         }
         var u = uOpt.get();
 
-        if (!u.getEmail().equals(email) && service.obtenerPorEmail(email).isPresent()) {
+        if (!u.getEmail().equals(email) && service.findByEmail(email).isPresent()) {
             ra.addFlashAttribute("error", "Ya existe un usuario con ese email.");
             return "redirect:/usuarios/" + id + "/editar";
         }

@@ -1,41 +1,17 @@
 package com.aponia.aponia_hotel.service.pagos;
 
-import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
+
 public interface ResumenPagoService {
-    /**
-     * Lista todos los resúmenes de pago
-     */
     List<ResumenPago> listar();
-
-    /**
-     * Obtiene el resumen de pago de una reserva
-     */
-    Optional<ResumenPago> obtenerPorReserva(String reservaId);
-
-    /**
-     * Crea un nuevo resumen de pago
-     */
     ResumenPago crear(ResumenPago resumenPago);
-
-    /**
-     * Obtiene un resumen de pago por su ID
-     */
-    Optional<ResumenPago> obtener(String id);
-
-    /**
-     * Actualiza un resumen de pago existente
-     */
+    Optional<ResumenPago> obtener(String reservaId);
+    public Optional<ResumenPago> obtenerPorReserva(String reservaId) ;
     ResumenPago actualizar(ResumenPago resumenPago);
-
-    /**
-     * Elimina un resumen de pago por su ID
-     */
-    void eliminar(String id);
-
-    // Métodos deprecados o no utilizados
-    // @deprecated Usar obtenerPorReserva() en su lugar
-    // Optional<ResumenPago> findByReservaId(String reservaId);
+    void eliminar(String reservaId);
+    void actualizarResumen(String reservaId, BigDecimal totalHabitaciones, BigDecimal totalServicios, BigDecimal totalPagado);
 }

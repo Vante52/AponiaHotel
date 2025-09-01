@@ -1,13 +1,20 @@
 package com.aponia.aponia_hotel.controller.pagos;
 
-import com.aponia.aponia_hotel.entities.pagos.Pago;
-import com.aponia.aponia_hotel.service.pagos.PagoService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.aponia.aponia_hotel.entities.pagos.Pago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.EstadoPago;
+import com.aponia.aponia_hotel.entities.pagos.Pago.TipoPago;
+import com.aponia.aponia_hotel.service.pagos.PagoService;
 
 @Controller
 @RequestMapping("/pagos")
@@ -29,8 +36,8 @@ public class PagoController {
     public String nuevoForm(Model model) {
         Pago pago = new Pago();
         pago.setFecha(LocalDateTime.now());
-        pago.setEstado("pendiente");
-        pago.setTipo("pago_parcial");
+        pago.setEstado(EstadoPago.PENDIENTE);
+        pago.setTipo(TipoPago.PAGO_PARCIAL);
         model.addAttribute("pago", pago);
         return "pagos/form";
     }

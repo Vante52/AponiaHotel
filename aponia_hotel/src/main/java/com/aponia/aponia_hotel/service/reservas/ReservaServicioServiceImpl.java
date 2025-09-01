@@ -1,13 +1,14 @@
 package com.aponia.aponia_hotel.service.reservas;
 
-import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
-import com.aponia.aponia_hotel.repository.reservas.ReservaServicioRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.aponia.aponia_hotel.entities.reservas.ReservaServicio;
+import com.aponia.aponia_hotel.repository.reservas.ReservaServicioRepository;
 
 @Service
 @Transactional
@@ -27,19 +28,19 @@ public class ReservaServicioServiceImpl implements ReservaServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ReservaServicio> listarPorReserva(String reservaId) {
+    public List<ReservaServicio> findByReservaId(String reservaId) {
         return repository.findByReservaId(reservaId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ReservaServicio> listarPorServicioYFecha(String servicioId, LocalDate fecha) {
+    public List<ReservaServicio> findByServicioIdAndFecha(String servicioId, LocalDate fecha) {
         return repository.findByServicioIdAndFecha(servicioId, fecha);
     }
 
     @Override
-    public ReservaServicio crear(ReservaServicio reservaServicio) {
-        return repository.save(reservaServicio);
+    public void crear(ReservaServicio reservaServicio) {
+        repository.save(reservaServicio);
     }
 
     @Override
@@ -49,8 +50,8 @@ public class ReservaServicioServiceImpl implements ReservaServicioService {
     }
 
     @Override
-    public ReservaServicio actualizar(ReservaServicio reservaServicio) {
-        return repository.save(reservaServicio);
+    public void actualizar(ReservaServicio reservaServicio) {
+        repository.save(reservaServicio);
     }
 
     @Override

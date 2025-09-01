@@ -90,7 +90,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Reserva> obtenerPorCodigo(String codigo) {
+    public Optional<Reserva> findByCodigo(String codigo) {
         return repository.findByCodigo(codigo);
     }
 
@@ -121,7 +121,7 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public Reserva confirmarReserva(String id) {
+    public void confirmarReserva(String id) {
         Reserva reserva = obtenerYValidar(id);
         if (reserva.getEstado() != EstadoReserva.PENDIENTE) {
             throw new IllegalStateException("Solo se pueden confirmar reservas pendientes");
@@ -131,41 +131,41 @@ public class ReservaServiceImpl implements ReservaService {
         for (Estancia estancia : reserva.getEstancias()) {
             if (!verificarDisponibilidad(
                     estancia.getTipoHabitacion().getId(),
-                    estancia.getCheckIn(),
-                    estancia.getCheckOut(),
+                    estancia.getEntrada(),
+                    estancia.getSalida(),
                     estancia.getNumeroHuespedes())) {
                 throw new IllegalStateException("No hay disponibilidad para alguna de las habitaciones solicitadas");
             }
         }
 
         reserva.setEstado(EstadoReserva.CONFIRMADA);
-        return repository.save(reserva);
+        repository.save(reserva);
     }
 
     @Override
-    public Reserva cancelarReserva(String id) {
+    public void cancelarReserva(String id) {
         Reserva reserva = obtenerYValidar(id);
         if (reserva.getEstado() == EstadoReserva.COMPLETADA) {
             throw new IllegalStateException("No se puede cancelar una reserva completada");
         }
 
         reserva.setEstado(EstadoReserva.CANCELADA);
-        return repository.save(reserva);
+        repository.save(reserva);
     }
 
     @Override
-    public Reserva completarReserva(String id) {
+    public void completarReserva(String id) {
         Reserva reserva = obtenerYValidar(id);
         if (reserva.getEstado() != EstadoReserva.CONFIRMADA) {
             throw new IllegalStateException("Solo se pueden completar reservas confirmadas");
         }
 
         reserva.setEstado(EstadoReserva.COMPLETADA);
-        return repository.save(reserva);
+        repository.save(reserva);
     }
 
     @Override
-    public boolean verificarDisponibilidad(String tipoHabitacionId, LocalDate checkIn, LocalDate checkOut, int numeroHuespedes) {
+    public boolean verificarDisponibilidad(String tipoHabitacionId, LocalDate entrada, LocalDate salida, int numeroHuespedes) {
         // Verificar que el tipo de habitación existe y tiene capacidad suficiente
         Optional<HabitacionTipo> tipo = habitacionTipoRepository.findById(tipoHabitacionId);
         if (tipo.isEmpty() || !tipo.get().getActiva() || tipo.get().getAforoMaximo() < numeroHuespedes) {
@@ -174,7 +174,7 @@ public class ReservaServiceImpl implements ReservaService {
 
         // Contar cuántas habitaciones de este tipo están ocupadas en las fechas solicitadas
         long habitacionesOcupadas = estanciaRepository.contarHabitacionesOcupadas(
-            tipoHabitacionId, checkIn, checkOut);
+            tipoHabitacionId, entrada, salida);
 
         // Contar el total de habitaciones de este tipo
         long totalHabitaciones = tipo.get().getHabitaciones().stream()

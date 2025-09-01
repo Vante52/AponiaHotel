@@ -1,12 +1,14 @@
 package com.aponia.aponia_hotel.service.pagos;
 
-import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
-import com.aponia.aponia_hotel.repository.pagos.ResumenPagoRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.aponia.aponia_hotel.entities.pagos.ResumenPago;
+import com.aponia.aponia_hotel.repository.pagos.ResumenPagoRepository;
 
 @Service
 @Transactional
@@ -50,4 +52,10 @@ public class ResumenPagoServiceImpl implements ResumenPagoService {
     public void eliminar(String id) {
         repository.deleteById(id);
     }
+    
+    @Override
+    public void actualizarResumen(String reservaId, BigDecimal totalHabitaciones, BigDecimal totalServicios, BigDecimal totalPagado){
+
+    }
+
 }

@@ -1,10 +1,11 @@
 package com.aponia.aponia_hotel.service.pagos;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.aponia.aponia_hotel.entities.pagos.Pago;
 import com.aponia.aponia_hotel.entities.pagos.Pago.EstadoPago;
 import com.aponia.aponia_hotel.entities.pagos.Pago.TipoPago;
-import java.util.List;
-import java.util.Optional;
 
 public interface PagoService {
     /**
@@ -50,17 +51,17 @@ public interface PagoService {
     /**
      * Completa un pago pendiente
      */
-    Pago completarPago(String id);
+    void completarPago(String id);
 
     /**
      * Marca un pago como fallido
      */
-    Pago marcarPagoFallido(String id);
+    void marcarPagoFallido(String id);
 
     /**
      * Procesa un reembolso
      */
-    Pago procesarReembolso(String id);
+    void procesarReembolso(String id);
 
     /**
      * Calcula el total de pagos completados para una reserva
