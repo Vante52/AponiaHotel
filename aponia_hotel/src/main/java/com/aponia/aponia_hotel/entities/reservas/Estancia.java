@@ -32,10 +32,16 @@ public class Estancia {
     private HabitacionTipo tipoHabitacion;
 
     @Column(name = "check_in", nullable = false)
-    private LocalDate checkIn;
+    private Boolean checkIn;
 
     @Column(name = "check_out", nullable = false)
-    private LocalDate checkOut;
+    private Boolean checkOut;
+
+    @Column(name = "entrada", nullable = false)
+    private LocalDate entrada;
+
+    @Column(name = "salida", nullable = false)
+    private LocalDate salida;
 
     @Column(name = "numero_huespedes", nullable = false)
     private Integer numeroHuespedes;
@@ -53,13 +59,13 @@ public class Estancia {
     @PrePersist
     @PreUpdate
     public void validate() {
-        if (checkIn == null) {
+        if (entrada == null) {
             throw new IllegalStateException("La fecha de check-in es requerida");
         }
-        if (checkOut == null) {
+        if (salida == null) {
             throw new IllegalStateException("La fecha de check-out es requerida");
         }
-        if (!checkOut.isAfter(checkIn)) {
+        if (!salida.isAfter(entrada)) {
             throw new IllegalStateException("La fecha de check-out debe ser posterior a la de check-in");
         }
         if (numeroHuespedes == null || numeroHuespedes <= 0) {

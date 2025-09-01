@@ -34,12 +34,6 @@ public class HabitacionTipo {
     @Column(name = "precio_por_noche", nullable = false, precision = 12, scale = 2)
     private BigDecimal precioPorNoche;
 
-    @Column(name = "rango_inicio", nullable = false)
-    private Integer rangoInicio;
-
-    @Column(name = "rango_fin", nullable = false)
-    private Integer rangoFin;
-
     @Column(name = "activa", nullable = false)
     private Boolean activa = true;
 
@@ -60,15 +54,6 @@ public class HabitacionTipo {
         }
         if (precioPorNoche == null || precioPorNoche.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalStateException("El precio por noche debe ser no negativo");
-        }
-        if (rangoInicio == null) {
-            throw new IllegalStateException("El rango inicial es requerido");
-        }
-        if (rangoFin == null) {
-            throw new IllegalStateException("El rango final es requerido");
-        }
-        if (rangoInicio >= rangoFin) {
-            throw new IllegalStateException("El rango final debe ser mayor que el rango inicial");
         }
     }
 }
