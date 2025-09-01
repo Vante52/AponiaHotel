@@ -85,8 +85,8 @@ public class EstanciaServiceImpl implements EstanciaService {
 
         List<Habitacion> habitacionesDisponibles = habitacionRepository.findHabitacionesDisponibles(
                 estancia.getTipoHabitacion().getId(),
-                estancia.getCheckIn(),
-                estancia.getCheckOut()
+                estancia.getEntrada(),
+                estancia.getSalida()
         );
 
         if (habitacionesDisponibles.isEmpty()) {
