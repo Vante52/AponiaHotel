@@ -3,6 +3,7 @@ package com.aponia.aponia_hotel.service.reservas;
 import com.aponia.aponia_hotel.entities.habitaciones.Habitacion;
 import com.aponia.aponia_hotel.entities.habitaciones.HabitacionTipo;
 import com.aponia.aponia_hotel.entities.reservas.Estancia;
+import com.aponia.aponia_hotel.entities.reservas.Reserva;
 import com.aponia.aponia_hotel.repository.habitaciones.HabitacionRepository;
 import com.aponia.aponia_hotel.repository.habitaciones.HabitacionTipoRepository;
 import com.aponia.aponia_hotel.repository.reservas.EstanciaRepository;
@@ -143,7 +144,7 @@ public class EstanciaServiceImpl implements EstanciaService {
         if (estancia.getCheckIn() == null || estancia.getCheckOut() == null) {
             throw new IllegalArgumentException("Las fechas de check-in y check-out son requeridas");
         }
-        if (!estancia.getCheckOut().isAfter(estancia.getCheckIn())) {
+        if (!estancia.getSalida().isAfter(estancia.getEntrada())) {
             throw new IllegalArgumentException("La fecha de check-out debe ser posterior a la de check-in");
         }
         if (estancia.getNumeroHuespedes() <= 0) {
@@ -160,8 +161,8 @@ public class EstanciaServiceImpl implements EstanciaService {
     private void validarDisponibilidadHabitacion(Estancia estancia) {
         List<Estancia> conflictos = buscarConflictosFechas(
             estancia.getHabitacionAsignada().getId(),
-            estancia.getCheckIn(),
-            estancia.getCheckOut()
+            estancia.getEntrada(),
+            estancia.getSalida()
         );
 
         if (!conflictos.isEmpty() &&

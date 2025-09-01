@@ -10,4 +10,6 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, String> 
     List<Habitacion> findByTipoIdAndActivaIsTrue(String tipoId);
     List<Habitacion> findByActivaIsTrue();
     boolean existsByNumero(Integer numero);
+
+    List<Habitacion> findHabitacionesDisponibles(String id, Boolean checkIn, Boolean checkOut);
 }
