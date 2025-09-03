@@ -185,7 +185,7 @@
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
-              href="./login.html"
+              href="./login"
               class="px-6 py-3 rounded-xl bg-aponia-secondary text-white shadow-lift hover:opacity-90"
               >Reservar ahora</a
             >
@@ -256,11 +256,21 @@
             </ul>
           </div>
           <div class="relative">
+            <!-- Imagen -->
             <img
+              id="about-image"
               src="../img/suite-lujo.jpg"
               alt="Suite de lujo"
-              class="rounded-2xl shadow-soft object-cover w-full h-[360px]"
+              class="rounded-2xl shadow-soft object-cover w-full h-[360px] transition-opacity duration-700"
             />
+
+            <!-- Punticos -->
+            <div
+              id="carousel-dots"
+              class="flex justify-center gap-2 mt-4"
+            ></div>
+
+            <!-- Cuadro decorativo -->
             <div
               class="absolute -bottom-6 -left-6 hidden sm:block h-28 w-28 rounded-2xl bg-aponia-secondary/20"
             ></div>
@@ -276,7 +286,7 @@
               Habitaciones & Suites
             </h2>
             <a
-              href="./login.html"
+              href="./login"
               class="hidden sm:inline-block px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5"
               >Reservar</a
             >
@@ -303,7 +313,7 @@
                   Funcional y cómoda para estancias cortas.
                 </p>
                 <a
-                  href="#"
+                  href="/login"
                   class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline"
                   >Ver detalles</a
                 >
@@ -330,7 +340,7 @@
                   Espacio adicional y escritorio de trabajo.
                 </p>
                 <a
-                  href="#"
+                  href="/login"
                   class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline"
                   >Ver detalles</a
                 >
@@ -357,7 +367,7 @@
                   Amenidades premium y vista privilegiada.
                 </p>
                 <a
-                  href="#"
+                  href="/login"
                   class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline"
                   >Ver detalles</a
                 >
@@ -384,7 +394,7 @@
                   Máximo confort, sala privada y terraza.
                 </p>
                 <a
-                  href="#"
+                  href="/login"
                   class="mt-4 inline-flex items-center gap-2 text-aponia-primary hover:underline"
                   >Ver detalles</a
                 >
@@ -406,299 +416,341 @@
             </h2>
           </div>
 
-          <!-- Grid + destacado -->
-          <div class="mt-10 grid gap-6 lg:grid-cols-3">
-            <!-- Destacado grande -->
+          <!-- Spa destacado -->
+          <div
+            class="mt-10 relative overflow-hidden rounded-3xl shadow-lift h-[400px] flex items-end"
+          >
+            <img
+              src="../img/spa.jpg"
+              alt="Spa"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <!-- Gradiente overlay -->
             <div
-              class="lg:col-span-1 relative overflow-hidden rounded-3xl bg-aponia-primary text-white p-8 shadow-lift"
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
+            ></div>
+
+            <div class="relative z-10 p-8 text-white max-w-lg">
+              <span
+                class="inline-flex items-center gap-2 text-xs uppercase tracking-wide bg-white/20 px-3 py-1 rounded-full"
+                >Destacado</span
+              >
+              <h3 class="mt-4 text-3xl font-semibold">Spa & Wellness</h3>
+              <p class="mt-2 text-white/90">
+                Masajes, sauna, circuito de hidroterapia y rituales de
+                relajación.
+              </p>
+              <ul class="mt-4 space-y-2 text-sm text-white/90">
+                <li class="flex items-center gap-2">✔️ Aromaterapia</li>
+                <li class="flex items-center gap-2">✔️ Jacuzzi privado</li>
+                <li class="flex items-center gap-2">✔️ Sauna & turco</li>
+              </ul>
+              <a
+                href="#"
+                class="mt-6 inline-flex items-center gap-2 bg-white text-aponia-primary px-5 py-2.5 rounded-xl font-medium shadow-soft hover:shadow-lift transition-all"
+                >Reserva tu experiencia</a
+              >
+            </div>
+          </div>
+
+          <!-- Grid de servicios -->
+          <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lift transition-all duration-300"
             >
               <img
-                src="../img/spa.jpg"
-                alt="Spa"
-                class="absolute inset-0 h-full w-full object-cover opacity-30"
+                src="../img/restaurante.jpg"
+                alt="restaurante"
+                class="w-full h-36 object-cover rounded-xl mb-4"
               />
-              <div class="relative">
-                <span
-                  class="inline-flex items-center gap-2 text-xs uppercase tracking-wide bg-white/20 px-3 py-1 rounded-full"
-                  >Destacado</span
-                >
-                <h3 class="mt-4 text-2xl font-semibold">Spa & Wellness</h3>
-                <p class="mt-2 text-white/90">
-                  Masajes, sauna, circuito de hidroterapia y rituales de
-                  relajación.
-                </p>
-                <ul class="mt-4 space-y-2 text-sm text-white/90">
-                  <li class="flex items-center gap-2">🧖‍♀️ Aromaterapia</li>
-                  <li class="flex items-center gap-2">🛁 Jacuzzi privado</li>
-                  <li class="flex items-center gap-2">🧊 Sauna & turco</li>
-                </ul>
-                <a
-                  href="#"
-                  class="mt-6 inline-flex items-center gap-2 bg-white text-aponia-primary px-4 py-2 rounded-xl"
-                  >Ver carta de tratamientos</a
-                >
-              </div>
+              <h3 class="font-semibold">Restaurante 🧑‍🍳</h3>
+              <p class="mt-2 text-sm text-slate-600">
+                Gastronomía de autor con ingredientes locales. Opciones veganas
+                y vegetarianas.
+              </p>
             </div>
 
-            <!-- Tarjetas -->
-            <div class="lg:col-span-2 grid gap-6 sm:grid-cols-2">
-              <div
-                class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow"
-              >
-                <div
-                  class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4"
-                >
-                  <img
-                    src="../img/restaurante.jpg"
-                    alt="restaurante"
-                    class="w-12 h-12 rounded-xl"
-                  />
-                </div>
-                <h3 class="font-semibold">Restaurante 🧑‍🍳</h3>
-                <p class="mt-2 text-sm text-slate-600">
-                  Gastronomía de autor con ingredientes locales. Opción
-                  vegana/veg.
-                </p>
-              </div>
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lift transition-all duration-300"
+            >
+              <img
+                src="../img/tours.jpg"
+                alt="tours"
+                class="w-full h-36 object-cover rounded-xl mb-4"
+              />
+              <h3 class="font-semibold">Tours 🏖️</h3>
+              <p class="mt-2 text-sm text-slate-600">
+                Senderismo, buceo y experiencias culturales con guías
+                certificados.
+              </p>
+            </div>
 
-              <div
-                class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow"
-              >
-                <div
-                  class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4"
-                >
-                  <img
-                    src="../img/tours.jpg"
-                    alt="restaurante"
-                    class="w-12 h-12 rounded-xl"
-                  />
-                </div>
-                <h3 class="font-semibold">Tours 🏖️</h3>
-                <p class="mt-2 text-sm text-slate-600">
-                  Senderismo, buceo y experiencias culturales con guías
-                  certificados.
-                </p>
-              </div>
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lift transition-all duration-300"
+            >
+              <img
+                src="../img/transporte.jpg"
+                alt="transporte"
+                class="w-full h-36 object-cover rounded-xl mb-4"
+              />
+              <h3 class="font-semibold">Transporte 🚘</h3>
+              <p class="mt-2 text-sm text-slate-600">
+                Traslados al aeropuerto y chofer privado a demanda.
+              </p>
+            </div>
 
-              <div
-                class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow"
-              >
-                <div
-                  class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4"
-                >
-                  <img
-                    src="../img/transporte.jpg"
-                    alt="restaurante"
-                    class="w-12 h-12 rounded-xl"
-                  />
-                </div>
-                <h3 class="font-semibold">Transporte 🚘</h3>
-                <p class="mt-2 text-sm text-slate-600">
-                  Traslados al aeropuerto y chofer privado a demanda.
-                </p>
-              </div>
-
-              <div
-                class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:shadow-lift transition-shadow"
-              >
-                <div
-                  class="h-12 w-12 rounded-xl bg-aponia-secondary/20 grid place-items-center mb-4"
-                >
-                  <img
-                    src="../img/cowork.jpg"
-                    class="w-12 h-12 rounded-xl"
-                    alt=""
-                  />
-                </div>
-                <h3 class="font-semibold">Wi‑Fi & Cowork 🛜</h3>
-                <p class="mt-2 text-sm text-slate-600">
-                  Internet de alta velocidad y salas de reuniones.
-                </p>
-              </div>
+            <div
+              class="rounded-2xl bg-white p-6 border border-slate-200 shadow-soft hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lift transition-all duration-300"
+            >
+              <img
+                src="../img/cowork.jpg"
+                alt="cowork"
+                class="w-full h-36 object-cover rounded-xl mb-4"
+              />
+              <h3 class="font-semibold">Wi-Fi & Cowork 🛜</h3>
+              <p class="mt-2 text-sm text-slate-600">
+                Internet de alta velocidad y salas de reuniones.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Experiencias (Carrusel scroll-snap) -->
-      <section id="experiences" class="py-20">
+      <section id="experiences" class="py-20 bg-aponia-neutral">
         <div class="mx-auto max-w-7xl px-6">
+          <!-- Título + CTA -->
           <div class="flex items-center justify-between">
             <h2 class="font-display text-3xl md:text-4xl text-aponia-primary">
               Experiencias
             </h2>
             <a
-              href="./login.html"
-              class="hidden sm:inline-block px-4 py-2 rounded-lg bg-aponia-primary text-white hover:opacity-90"
-              >Personaliza tu plan</a
+              href="./login"
+              class="hidden sm:inline-block px-4 py-2 rounded-xl bg-aponia-primary text-white shadow-soft hover:shadow-lift transition-all"
             >
+              Personaliza tu plan
+            </a>
           </div>
 
-          <div class="mt-8 relative">
+          <!-- Carrusel -->
+          <div class="mt-10 relative">
             <div class="mask-fade">
               <div
                 id="xpCarousel"
-                class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2"
+                class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4"
                 aria-label="Carrusel de experiencias"
               >
                 <!-- Slide -->
                 <figure
-                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft"
+                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-3xl overflow-hidden bg-white shadow-soft hover:shadow-lift transition-all duration-300"
                 >
-                  <img
-                    src="https://images.unsplash.com/photo-1554797589-7241bb691973?q=80&w=1200&auto=format&fit=crop"
-                    alt="Spa"
-                    class="h-56 w-full object-cover"
-                  />
-                  <figcaption class="p-5">
-                    <h3 class="font-semibold">Spa de autor</h3>
-                    <p class="text-sm text-slate-600 mt-1">
-                      Rituales con esencias locales. 60–120 min.
-                    </p>
-                  </figcaption>
+                  <div class="relative group">
+                    <img
+                      src="https://images.unsplash.com/photo-1554797589-7241bb691973?q=80&w=1200&auto=format&fit=crop"
+                      alt="Spa"
+                      class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                    ></div>
+                    <figcaption class="absolute bottom-4 left-4 text-white">
+                      <h3 class="font-semibold text-lg">Spa de autor</h3>
+                      <p class="text-sm opacity-90">
+                        Rituales con esencias locales. 60–120 min.
+                      </p>
+                    </figcaption>
+                  </div>
                 </figure>
 
+                <!-- Slide -->
                 <figure
-                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft"
+                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-3xl overflow-hidden bg-white shadow-soft hover:shadow-lift transition-all duration-300"
                 >
-                  <img
-                    src="https://s3-us-west-2.amazonaws.com/wp-divingyucatan/wp-content/uploads/2020/04/15110254/tipos-trajes-buceo.jpg"
-                    alt="Buceo"
-                    class="h-56 w-full object-cover"
-                  />
-                  <figcaption class="p-5">
-                    <h3 class="font-semibold">Buceo en arrecife</h3>
-                    <p class="text-sm text-slate-600 mt-1">
-                      Para principiantes y avanzados. Equipo incluido.
-                    </p>
-                  </figcaption>
+                  <div class="relative group">
+                    <img
+                      src="https://s3-us-west-2.amazonaws.com/wp-divingyucatan/wp-content/uploads/2020/04/15110254/tipos-trajes-buceo.jpg"
+                      alt="Buceo"
+                      class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                    ></div>
+                    <figcaption class="absolute bottom-4 left-4 text-white">
+                      <h3 class="font-semibold text-lg">Buceo en arrecife</h3>
+                      <p class="text-sm opacity-90">
+                        Para principiantes y avanzados. Equipo incluido.
+                      </p>
+                    </figcaption>
+                  </div>
                 </figure>
 
+                <!-- Slide -->
                 <figure
-                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft"
+                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-3xl overflow-hidden bg-white shadow-soft hover:shadow-lift transition-all duration-300"
                 >
-                  <img
-                    src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1200&auto=format&fit=crop"
-                    alt="Montaña"
-                    class="h-56 w-full object-cover"
-                  />
-                  <figcaption class="p-5">
-                    <h3 class="font-semibold">Trekking al amanecer</h3>
-                    <p class="text-sm text-slate-600 mt-1">
-                      Panorámicas únicas y picnic gourmet.
-                    </p>
-                  </figcaption>
+                  <div class="relative group">
+                    <img
+                      src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1200&auto=format&fit=crop"
+                      alt="Montaña"
+                      class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                    ></div>
+                    <figcaption class="absolute bottom-4 left-4 text-white">
+                      <h3 class="font-semibold text-lg">
+                        Trekking al amanecer
+                      </h3>
+                      <p class="text-sm opacity-90">
+                        Panorámicas únicas y picnic gourmet.
+                      </p>
+                    </figcaption>
+                  </div>
                 </figure>
 
+                <!-- Slide -->
                 <figure
-                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft"
+                  class="min-w-[85%] sm:min-w-[48%] lg:min-w-[32%] snap-start rounded-3xl overflow-hidden bg-white shadow-soft hover:shadow-lift transition-all duration-300"
                 >
-                  <img
-                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
-                    alt="Cata de café"
-                    class="h-56 w-full object-cover"
-                  />
-                  <figcaption class="p-5">
-                    <h3 class="font-semibold">Cata de café de origen</h3>
-                    <p class="text-sm text-slate-600 mt-1">
-                      Aprende con baristas certificados.
-                    </p>
-                  </figcaption>
+                  <div class="relative group">
+                    <img
+                      src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
+                      alt="Cata de café"
+                      class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                    ></div>
+                    <figcaption class="absolute bottom-4 left-4 text-white">
+                      <h3 class="font-semibold text-lg">
+                        Cata de café de origen
+                      </h3>
+                      <p class="text-sm opacity-90">
+                        Aprende con baristas certificados.
+                      </p>
+                    </figcaption>
+                  </div>
                 </figure>
               </div>
             </div>
-            <!-- Controles -->
-            <div class="flex items-center justify-center gap-3 mt-6">
-              <button
-                id="xpPrev"
-                class="h-10 w-10 rounded-full border border-slate-300 grid place-items-center hover:bg-slate-50"
-                aria-label="Anterior"
+
+            <!-- Botones prev/next flotantes -->
+            <button
+              id="xpPrev"
+              class="absolute left-2 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/90 backdrop-blur border border-slate-200 shadow-soft grid place-items-center hover:bg-white hover:shadow-lift transition-all"
+              aria-label="Anterior"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="h-6 w-6 text-slate-700"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  class="h-5 w-5"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z"
-                  />
-                </svg>
-              </button>
-              <button
-                id="xpNext"
-                class="h-10 w-10 rounded-full border border-slate-300 grid place-items-center hover:bg-slate-50"
-                aria-label="Siguiente"
+                <path
+                  fill="currentColor"
+                  d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z"
+                />
+              </svg>
+            </button>
+            <button
+              id="xpNext"
+              class="absolute right-2 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/90 backdrop-blur border border-slate-200 shadow-soft grid place-items-center hover:bg-white hover:shadow-lift transition-all"
+              aria-label="Siguiente"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="h-6 w-6 text-slate-700"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  class="h-5 w-5"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M8.59 16.59L10 18l6-6l-6-6l-1.41 1.41L13.17 12z"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  fill="currentColor"
+                  d="M8.59 16.59L10 18l6-6l-6-6l-1.41 1.41L13.17 12z"
+                />
+              </svg>
+            </button>
+
+            <!-- Indicadores -->
+            <!-- <div class="flex items-center justify-center gap-2 mt-6">
+              <span class="h-2 w-2 rounded-full bg-aponia-primary"></span>
+              <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+              <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+              <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+            </div> -->
           </div>
         </div>
       </section>
 
       <!-- Opiniones con estrellas -->
-      <section id="testimonials" class="py-20 bg-aponia-primary text-white">
-        <div class="mx-auto max-w-7xl px-6">
+      <section
+        id="testimonials"
+        class="py-20 relative text-white overflow-hidden"
+      >
+        <!-- Fondo -->
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-aponia-primary via-indigo-900 to-aponia-primary"
+        ></div>
+        <!-- Blobs difusos -->
+        <div
+          class="absolute top-10 left-10 w-80 h-80 bg-aponia-secondary/30 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]"
+        ></div>
+
+        <div class="relative mx-auto max-w-7xl px-6">
           <h2 class="font-display text-3xl md:text-4xl">
             Opiniones de huéspedes
           </h2>
           <div class="mt-10 grid gap-6 md:grid-cols-3">
             <!-- Testimonial card -->
             <blockquote
-              class="rounded-2xl bg-white/10 p-6 border border-white/20"
+              class="rounded-2xl bg-white/10 p-6 border border-white/20 backdrop-blur-sm hover:bg-white/20 transition"
             >
-              <div class="flex items-center gap-1" aria-label="5 estrellas">
-                <h3 class="font-bold text-2xl font-display">Habitaciones</h3>
+              <h3 class="font-bold text-2xl font-display">Habitaciones</h3>
+              <div
+                class="flex items-center gap-1 mt-1"
+                aria-label="5 estrellas"
+              >
+                <span class="text-aponia-secondary text-lg">★★★★★</span>
               </div>
-              <div class="flex items-center gap-1" aria-label="5 estrellas">
-                <!-- 5 estrellas -->
-                <span class="text-aponia-secondary">★★★★★</span>
-              </div>
-              <p class="mt-3 text-slate-300">
+              <p class="mt-3 text-slate-200">
                 “Servicio impecable y habitaciones hermosas. Volveré.”
               </p>
               <footer class="mt-4 text-sm text-white/80">— Camila G.</footer>
             </blockquote>
+
             <blockquote
-              class="rounded-2xl bg-white/10 p-6 border border-white/20"
+              class="rounded-2xl bg-white/10 p-6 border border-white/20 backdrop-blur-sm hover:bg-white/20 transition"
             >
-              <div class="flex items-center gap-1" aria-label="5 estrellas">
-                <h3 class="font-bold text-2xl font-display">Spa y Piscina</h3>
-              </div>
+              <h3 class="font-bold text-2xl font-display">Spa y Piscina</h3>
               <div
-                class="flex items-center gap-1"
+                class="flex items-center gap-1 mt-1"
                 aria-label="4 estrellas y media"
               >
-                <span class="text-aponia-secondary">★★★★☆</span>
+                <span class="text-aponia-secondary text-lg">★★★★☆</span>
               </div>
-              <p class="mt-3">
+              <p class="mt-3 text-slate-200">
                 “El spa es espectacular y la comida deliciosa.”
               </p>
               <footer class="mt-4 text-sm text-white/80">— Andrés R.</footer>
             </blockquote>
+
             <blockquote
-              class="rounded-2xl bg-white/10 p-6 border border-white/20"
+              class="rounded-2xl bg-white/10 p-6 border border-white/20 backdrop-blur-sm hover:bg-white/20 transition"
             >
-              <div class="flex items-center gap-1" aria-label="5 estrellas">
-                <h3 class="font-bold text-2xl font-display">Experiencias</h3>
+              <h3 class="font-bold text-2xl font-display">Experiencias</h3>
+              <div
+                class="flex items-center gap-1 mt-1"
+                aria-label="5 estrellas"
+              >
+                <span class="text-aponia-secondary text-lg">★★★★★</span>
               </div>
-              <div class="flex items-center gap-1" aria-label="5 estrellas">
-                <span class="text-aponia-secondary">★★★★★</span>
-              </div>
-              <p class="mt-3">“Experiencias únicas, valió cada minuto.”</p>
+              <p class="mt-3 text-slate-200">
+                “Experiencias únicas, valió cada minuto.”
+              </p>
               <footer class="mt-4 text-sm text-white/80">— Valentina P.</footer>
             </blockquote>
           </div>
+
           <!-- CTA de reviews -->
           <div class="mt-8 text-white/90 text-sm">
             Puntuación media <span class="font-semibold">4.8/5</span> basada en
@@ -758,7 +810,7 @@
           </div>
           <div class="text-center mt-8">
             <a
-              href="./login.html"
+              href="./login"
               class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-aponia-primary text-white hover:opacity-90"
               >Comenzar</a
             >
@@ -780,7 +832,7 @@
           </p>
           <div class="mt-8">
             <a
-              href="/signup"
+              href="/register"
               class="px-6 py-3 rounded-xl bg-aponia-secondary text-white hover:opacity-90"
               >Crear cuenta</a
             >
@@ -837,9 +889,16 @@
         <div>
           <h4 class="font-semibold mb-3">Síguenos</h4>
           <div class="flex gap-3 text-slate-500">
-            <img src="../img/instagram.png" class="w-8 h-8" alt="Instagram" />
-            <img src="../img/facebook.png" class="w-8 h-8" alt="Facebook" />
-            <img src="../img/x.png" class="w-8 h-8" alt="X/Twitter" />
+            <a href="https://www.instagram.com" target="_blank"
+              ><img src="../img/instagram.png" class="w-8 h-8" alt="Instagram"
+            /></a>
+
+            <a href="https://wwww.facebook.com" target="_blank"
+              ><img src="../img/facebook.png" class="w-8 h-8" alt="Facebook"
+            /></a>
+            <a href="https://www.x.com" target="_blank">
+              <img src="../img/x.png" class="w-8 h-8" alt="X/Twitter" />
+            </a>
           </div>
         </div>
       </div>
@@ -966,6 +1025,56 @@
         clearTimeout(window.__xpResizeTimer);
         window.__xpResizeTimer = setTimeout(initInfiniteCarousel, 150);
       });
+    </script>
+    <script>
+      const images = [
+        "../img/cowork.jpg",
+        "../img/restaurante.jpg",
+        "../img/spa.jpg",
+        "../img/suite-lujo.jpg",
+      ];
+
+      let index = 0;
+      const imgElement = document.getElementById("about-image");
+      const dotsContainer = document.getElementById("carousel-dots");
+
+      // Crear los punticos dinámicamente
+      images.forEach((_, i) => {
+        const dot = document.createElement("span");
+        dot.className =
+          "h-2 w-2 rounded-full cursor-pointer transition-colors duration-300 " +
+          (i === 0 ? "bg-aponia-primary" : "bg-gray-300");
+        dot.dataset.index = i;
+        dotsContainer.appendChild(dot);
+
+        // Clic en puntico → cambia imagen
+        dot.addEventListener("click", () => {
+          index = i;
+          updateImage();
+        });
+      });
+
+      const updateImage = () => {
+        // efecto fade-out / fade-in
+        imgElement.classList.add("opacity-0");
+        setTimeout(() => {
+          imgElement.src = images[index];
+          imgElement.classList.remove("opacity-0");
+
+          // actualizar punticos
+          [...dotsContainer.children].forEach((dot, i) => {
+            dot.className =
+              "h-2 w-2 rounded-full cursor-pointer transition-colors duration-300 " +
+              (i === index ? "bg-aponia-primary" : "bg-gray-300");
+          });
+        }, 700);
+      };
+
+      // Cambio automático
+      setInterval(() => {
+        index = (index + 1) % images.length;
+        updateImage();
+      }, 4000);
     </script>
   </body>
 </html>

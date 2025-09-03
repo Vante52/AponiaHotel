@@ -13,378 +13,159 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
-
-    <style>
-      :root {
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --ap-beige: #f4e3c1;
-        --ap-neutral: #f5f5f5;
-        --ap-white: #ffffff;
-
-        --ink: #243444;
-        --muted: #6b7280;
-        --line: #e8edf1;
-
-        --radius: 20px;
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        background: var(--ap-white);
-        color: var(--ink);
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      img {
-        display: block;
-        max-width: 100%;
-      }
-
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Header mini */
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.92),
-          rgba(255, 255, 255, 0.86)
-        );
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav {
-        height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .brand__name {
-        font-family: "Playfair Display", serif;
-        font-size: 22px;
-        color: var(--ap-primary);
-      }
-
-      /* Encabezado */
-      .pagehead {
-        padding: 22px 0 10px;
-      }
-      .breadcrumbs {
-        font-size: 13px;
-        color: #64748b;
-      }
-      .breadcrumbs a {
-        color: var(--ap-primary);
-      }
-      .title {
-        margin: 6px 0 0;
-        font-family: "Playfair Display", serif;
-        font-size: 34px;
-        color: var(--ap-primary);
-      }
-      .subtitle {
-        margin: 6px 0 0;
-        color: #4b5563;
-      }
-
-      /* Layout contenido */
-      .grid {
-        display: grid;
-        gap: 22px;
-      }
-      @media (min-width: 1024px) {
-        .grid {
-          grid-template-columns: 1.2fr 0.8fr;
-        }
-      }
-
-      /* Galería */
-      .gallery {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-soft);
-        padding: 10px;
-      }
-      .hero-img {
-        height: 420px;
-        border-radius: 16px;
-        overflow: hidden;
-        background: #f3f4f6;
-        display: grid;
-        place-items: center;
-      }
-      .hero-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .thumbs {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-        overflow: auto;
-        padding-bottom: 2px;
-      }
-      .thumb {
-        width: 92px;
-        height: 68px;
-        object-fit: cover;
-        border-radius: 10px;
-        border: 2px solid transparent;
-        cursor: pointer;
-        flex: 0 0 auto;
-        background: #fff;
-      }
-      .thumb.active {
-        border-color: var(--ap-secondary);
-      }
-      .thumbs::-webkit-scrollbar {
-        height: 8px;
-      }
-      .thumbs::-webkit-scrollbar-thumb {
-        background: #d1d5db;
-        border-radius: 10px;
-      }
-
-      /* Panel info / booking */
-      .panel {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-soft);
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        position: sticky;
-        top: 92px;
-        height: fit-content;
-      }
-      .price {
-        font-weight: 800;
-        font-size: 22px;
-        color: #111827;
-      }
-      .meta {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .pill {
-        background: var(--ap-neutral);
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        color: #334155;
-      }
-      .cta {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 700;
-        cursor: pointer;
-        border: 1px solid var(--ap-primary);
-        color: #fff;
-        background: var(--ap-primary);
-        box-shadow: var(--shadow-soft);
-      }
-      .btn:hover {
-        box-shadow: var(--shadow-lift);
-      }
-      .btn.ghost {
-        background: #fff;
-        color: var(--ap-primary);
-      }
-      .alert {
-        font-size: 13px;
-        color: #64748b;
-      }
-
-      /* Secciones */
-      .section {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-soft);
-        padding: 18px;
-      }
-      .section h2 {
-        margin: 0 0 10px;
-        font-size: 20px;
-      }
-      .text {
-        color: #334155;
-        line-height: 1.65;
-      }
-
-      /* Footer mini */
-      .footer {
-        border-top: 1px solid var(--line);
-        color: #64748b;
-        text-align: center;
-        padding: 16px;
-        margin-top: 28px;
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-white text-slate-800 font-inter">
     <!-- Header -->
-    <header class="header">
-      <div class="wrap">
-        <div class="nav">
-          <a th:href="@{/}" class="brand">
+    <header
+      class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200"
+    >
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+          <a th:href="@{/}" class="flex items-center gap-2">
             <img
               src="/img/logo_aponia.png"
               alt="Aponia"
               width="40"
               height="40"
-              style="border-radius: 10px"
+              class="rounded-lg"
             />
-            <span class="brand__name">Aponia</span>
+            <span class="font-serif text-xl font-bold text-primary"
+              >Aponia</span
+            >
           </a>
           <a
             th:href="@{/servicios/cards}"
-            style="color: var(--ap-primary); font-weight: 600"
+            class="text-[#0a3d62] font-medium hover:underline"
             >↩ Volver a servicios</a
           >
         </div>
       </div>
     </header>
 
-    <main class="wrap">
+    <main class="max-w-6xl mx-auto px-6">
       <!-- Head -->
-      <div class="pagehead">
-        <div class="breadcrumbs">
-          <a th:href="@{/}">Inicio</a> ·
-          <a th:href="@{/servicios/cards}">Servicios</a> ·
-          <span th:text="${servicio.nombre}">Servicio</span>
+      <div class="py-6">
+        <div class="text-sm text-slate-500">
+          <a th:href="@{/}" class="text-[#0a3d62] hover:underline">Inicio</a> ·
+          <a
+            th:href="@{/servicios/cards}"
+            class="text-[#0a3d62] hover:underline"
+            >Servicios</a
+          >
+          · <span th:text="${servicio.nombre}">Servicio</span>
         </div>
-        <h1 class="title" th:text="${servicio.nombre}">Nombre Servicio</h1>
-        <p class="subtitle" th:text="${servicio.lugar}">Lugar</p>
+        <h1
+          class="mt-2 font-playfair text-3xl text-[#0a3d62] font-semibold tracking-tight"
+          th:text="${servicio.nombre}"
+        >
+          Nombre Servicio
+        </h1>
+        <p class="mt-1 text-slate-600" th:text="${servicio.lugar}">Lugar</p>
       </div>
 
       <!-- Contenido -->
-      <div class="grid">
+      <div class="grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
         <!-- Galería -->
-        <section class="gallery">
-          <div class="hero-img" id="hero">
+        <section
+          class="bg-white border border-slate-200 rounded-2xl shadow-sm p-3"
+        >
+          <div
+            class="h-[420px] rounded-xl overflow-hidden bg-slate-100 grid place-items-center"
+            id="hero"
+          >
             <img
               th:src="${#lists.isEmpty(servicio.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${servicio.imagenes.get(0).url}"
               alt="Imagen principal del servicio"
               id="heroImg"
+              class="w-full h-full object-cover"
             />
           </div>
 
           <!-- Thumbs -->
-          <div class="thumbs" id="thumbs">
-            <!-- Si hay imágenes -->
+          <div
+            class="flex gap-2 mt-3 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-slate-300"
+            id="thumbs"
+          >
             <img
-              class="thumb active"
+              class="thumb active w-24 h-16 object-cover rounded-md border-2 border-transparent cursor-pointer flex-shrink-0"
               th:if="${!#lists.isEmpty(servicio.imagenes)}"
               th:each="img, it : ${servicio.imagenes}"
               th:src="${img.url}"
               th:alt="|Imagen ${it.index + 1}|"
               th:attr="data-src=${img.url}"
             />
-            <!-- Si no hay imágenes, mostramos solo el placeholder (sin thumbs extra) -->
           </div>
         </section>
 
         <!-- Panel reserva/info -->
-        <aside class="panel">
+        <aside
+          class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 flex flex-col gap-4 sticky top-24 h-fit"
+        >
           <div
-            class="price"
+            class="text-2xl font-extrabold text-slate-900"
             th:text="|$ ${#numbers.formatDecimal(servicio.precioPorPersona,0,'POINT',2,'COMMA')} COP|"
           >
             $ 0,00 COP
           </div>
 
-          <div class="meta">
-            <span class="pill" th:text="|⏱ ${servicio.duracionMinutos} min|"
+          <div class="flex flex-wrap gap-2">
+            <span
+              class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium"
+              th:text="|⏱ ${servicio.duracionMinutos} min|"
               >⏱ 0 min</span
             >
-            <span class="pill"
+            <span
+              class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium"
               >👥
               <span
                 th:text="${servicio.capacidadMaxima != null ? servicio.capacidadMaxima : '-'}"
                 >-</span
               ></span
             >
-            <span class="pill" th:text="|📍 ${servicio.lugar}|">📍 Lugar</span>
+            <span
+              class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium"
+              th:text="|📍 ${servicio.lugar}|"
+              >📍 Lugar</span
+            >
           </div>
 
-          <div class="cta">
-            <!-- Ajusta la URL de reservar según tu flujo -->
+          <div class="flex flex-wrap gap-3">
             <a
-              class="btn"
+              class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold border border-[#0a3d62] bg-[#0a3d62] text-white shadow-sm hover:shadow-lg transition"
               th:href="@{|/reservas/nueva?servicioId=${servicio.id}|}"
               >Reservar ahora</a
             >
-            <a class="btn ghost" th:href="@{/servicios/cards}"
+            <a
+              class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold border border-[#0a3d62] text-[#0a3d62] bg-white hover:bg-slate-50 transition"
+              th:href="@{/servicios/cards}"
               >Seguir explorando</a
             >
           </div>
 
-          <div class="alert">
+          <div class="text-sm text-slate-500">
             Cancelación flexible · Mejor precio garantizado
           </div>
         </aside>
       </div>
 
       <!-- Descripción -->
-      <section class="section" style="margin-top: 22px">
-        <h2>Descripción</h2>
-        <div class="text" th:text="${servicio.descripcion}">
+      <section
+        class="mt-6 bg-white border border-slate-200 rounded-2xl shadow-sm p-6"
+      >
+        <h2 class="text-xl font-semibold mb-2">Descripción</h2>
+        <div
+          class="text-slate-700 leading-relaxed"
+          th:text="${servicio.descripcion}"
+        >
           Texto descriptivo del servicio…
         </div>
       </section>
+    </main>
 
-      <!-- Información adicional (opcional) -->
-      <!--
-    <section class="section" style="margin-top:16px">
-      <h2>Detalles y condiciones</h2>
-      <ul class="text" style="padding-left:18px">
-        <li>Recomendado llegar 15 minutos antes.</li>
-        <li>Traer documento de identidad.</li>
-      </ul>
-    </section>
-    --></main>
-
-    <footer class="footer">
+    <footer
+      class="border-t border-slate-200 text-slate-500 text-center text-sm py-4 mt-8"
+    >
       © <span id="year"></span> Aponia. Todos los derechos reservados.
     </footer>
 
@@ -400,8 +181,8 @@
             const src = t.getAttribute("data-src") || t.getAttribute("src");
             if (!src) return;
             heroImg.src = src;
-            thumbs.forEach((x) => x.classList.remove("active"));
-            t.classList.add("active");
+            thumbs.forEach((x) => x.classList.remove("border-[#cfa15a]"));
+            t.classList.add("border-[#cfa15a]");
           });
         });
       })();

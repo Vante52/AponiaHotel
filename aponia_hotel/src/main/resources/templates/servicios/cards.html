@@ -17,318 +17,64 @@
       rel="stylesheet"
     />
 
-    <style>
-      :root {
-        /* Paleta Aponia */
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --ap-beige: #f4e3c1;
-        --ap-neutral: #f5f5f5;
-        --ap-white: #ffffff;
-
-        /* Neutros/UI */
-        --ink: #243444;
-        --muted: #6b7280;
-        --line: #e8edf1;
-        --radius: 20px;
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        background: var(--ap-white);
-        color: var(--ink);
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      img {
-        display: block;
-        max-width: 100%;
-      }
-
-      /* Header simple */
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.92),
-          rgba(255, 255, 255, 0.86)
-        );
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      .nav {
-        height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .brand__name {
-        font-family: "Playfair Display", serif;
-        font-size: 22px;
-        color: var(--ap-primary);
-      }
-
-      /* Hero */
-      .hero {
-        position: relative;
-        overflow: hidden;
-        min-height: 260px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(
-          120deg,
-          rgba(10, 61, 98, 0.08),
-          rgba(207, 161, 90, 0.1)
-        );
-        border-bottom: 1px solid var(--line);
-      }
-      .hero-inner {
-        padding: 42px 0;
-        text-align: center;
-      }
-      .title {
-        margin: 0;
-        font-family: "Playfair Display", serif;
-        font-size: 36px;
-        color: var(--ap-primary);
-        letter-spacing: 0.3px;
-      }
-      .subtitle {
-        margin: 8px 0 0;
-        color: #4b5563;
-      }
-
-      /* Toolbar (buscador opcional) */
-      .toolbar {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        justify-content: space-between;
-        margin: 18px 0 8px;
-        flex-wrap: wrap;
-      }
-      .search {
-        position: relative;
-        flex: 1 1 280px;
-        max-width: 460px;
-      }
-      .search input {
-        width: 100%;
-        padding: 12px 14px 12px 40px;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        font: inherit;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      }
-      .search input:focus {
-        outline: none;
-        border-color: #b6c6d6;
-        box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.12);
-      }
-      .search-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        opacity: 0.6;
-      }
-      .counter {
-        color: #64748b;
-        font-size: 14px;
-      }
-
-      /* Grid de tarjetas */
-      .grid {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      }
-      .card {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: var(--shadow-soft);
-        transition: box-shadow 0.25s ease, transform 0.1s ease;
-        display: flex;
-        flex-direction: column;
-      }
-      .card:hover {
-        box-shadow: var(--shadow-lift);
-        transform: translateY(-1px);
-      }
-      .cover {
-        position: relative;
-        height: 180px;
-        overflow: hidden;
-      }
-      .cover img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        font-size: 12px;
-        padding: 6px 8px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.92);
-        border: 1px solid var(--line);
-      }
-      .body {
-        padding: 14px 14px 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .name {
-        font-weight: 700;
-        font-size: 18px;
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .desc {
-        color: #334155;
-        font-size: 14px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        min-height: 40px;
-      }
-      .meta {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 4px;
-      }
-      .pill {
-        background: var(--ap-neutral);
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        color: #334155;
-      }
-      .cta {
-        margin-top: auto;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid var(--ap-primary);
-        color: var(--ap-primary);
-        background: #fff;
-      }
-      .btn:hover {
-        background: rgba(10, 61, 98, 0.06);
-      }
-      .price {
-        font-weight: 700;
-        white-space: nowrap;
-      }
-
-      /* Empty */
-      .empty {
-        margin: 24px 0;
-        text-align: center;
-        color: #64748b;
-        border: 1px dashed var(--line);
-        border-radius: 16px;
-        padding: 28px;
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#0a3d62",
+              secondary: "#cfa15a",
+              beige: "#f4e3c1",
+              ink: "#243444",
+              muted: "#6b7280",
+              line: "#e8edf1",
+            },
+            boxShadow: {
+              soft: "0 6px 18px rgba(10,61,98,0.08)",
+              lift: "0 12px 32px rgba(10,61,98,0.18)",
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
+  <body class="bg-white text-ink font-sans">
     <!-- Header -->
-    <header class="header">
-      <div class="wrap">
-        <div class="nav">
-          <a th:href="@{/}" class="brand">
-            <img
-              src="/img/logo_aponia.png"
-              alt="Aponia"
-              width="40"
-              height="40"
-              style="border-radius: 10px"
-            />
-            <span class="brand__name">Aponia</span>
-          </a>
-          <nav class="navlinks" style="display: none"></nav>
-        </div>
-      </div>
-    </header>
+    <div th:replace="fragments/navbar :: navbar"></div>
 
     <!-- Hero -->
-    <section class="hero">
-      <div class="wrap hero-inner">
-        <h1 class="title">Servicios & Experiencias</h1>
-        <p class="subtitle">
+    <section
+      class="relative min-h-[240px] grid place-items-center bg-gradient-to-tr from-primary/5 to-secondary/10 border-b border-line"
+    >
+      <div class="max-w-2xl mx-auto text-center px-4 py-12">
+        <h1 class="font-serif text-3xl md:text-4xl font-bold text-primary">
+          Servicios & Experiencias
+        </h1>
+        <p class="mt-2 text-muted">
           Relájate, explora y disfruta. Elige tu plan ideal.
         </p>
       </div>
     </section>
 
-    <main class="wrap">
+    <main class="max-w-6xl mx-auto px-5">
       <!-- Toolbar -->
-      <div class="toolbar">
-        <!-- Buscador local (opcional; filtra en el cliente) -->
-        <div class="search">
+      <div class="flex flex-wrap gap-3 items-center justify-between mt-6 mb-3">
+        <!-- Search -->
+        <div class="relative flex-1 max-w-md">
           <svg
-            class="search-icon"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted"
             fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-              stroke="currentColor"
-              stroke-width="2"
-            ></circle>
+            <circle cx="11" cy="11" r="7" stroke-width="2"></circle>
             <path
               d="M20 20L17 17"
-              stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
             ></path>
@@ -338,9 +84,11 @@
             type="search"
             placeholder="Buscar servicio, lugar o palabra clave…"
             aria-label="Buscar servicios"
+            class="w-full border border-line rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
           />
         </div>
-        <div class="counter">
+
+        <div class="text-sm text-muted">
           <span th:text="'Encontrados: ' + ${#lists.size(servicios)}"
             >Encontrados: 0</span
           >
@@ -348,19 +96,26 @@
       </div>
 
       <!-- Grid de tarjetas -->
-      <section class="grid" id="cards">
+      <section
+        id="cards"
+        class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr"
+      >
         <article
           th:each="s : ${servicios}"
-          class="card"
           data-card
           th:attr="data-name=${s.nombre}, data-place=${s.lugar}, data-desc=${s.descripcion}"
+          class="flex flex-col bg-white border border-line rounded-2xl shadow-soft hover:shadow-lift hover:border-secondary/50 transition"
         >
-          <div class="cover">
+          <!-- Imagen -->
+          <div class="relative h-44 overflow-hidden rounded-t-2xl">
             <img
               th:src="${#lists.isEmpty(s.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${s.imagenes.get(0).url}"
               alt="Imagen servicio"
+              class="w-full h-full object-cover"
             />
-            <span class="badge">
+            <span
+              class="absolute top-3 right-3 bg-white/90 border border-line text-[13px] px-2.5 py-1 rounded-full font-semibold shadow-sm"
+            >
               <span
                 th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')}|"
                 >$ 0,00</span
@@ -368,15 +123,30 @@
               COP
             </span>
           </div>
-          <div class="body">
-            <h3 class="name" th:text="${s.nombre}">Nombre del servicio</h3>
-            <div class="muted" th:text="${s.lugar}">Lugar</div>
-            <p class="desc" th:text="${s.descripcion}">Descripción breve…</p>
-            <div class="meta">
-              <span class="pill" th:text="|⏱ ${s.duracionMinutos} min|"
+
+          <!-- Contenido -->
+          <div class="flex flex-col flex-1 p-4 gap-2">
+            <h3
+              th:text="${s.nombre}"
+              class="font-semibold text-lg text-primary"
+            >
+              Nombre del servicio
+            </h3>
+            <div class="text-muted text-sm" th:text="${s.lugar}">Lugar</div>
+            <p
+              th:text="${s.descripcion}"
+              class="text-sm text-ink/80 line-clamp-2"
+            >
+              Descripción breve…
+            </p>
+
+            <div class="flex flex-wrap gap-2 mt-1">
+              <span
+                class="px-2.5 py-1 bg-gray-100 rounded-full text-xs"
+                th:text="|⏱ ${s.duracionMinutos} min|"
                 >⏱ 0 min</span
               >
-              <span class="pill"
+              <span class="px-2.5 py-1 bg-gray-100 rounded-full text-xs"
                 >👥
                 <span
                   th:text="${s.capacidadMaxima != null ? s.capacidadMaxima : '-'}"
@@ -384,33 +154,37 @@
                 ></span
               >
             </div>
-            <div class="cta">
-              <a class="btn" th:href="@{|/servicios/${s.id}|}">Ver detalle</a>
+
+            <div class="flex items-center justify-between mt-auto pt-2">
+              <a
+                th:href="@{|/servicios/${s.id}|}"
+                class="px-4 py-2 border border-primary text-primary rounded-xl font-medium text-sm hover:bg-primary hover:text-white transition"
+                >Ver detalle</a
+              >
               <span
-                class="price"
                 th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')} COP|"
+                class="font-bold text-sm text-ink whitespace-nowrap"
                 >$ 0,00 COP</span
               >
             </div>
           </div>
         </article>
 
-        <!-- Estado vacío -->
-        <div th:if="${#lists.isEmpty(servicios)}" class="empty">
+        <!-- Empty -->
+        <div
+          th:if="${#lists.isEmpty(servicios)}"
+          class="col-span-full text-center text-muted border border-dashed border-line rounded-xl py-10"
+        >
           No hay servicios publicados por ahora. Vuelve pronto.
         </div>
       </section>
 
-      <div style="height: 20px"></div>
+      <div class="h-8"></div>
     </main>
 
+    <!-- Footer -->
     <footer
-      style="
-        border-top: 1px solid var(--line);
-        color: #64748b;
-        text-align: center;
-        padding: 16px;
-      "
+      class="border-t border-line text-muted text-center text-sm py-5 mt-6"
     >
       © <span id="year"></span> Aponia. Todos los derechos reservados.
     </footer>
@@ -418,7 +192,7 @@
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Filtro rápido en cliente (buscador)
+      // Filtro rápido
       const q = document.getElementById("q");
       const cards = Array.from(document.querySelectorAll("[data-card]"));
       q?.addEventListener("input", () => {

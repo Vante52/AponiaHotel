@@ -1,204 +1,215 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <nav th:fragment="navbar" class="navbar">
-      <div class="nav-left">
-        <a th:href="@{/}" class="logo">Aponia Hotel</a>
-        <a th:href="@{/servicios/cards}">Servicios</a>
-        <a th:href="@{/habitaciones-tipos}">Habitaciones</a>
-      </div>
+    <header
+      th:fragment="navbar"
+      class="sticky inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200 select-none"
+    >
+      <div
+        class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
+      >
+        <!-- Logo -->
+        <a th:href="@{/home/dashboard}" class="flex items-center gap-2">
+          <img src="/img/logo_aponia.png" class="h-10 w-10" alt="logo" />
+          <span
+            class="font-display text-xl tracking-wide text-aponia-primary font-sans"
+          >
+            Aponia
+          </span>
+        </a>
 
-      <!-- Invitado -->
-      <div class="nav-right" th:if="${session.AUTH_USER_ID} == null">
-        <a class="btn" th:href="@{/login}">Iniciar sesión</a>
-        <a class="btn btn-sec" th:href="@{/registro}">Crear cuenta</a>
-      </div>
+        <!-- Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a th:href="@{/servicios/cards}" class="hover:text-aponia-primary">
+            Servicios
+          </a>
+          <a th:href="@{/habitaciones-tipos}" class="hover:text-aponia-primary">
+            Habitaciones
+          </a>
+          <a th:href="@{/experiencias}" class="hover:text-aponia-primary">
+            Experiencias
+          </a>
+          <a th:href="@{/contacto}" class="hover:text-aponia-primary">
+            Contacto
+          </a>
+        </nav>
 
-      <!-- Usuario logueado -->
-      <div class="nav-right" th:if="${session.AUTH_USER_ID} != null">
-        <div class="user-menu">
-          <button class="avatar" aria-haspopup="true">
-            <!-- Foto si existe -->
+        <!-- Invitado -->
+        <div
+          class="hidden md:flex items-center gap-3"
+          th:if="${session.AUTH_USER_ID} == null"
+        >
+          <a
+            th:href="@{/login}"
+            class="px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary hover:bg-aponia-primary/5"
+          >
+            Iniciar sesión
+          </a>
+          <a
+            th:href="@{/registro}"
+            class="px-4 py-2 rounded-lg bg-aponia-secondary text-white hover:opacity-90"
+          >
+            Crear cuenta
+          </a>
+        </div>
+
+        <!-- Usuario logueado -->
+        <div
+          class="relative hidden md:block"
+          th:if="${session.AUTH_USER_ID} != null"
+        >
+          <button
+            id="userMenuBtn"
+            class="w-11 h-11 rounded-full border-2 border-aponia-primary bg-slate-700 text-white flex items-center justify-center font-semibold hover:scale-105 transition overflow-hidden"
+          >
             <img
               th:if="${session.AUTH_USER_PHOTO != null}"
               th:src="${session.AUTH_USER_PHOTO}"
               alt="Foto de perfil"
+              class="w-full h-full object-cover"
             />
-            <!-- Inicial si no hay foto -->
             <span
               th:if="${session.AUTH_USER_PHOTO == null}"
               th:text="${(session.AUTH_USER_NAME != null ? #strings.substring(session.AUTH_USER_NAME,0,1) : #strings.substring(session.AUTH_USER_EMAIL,0,1)).toUpperCase()}"
-              >U</span
             >
+              U
+            </span>
           </button>
-          <div class="dropdown">
-            <div class="user-line">
+
+          <!-- Dropdown -->
+          <div
+            id="userMenu"
+            class="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg hidden"
+          >
+            <div class="px-4 py-3 border-b border-gray-200">
               <strong
                 th:text="${session.AUTH_USER_NAME != null ? session.AUTH_USER_NAME : session.AUTH_USER_EMAIL}"
-                >Usuario</strong
+                class="block text-aponia-primary"
               >
-              <small th:text="${session.AUTH_USER_ROLE}">ROL</small>
+                Usuario
+              </strong>
+              <small th:text="${session.AUTH_USER_ROLE}" class="text-gray-500">
+                ROL
+              </small>
             </div>
-            <a th:href="@{/perfil}">Mi perfil</a>
-            <a th:href="@{/reservas/mias}">Mis reservas</a>
+            <a
+              th:href="@{/home/user_info/{email}(email=${session.AUTH_USER_EMAIL})}"
+              class="block px-4 py-2 hover:bg-gray-50 rounded-md"
+            >
+              Mi perfil
+            </a>
+            <a
+              th:href="@{/reservas/mias}"
+              class="block px-4 py-2 hover:bg-gray-50 rounded-md"
+            >
+              Mis reservas
+            </a>
             <hr />
-            <a th:href="@{/logout}">Cerrar sesión</a>
+            <a
+              th:href="@{/logout}"
+              class="block px-4 py-2 hover:bg-gray-50 rounded-md"
+            >
+              Cerrar sesión
+            </a>
           </div>
         </div>
+
+        <!-- Botón menú móvil -->
+        <button
+          id="menuBtn"
+          class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-300"
+          aria-label="Abrir menú"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
       </div>
-    </nav>
 
-    <style>
-      :root {
-        --primary: #0a3d62;
-        --secondary: #cfa15a;
-        --ink: #243444;
-        --muted: #6b7a89;
-        --line: #e8edf1;
-      }
+      <!-- Menú móvil -->
+      <div
+        id="mobileMenu"
+        class="md:hidden hidden border-t border-slate-200 bg-white"
+      >
+        <nav class="px-4 py-3 grid gap-3 text-sm">
+          <a th:href="@{/servicios/cards}" class="py-2">Servicios</a>
+          <a th:href="@{/habitaciones-tipos}" class="py-2">Habitaciones</a>
+          <a th:href="@{/experiencias}" class="py-2">Experiencias</a>
+          <a th:href="@{/contacto}" class="py-2">Contacto</a>
 
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 28px;
-        background: #fff;
-        border-bottom: 1px solid var(--line);
-        box-shadow: 0 4px 12px rgba(10, 61, 98, 0.06);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
+          <!-- Invitado -->
+          <div class="flex gap-2 pt-2" th:if="${session.AUTH_USER_ID} == null">
+            <a
+              th:href="@{/login}"
+              class="flex-1 px-4 py-2 rounded-lg border border-aponia-primary text-aponia-primary text-center"
+            >
+              Iniciar sesión
+            </a>
+            <a
+              th:href="@{/registro}"
+              class="flex-1 px-4 py-2 rounded-lg bg-aponia-secondary text-white text-center"
+            >
+              Crear cuenta
+            </a>
+          </div>
 
-      .logo {
-        font-family: "Playfair Display", serif;
-        font-size: 22px;
-        font-weight: 700;
-        color: var(--primary);
-        margin-right: 24px;
-        text-decoration: none;
-      }
+          <!-- Usuario logueado -->
+          <div
+            th:if="${session.AUTH_USER_ID} != null"
+            class="flex flex-col gap-2 pt-2"
+          >
+            <a
+              th:href="@{/home/user_info/{email}(email=${session.AUTH_USER_EMAIL})}"
+              class="px-4 py-2 rounded-lg border border-slate-300 text-center"
+            >
+              Mi perfil
+            </a>
+            <a
+              th:href="@{/reservas/mias}"
+              class="px-4 py-2 rounded-lg border border-slate-300 text-center"
+            >
+              Mis reservas
+            </a>
+            <a
+              th:href="@{/logout}"
+              class="px-4 py-2 rounded-lg border border-slate-300 text-center"
+            >
+              Cerrar sesión
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-      .nav-left a {
-        margin-right: 20px;
-        text-decoration: none;
-        color: var(--ink);
-        font-weight: 500;
-        transition: color 0.2s ease;
-      }
-      .nav-left a:hover {
-        color: var(--secondary);
-      }
-
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-
-      .btn {
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: 1px solid var(--primary);
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.2s ease;
-      }
-      .btn:hover {
-        background: var(--primary);
-        color: #fff;
-      }
-
-      .btn-sec {
-        border-color: var(--secondary);
-        color: var(--secondary);
-      }
-      .btn-sec:hover {
-        background: var(--secondary);
-        color: #fff;
+    <script>
+      // Toggle menú usuario
+      const userBtn = document.getElementById("userMenuBtn");
+      const userMenu = document.getElementById("userMenu");
+      if (userBtn) {
+        userBtn.addEventListener("click", () => {
+          userMenu.classList.toggle("hidden");
+        });
       }
 
-      /* Menú usuario */
-      .user-menu {
-        position: relative;
+      // Toggle menú móvil
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (menuBtn) {
+        menuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
       }
-      .avatar {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: 2px solid var(--secondary);
-        background: var(--primary);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        overflow: hidden;
-        font-weight: 600;
-        transition: transform 0.1s ease;
-      }
-      .avatar:hover {
-        transform: scale(1.05);
-      }
-      .avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .dropdown {
-        position: absolute;
-        right: 0;
-        top: 50px;
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        box-shadow: 0 12px 32px rgba(10, 61, 98, 0.12);
-        padding: 8px;
-        display: none;
-        min-width: 220px;
-        z-index: 50;
-      }
-      .user-menu:hover .dropdown {
-        display: block;
-        animation: fadeIn 0.2s ease;
-      }
-      .dropdown a {
-        display: block;
-        padding: 10px 14px;
-        color: var(--ink);
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background 0.2s ease;
-      }
-      .dropdown a:hover {
-        background: #f7f9fb;
-      }
-      .user-line {
-        padding: 10px 14px;
-        border-bottom: 1px solid #eef2f6;
-        margin-bottom: 6px;
-      }
-      .user-line strong {
-        display: block;
-        color: var(--primary);
-      }
-      .user-line small {
-        display: block;
-        color: var(--muted);
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
+    </script>
   </body>
 </html>

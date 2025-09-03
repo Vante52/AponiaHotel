@@ -55,7 +55,7 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/login?logout";
+        return "redirect:/";
     }
 
     private boolean matchesPlain(String rawPassword, String storedPasswordHash) {
@@ -94,4 +94,46 @@ public class AuthController {
             return "auth/register";
         }
     }
+
+    @PostMapping("/auth/password")
+public String changePassword(@RequestParam String currentPassword,
+                             @RequestParam String newPassword,
+                             @RequestParam String confirmPassword,
+                             HttpSession session,
+                             Model model) {
+
+    // Usuario autenticado (desde la sesión)
+    String userId = (String) session.getAttribute("AUTH_USER_ID");
+    if (userId == null) {
+        return "redirect:/login";
+    }
+
+    Optional<Usuario> optUser = usuarioService.obtener(userId);
+    if (optUser.isEmpty()) {
+        model.addAttribute("error", "Usuario no encontrado");
+        return "redirect:/login";
+    }
+
+    Usuario user = optUser.get();
+
+    // Validar contraseña actual
+    if (!user.getPasswordHash().equals(currentPassword)) {
+        model.addAttribute("error", "La contraseña actual no es correcta");
+        return "redirect:/home/user_info/" + user.getEmail();
+    }
+
+    // Validar confirmación
+    if (!newPassword.equals(confirmPassword)) {
+        model.addAttribute("error", "Las contraseñas nuevas no coinciden");
+        return "redirect:/home/user_info/" + user.getEmail();
+    }
+
+    // Guardar nueva contraseña (texto plano por ahora)
+    user.setPasswordHash(newPassword);
+    usuarioService.actualizar(user);
+
+    model.addAttribute("success", "Contraseña actualizada correctamente");
+    return "redirect:/home/user_info/" + user.getEmail();
+}
+
 }
