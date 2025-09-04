@@ -1,7 +1,7 @@
 # APONIA — Hotel & Experiencias 🛎️🌿
 
 <p align="center">
-  <img src="logo_aponia.png" alt="Aponia Hotel Logo" width="240"/>
+  <img src="aponia_hotel/src/main/resources/static/img/logo_aponia.png" alt="Aponia Hotel Logo" width="240"/>
 </p>
 
 **Tu refugio de calma y diseño, con experiencias que cuentan historias.**  
