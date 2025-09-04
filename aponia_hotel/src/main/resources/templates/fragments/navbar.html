@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            aponia: {
+              primary: "#0A3D62",
+              secondary: "#CFA15A",
+              beige: "#F4E3C1",
+              neutral: "#F5F5F5",
+              white: "#FFFFFF",
+            },
+          },
+          fontFamily: {
+            display: ["Playfair Display", "serif"],
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 10px 30px rgba(0,0,0,0.08)",
+            lift: "0 12px 40px rgba(10,61,98,0.15)",
+          },
+        },
+      },
+    };
+  </script>
+
   <body>
     <header
       th:fragment="navbar"
@@ -79,7 +105,7 @@
           <!-- Dropdown -->
           <div
             id="userMenu"
-            class="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg hidden"
+            class="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-lg hidden"
           >
             <div class="px-4 py-3 border-b border-gray-200">
               <strong

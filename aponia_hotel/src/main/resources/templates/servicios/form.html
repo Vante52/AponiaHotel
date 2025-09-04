@@ -9,7 +9,10 @@
       Servicio – Aponia
     </title>
 
-    <!-- Tipografías -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,268 +21,66 @@
     />
 
     <style>
-      :root {
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --ap-beige: #f4e3c1;
-        --ap-neutral: #f5f5f5;
-        --ap-white: #ffffff;
-
-        --ink: #243444;
-        --muted: #6b7280;
-        --line: #e8edf1;
-
-        --radius: 16px;
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
       body {
-        margin: 0;
-        background: var(--ap-white);
-        color: var(--ink);
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        font-family: "Inter", sans-serif;
       }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      img {
-        display: block;
-        max-width: 100%;
-      }
-      .wrap {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Header */
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.92),
-          rgba(255, 255, 255, 0.86)
-        );
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav {
-        height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+      h1,
       .brand__name {
         font-family: "Playfair Display", serif;
-        font-size: 22px;
-        color: var(--ap-primary);
-      }
-
-      /* Page head */
-      .pagehead {
-        padding: 28px 0 8px;
-      }
-      .title {
-        margin: 0;
-        font-family: "Playfair Display", serif;
-        font-size: 32px;
-        color: var(--ap-primary);
-      }
-      .subtitle {
-        margin: 6px 0 0;
-        color: #4b5563;
-      }
-
-      /* Card */
-      .card {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-soft);
-      }
-      .card-body {
-        padding: 20px;
-      }
-      .card-footer {
-        padding: 16px 20px;
-        border-top: 1px solid var(--line);
-        display: flex;
-        gap: 12px;
-        justify-content: flex-end;
-      }
-
-      /* Form */
-      form {
-        margin-top: 16px;
-      }
-      .grid {
-        display: grid;
-        gap: 16px;
-      }
-      @media (min-width: 900px) {
-        .grid.two {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      .label {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      .hint {
-        font-size: 12px;
-        color: #64748b;
-      }
-      .input,
-      .textarea {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        font: inherit;
-        color: inherit;
-        background: #fff;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      }
-      .textarea {
-        min-height: 120px;
-        resize: vertical;
-      }
-      .input:focus,
-      .textarea:focus {
-        outline: none;
-        border-color: #b6c6d6;
-        box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.12);
-      }
-      .invalid {
-        border-color: #fda4af;
-        box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
-      }
-      .errors {
-        color: #991b1b;
-        font-size: 12px;
-      }
-
-      /* Buttons */
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid transparent;
-      }
-      .btn.primary {
-        background: var(--ap-secondary);
-        color: #fff;
-        box-shadow: var(--shadow-soft);
-      }
-      .btn.primary:hover {
-        box-shadow: var(--shadow-lift);
-      }
-      .btn.ghost {
-        background: #fff;
-        border: 1px solid var(--line);
-      }
-      .btn.ghost:hover {
-        background: var(--ap-neutral);
-      }
-      .btn.link {
-        color: var(--ap-primary);
       }
     </style>
   </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="wrap">
-        <div class="nav">
-          <a th:href="@{/}" class="brand">
-            <img
-              src="/img/logo_aponia.png"
-              alt="Aponia"
-              width="40"
-              height="40"
-              style="border-radius: 10px"
-            />
-            <span class="brand__name">Aponia</span>
-          </a>
-          <a th:href="@{/servicios}" class="btn link">← Volver a la lista</a>
-        </div>
-      </div>
-    </header>
 
-    <main class="wrap">
-      <div class="pagehead">
+  <body class="bg-white text-[#243444]">
+    <!-- Header -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+    <!-- Main -->
+    <main class="max-w-5xl mx-auto px-6">
+      <!-- Page head -->
+      <div class="pt-7 pb-2">
         <h1
-          class="title"
+          class="text-3xl text-[#0a3d62] font-semibold mb-1"
           th:text="${servicio.id} != null ? 'Editar servicio' : 'Nuevo servicio'"
         >
           Servicio
         </h1>
-        <p class="subtitle">Completa los detalles del servicio.</p>
+        <p class="text-gray-600">Completa los detalles del servicio.</p>
       </div>
 
-      <div class="card">
-        <div class="card-body">
-          <!-- Acción dinámica: crear vs actualizar -->
+      <!-- Card -->
+      <div class="bg-white border border-[#e8edf1] rounded-2xl shadow-md">
+        <div class="p-5">
           <form
             th:object="${servicio}"
             th:action="${servicio.id} != null ? @{'/servicios/' + ${servicio.id}} : @{/servicios}"
             method="post"
             novalidate
           >
-            <!-- csrf (si usas Spring Security) -->
+            <!-- CSRF -->
             <input
               type="hidden"
               th:if="${_csrf != null}"
               th:name="${_csrf.parameterName}"
               th:value="${_csrf.token}"
             />
-
-            <!-- ID oculto por si lo quieres mandar también -->
             <input type="hidden" th:field="*{id}" />
 
-            <div class="grid two">
-              <!-- Nombre -->
-              <div class="field">
-                <label for="nombre" class="label">Nombre</label>
+            <!-- Nombre / Lugar -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="nombre" class="text-sm font-semibold">Nombre</label>
                 <input
                   id="nombre"
-                  class="input"
                   type="text"
                   maxlength="120"
                   placeholder="Ej. Spa & Wellness"
                   th:field="*{nombre}"
-                  th:classappend="${#fields.hasErrors('nombre')} ? ' invalid'"
+                  th:classappend="${#fields.hasErrors('nombre')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                  class="w-full px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
                 />
                 <div
-                  class="errors"
+                  class="text-red-700 text-xs"
                   th:if="${#fields.hasErrors('nombre')}"
                   th:errors="*{nombre}"
                 >
@@ -287,20 +88,19 @@
                 </div>
               </div>
 
-              <!-- Lugar -->
-              <div class="field">
-                <label for="lugar" class="label">Lugar</label>
+              <div class="flex flex-col gap-1">
+                <label for="lugar" class="text-sm font-semibold">Lugar</label>
                 <input
                   id="lugar"
-                  class="input"
                   type="text"
                   maxlength="120"
                   placeholder="Ej. Torre principal – Piso 2"
                   th:field="*{lugar}"
-                  th:classappend="${#fields.hasErrors('lugar')} ? ' invalid'"
+                  th:classappend="${#fields.hasErrors('lugar')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                  class="w-full px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
                 />
                 <div
-                  class="errors"
+                  class="text-red-700 text-xs"
                   th:if="${#fields.hasErrors('lugar')}"
                   th:errors="*{lugar}"
                 >
@@ -310,17 +110,19 @@
             </div>
 
             <!-- Descripción -->
-            <div class="field" style="margin-top: 6px">
-              <label for="descripcion" class="label">Descripción</label>
+            <div class="flex flex-col gap-1 mt-4">
+              <label for="descripcion" class="text-sm font-semibold"
+                >Descripción</label
+              >
               <textarea
                 id="descripcion"
-                class="textarea"
                 placeholder="Describe la experiencia, condiciones, etc."
                 th:field="*{descripcion}"
-                th:classappend="${#fields.hasErrors('descripcion')} ? ' invalid'"
+                th:classappend="${#fields.hasErrors('descripcion')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                class="w-full min-h-[120px] resize-y px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
               ></textarea>
               <div
-                class="errors"
+                class="text-red-700 text-xs"
                 th:if="${#fields.hasErrors('descripcion')}"
                 th:errors="*{descripcion}"
               >
@@ -328,25 +130,27 @@
               </div>
             </div>
 
-            <div class="grid two">
-              <!-- Precio por persona -->
-              <div class="field">
-                <label for="precioPorPersona" class="label"
+            <!-- Precio / Duración -->
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="flex flex-col gap-1">
+                <label for="precioPorPersona" class="text-sm font-semibold"
                   >Precio por persona (COP)</label
                 >
                 <input
                   id="precioPorPersona"
-                  class="input"
                   type="number"
                   min="0"
                   step="0.01"
                   placeholder="0.00"
                   th:field="*{precioPorPersona}"
-                  th:classappend="${#fields.hasErrors('precioPorPersona')} ? ' invalid'"
+                  th:classappend="${#fields.hasErrors('precioPorPersona')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                  class="w-full px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
                 />
-                <div class="hint">Ingresa el valor en pesos colombianos.</div>
+                <div class="text-xs text-slate-500">
+                  Ingresa el valor en pesos colombianos.
+                </div>
                 <div
-                  class="errors"
+                  class="text-red-700 text-xs"
                   th:if="${#fields.hasErrors('precioPorPersona')}"
                   th:errors="*{precioPorPersona}"
                 >
@@ -354,23 +158,22 @@
                 </div>
               </div>
 
-              <!-- Duración -->
-              <div class="field">
-                <label for="duracionMinutos" class="label"
+              <div class="flex flex-col gap-1">
+                <label for="duracionMinutos" class="text-sm font-semibold"
                   >Duración (minutos)</label
                 >
                 <input
                   id="duracionMinutos"
-                  class="input"
                   type="number"
                   min="0"
                   step="1"
                   placeholder="Ej. 90"
                   th:field="*{duracionMinutos}"
-                  th:classappend="${#fields.hasErrors('duracionMinutos')} ? ' invalid'"
+                  th:classappend="${#fields.hasErrors('duracionMinutos')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                  class="w-full px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
                 />
                 <div
-                  class="errors"
+                  class="text-red-700 text-xs"
                   th:if="${#fields.hasErrors('duracionMinutos')}"
                   th:errors="*{duracionMinutos}"
                 >
@@ -379,25 +182,27 @@
               </div>
             </div>
 
-            <div class="grid two">
-              <!-- Capacidad -->
-              <div class="field">
-                <label for="capacidadMaxima" class="label"
+            <!-- Capacidad -->
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="flex flex-col gap-1">
+                <label for="capacidadMaxima" class="text-sm font-semibold"
                   >Capacidad máxima</label
                 >
                 <input
                   id="capacidadMaxima"
-                  class="input"
                   type="number"
                   min="1"
                   step="1"
                   placeholder="Ej. 8"
                   th:field="*{capacidadMaxima}"
-                  th:classappend="${#fields.hasErrors('capacidadMaxima')} ? ' invalid'"
+                  th:classappend="${#fields.hasErrors('capacidadMaxima')} ? 'border-red-400 ring-red-200 ring-2' : ''"
+                  class="w-full px-3 py-2 border border-[#e8edf1] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cfa15a]"
                 />
-                <div class="hint">Opcional. Déjalo vacío si no aplica.</div>
+                <div class="text-xs text-slate-500">
+                  Opcional. Déjalo vacío si no aplica.
+                </div>
                 <div
-                  class="errors"
+                  class="text-red-700 text-xs"
                   th:if="${#fields.hasErrors('capacidadMaxima')}"
                   th:errors="*{capacidadMaxima}"
                 >
@@ -405,27 +210,34 @@
                 </div>
               </div>
 
-              <!-- (Espacio reservado por si luego agregas otra cosa) -->
-              <div class="field">
-                <label class="label"> </label>
-                <div class="hint">...</div>
+              <div
+                class="flex flex-col justify-end text-sm text-slate-500 mt-1"
+              >
+                <!-- Espacio reservado -->
+                <div class="h-10">...</div>
               </div>
             </div>
 
             <!-- Nota sobre imágenes -->
-            <div class="field" style="margin-top: 6px">
-              <div class="hint">
-                Las <strong>imágenes</strong> se gestionan desde su módulo
-                (lista/galería). En la lista se muestra la primera imagen.
-              </div>
+            <div class="mt-4 text-sm text-slate-500">
+              Las <strong>imágenes</strong> se gestionan desde su módulo
+              (lista/galería). En la lista se muestra la primera imagen.
             </div>
 
-            <div class="card-footer">
-              <a th:href="@{/servicios}" class="btn ghost">Cancelar</a>
+            <!-- Botones -->
+            <div
+              class="flex justify-end gap-3 mt-6 pt-4 border-t border-[#e8edf1]"
+            >
+              <a
+                th:href="@{/servicios}"
+                class="inline-flex items-center px-4 py-2 border border-[#e8edf1] rounded-xl font-semibold hover:bg-gray-50"
+              >
+                Cancelar
+              </a>
               <button
                 type="submit"
-                class="btn primary"
                 th:text="${servicio.id} != null ? 'Guardar cambios' : 'Crear servicio'"
+                class="inline-flex items-center px-4 py-2 rounded-xl font-semibold text-white bg-[#cfa15a] hover:bg-[#b88e4e] shadow"
               >
                 Guardar
               </button>
@@ -434,7 +246,8 @@
         </div>
       </div>
 
-      <div style="height: 20px"></div>
+      <!-- Espaciado -->
+      <div class="h-6"></div>
     </main>
   </body>
 </html>

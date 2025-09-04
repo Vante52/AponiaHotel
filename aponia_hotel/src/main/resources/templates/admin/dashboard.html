@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Panel Administrador – Aponia</title>
+    <!-- CDN Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              aponia: {
+                primary: "#0A3D62",
+                secondary: "#CFA15A",
+                beige: "#F4E3C1",
+                neutral: "#F5F5F5",
+                white: "#FFFFFF",
+              },
+            },
+            fontFamily: {
+              display: ["Playfair Display", "serif"],
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 10px 30px rgba(0,0,0,0.08)",
+              lift: "0 12px 40px rgba(10,61,98,0.15)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-aponia-neutral min-h-screen">
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+    <!-- Contenido -->
+    <main class="max-w-7xl mx-auto p-6">
+      <h1 class="text-3xl font-display text-aponia-primary mb-6">
+        Panel de Administración
+      </h1>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card Usuarios -->
+        <a
+          th:href="@{/usuarios}"
+          class="bg-white rounded-2xl p-6 shadow-soft hover:shadow-lift transition block"
+        >
+          <h2 class="text-xl font-semibold text-aponia-primary">Usuarios</h2>
+          <p class="text-gray-500 text-sm mt-1">Gestiona cuentas y roles</p>
+        </a>
+
+        <!-- Card Habitaciones -->
+        <a
+          th:href="@{/habitaciones}"
+          class="bg-white rounded-2xl p-6 shadow-soft hover:shadow-lift transition block"
+        >
+          <h2 class="text-xl font-semibold text-aponia-primary">
+            Habitaciones
+          </h2>
+          <p class="text-gray-500 text-sm mt-1">Inventario y estado</p>
+        </a>
+
+        <!-- Card Tipos de Habitación -->
+        <a
+          th:href="@{/habitaciones-tipos}"
+          class="bg-white rounded-2xl p-6 shadow-soft hover:shadow-lift transition block"
+        >
+          <h2 class="text-xl font-semibold text-aponia-primary">Tipos</h2>
+          <p class="text-gray-500 text-sm mt-1">Categorías y precios</p>
+        </a>
+
+        <!-- Card Servicios -->
+        <a
+          th:href="@{/servicios}"
+          class="bg-white rounded-2xl p-6 shadow-soft hover:shadow-lift transition block"
+        >
+          <h2 class="text-xl font-semibold text-aponia-primary">Servicios</h2>
+          <p class="text-gray-500 text-sm mt-1">Configura experiencias</p>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

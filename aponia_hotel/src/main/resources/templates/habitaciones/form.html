@@ -8,6 +8,11 @@
     >
       Habitación
     </title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,222 +20,118 @@
       rel="stylesheet"
     />
     <style>
-      :root {
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --line: #e8edf1;
-        --ink: #243444;
-        --muted: #6b7280;
-        --radius: 16px;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-      * {
-        box-sizing: border-box;
-      }
       body {
-        margin: 0;
-        background: #fff;
-        color: var(--ink);
         font-family: Inter, system-ui, sans-serif;
       }
-      .wrap {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      .header {
-        position: sticky;
-        top: 0;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav {
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
+      h1,
       .brand__name {
         font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        font-size: 20px;
-      }
-      h1 {
-        font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        margin: 22px 0 6px;
-      }
-      .subtitle {
-        color: #4b5563;
-        margin: 0 0 10px;
-      }
-      .card {
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        background: #fff;
-        margin-top: 12px;
-      }
-      .body {
-        padding: 18px;
-      }
-      .footer {
-        padding: 14px 18px;
-        border-top: 1px solid var(--line);
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-      }
-      .grid {
-        display: grid;
-        gap: 14px;
-      }
-      @media (min-width: 900px) {
-        .grid.two {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      label {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      input,
-      select {
-        padding: 10px 12px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        font: inherit;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid transparent;
-      }
-      .btn.ghost {
-        background: #fff;
-        border: 1px solid var(--line);
-      }
-      .btn.primary {
-        background: var(--ap-secondary);
-        color: #fff;
-        box-shadow: var(--shadow);
       }
     </style>
   </head>
-  <body>
-    <header class="header">
-      <div class="wrap nav">
-        <a th:href="@{/habitaciones}" class="brand">
-          <img
-            src="/img/logo_aponia.png"
-            alt="Aponia"
-            width="36"
-            height="36"
-            style="border-radius: 8px"
-          />
-          <span class="brand__name">Aponia</span>
-        </a>
-        <a
-          th:href="@{/habitaciones}"
-          style="color: var(--ap-primary); font-weight: 600"
-          >↩ Volver</a
-        >
-      </div>
-    </header>
 
-    <main class="wrap">
+  <body class="bg-white text-slate-800">
+    <!-- Header -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+    <!-- Main -->
+    <main class="max-w-3xl mx-auto px-6">
       <h1
         th:text="${habitacion.id} != null ? 'Editar habitación' : 'Nueva habitación'"
+        class="text-2xl text-blue-900 mt-6 mb-1"
       >
         Habitación
       </h1>
-      <p class="subtitle">Completa la información de la habitación.</p>
+      <p class="text-slate-600 mb-3">
+        Completa la información de la habitación.
+      </p>
 
-      <div class="card">
-        <div class="body">
-          <form
-            th:object="${habitacion}"
-            th:action="@{${habitacion.id} != null ? '/habitaciones/' + ${habitacion.id} : '/habitaciones'}"
-            method="post"
-          >
-            <input type="hidden" th:field="*{id}" />
+      <!-- Card -->
+      <div class="border border-slate-200 rounded-2xl shadow p-6">
+        <form
+          th:object="${habitacion}"
+          th:action="@{${habitacion.id} != null ? '/habitaciones/' + ${habitacion.id} : '/habitaciones'}"
+          method="post"
+          class="space-y-6"
+        >
+          <input type="hidden" th:field="*{id}" />
 
-            <div class="grid two">
-              <div class="field">
-                <label for="numero">Número</label>
-                <input
-                  id="numero"
-                  type="number"
-                  min="1"
-                  th:field="*{numero}"
-                  placeholder="101"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label for="tipoId">Tipo de habitación</label>
-                <select id="tipoId" name="tipoId" required>
-                  <option
-                    value=""
-                    disabled
-                    th:if="${habitacion.tipo == null}"
-                    selected
-                  >
-                    Selecciona un tipo
-                  </option>
-                  <option
-                    th:each="t : ${tipos}"
-                    th:value="${t.id}"
-                    th:selected="${habitacion.tipo != null} ? ${t.id} == ${habitacion.tipo.id} : false"
-                    th:text="${t.nombre}"
-                  ></option>
-                </select>
-              </div>
+          <!-- Grid 2 columnas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="numero" class="font-semibold text-sm">Número</label>
+              <input
+                id="numero"
+                type="number"
+                min="1"
+                th:field="*{numero}"
+                placeholder="101"
+                required
+                class="border border-slate-200 rounded-xl px-3 py-2 focus:ring focus:ring-blue-200"
+              />
             </div>
 
-            <div class="grid">
-              <div class="field">
-                <label for="activa">Estado</label>
-                <select id="activa" th:field="*{activa}" required>
-                  <option th:value="true">Activa</option>
-                  <option th:value="false">Inactiva</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="footer">
-              <a th:href="@{/habitaciones}" class="btn ghost">Cancelar</a>
-              <button
-                type="submit"
-                class="btn primary"
-                th:text="${habitacion.id} != null ? 'Guardar cambios' : 'Crear habitación'"
+            <div class="flex flex-col gap-1">
+              <label for="tipoId" class="font-semibold text-sm"
+                >Tipo de habitación</label
               >
-                Guardar
-              </button>
+              <select
+                id="tipoId"
+                name="tipoId"
+                required
+                class="border border-slate-200 rounded-xl px-3 py-2 focus:ring focus:ring-blue-200"
+              >
+                <option
+                  value=""
+                  disabled
+                  th:if="${habitacion.tipo == null}"
+                  selected
+                >
+                  Selecciona un tipo
+                </option>
+                <option
+                  th:each="t : ${tipos}"
+                  th:value="${t.id}"
+                  th:selected="${habitacion.tipo != null} ? ${t.id} == ${habitacion.tipo.id} : false"
+                  th:text="${t.nombre}"
+                ></option>
+              </select>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <!-- Estado -->
+          <div class="flex flex-col gap-1">
+            <label for="activa" class="font-semibold text-sm">Estado</label>
+            <select
+              id="activa"
+              th:field="*{activa}"
+              required
+              class="border border-slate-200 rounded-xl px-3 py-2 focus:ring focus:ring-blue-200"
+            >
+              <option th:value="true">Activa</option>
+              <option th:value="false">Inactiva</option>
+            </select>
+          </div>
+
+          <!-- Footer botones -->
+          <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
+            <a
+              th:href="@{/habitaciones}"
+              class="inline-flex items-center px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50"
+              >Cancelar</a
+            >
+            <button
+              type="submit"
+              class="inline-flex items-center px-4 py-2 rounded-xl bg-amber-600 text-white shadow hover:bg-amber-700"
+              th:text="${habitacion.id} != null ? 'Guardar cambios' : 'Crear habitación'"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div style="height: 16px"></div>
+      <div class="h-4"></div>
     </main>
   </body>
 </html>

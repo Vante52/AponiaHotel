@@ -34,23 +34,34 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password,
-                        HttpSession session,
-                        Model model) {
+public String login(@RequestParam("email") String email,
+                    @RequestParam("password") String password,
+                    HttpSession session,
+                    Model model) {
 
-        Optional<Usuario> opt = usuarioService.findByEmail(email);
+    Optional<Usuario> opt = usuarioService.findByEmail(email);
 
-        if (opt.isPresent() && matchesPlain(password, opt.get().getPasswordHash())) {
-            session.setAttribute("AUTH_USER_ID", opt.get().getId());
-            session.setAttribute("AUTH_USER_EMAIL", opt.get().getEmail());
-            session.setAttribute("AUTH_USER_ROLE", opt.get().getRol());
+    if (opt.isPresent() && matchesPlain(password, opt.get().getPasswordHash())) {
+        Usuario u = opt.get();
+
+        // Guarda info básica en sesión
+        session.setAttribute("AUTH_USER_ID", u.getId());
+        session.setAttribute("AUTH_USER_EMAIL", u.getEmail());
+        session.setAttribute("AUTH_USER_ROLE", u.getRol()); // guarda el enum
+
+        // Redirige según rol
+        if (u.getRol() == Usuario.UserRole.ADMIN) {
+            return "redirect:/admin/dashboard";
+        } else {
             return "redirect:/home/dashboard";
         }
-
-        model.addAttribute("error", "Correo o contraseña incorrectos");
-        return "auth/login";
     }
+
+    model.addAttribute("error", "Correo o contraseña incorrectos");
+    return "auth/login";
+}
+
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

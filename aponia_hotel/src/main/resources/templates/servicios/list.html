@@ -9,497 +9,153 @@
       content="Administración de servicios y experiencias de Aponia."
     />
 
-    <!-- Tipografías -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
-
     <style>
-      :root {
-        /* Paleta Aponia */
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --ap-beige: #f4e3c1;
-        --ap-neutral: #f5f5f5;
-        --ap-white: #ffffff;
-        /* Neutros */
-        --ink: #243444;
-        --muted: #6b7280;
-        --line: #e8edf1;
-        /* UI */
-        --radius: 16px;
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-        --shadow-lift: 0 14px 44px rgba(10, 61, 98, 0.18);
-      }
-
-      /* Reset/opinión */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
       body {
-        margin: 0;
-        background: var(--ap-white);
-        color: var(--ink);
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        font-family: "Inter", sans-serif;
       }
-      img {
-        display: block;
-        max-width: 100%;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      /* Header estilo Aponia */
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.92),
-          rgba(255, 255, 255, 0.86)
-        );
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      .nav {
-        height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+      h1,
       .brand__name {
         font-family: "Playfair Display", serif;
-        font-size: 22px;
-        color: var(--ap-primary);
-        letter-spacing: 0.3px;
-      }
-      .navlinks {
-        display: none;
-        gap: 20px;
-        font-weight: 600;
-        font-size: 14px;
-      }
-      .navlinks a:hover {
-        color: var(--ap-primary);
-      }
-      @media (min-width: 900px) {
-        .navlinks {
-          display: flex;
-        }
-      }
-
-      /* Encabezado de página */
-      .pagehead {
-        padding: 28px 0 8px;
-      }
-      .title {
-        margin: 0;
-        font-family: "Playfair Display", serif;
-        font-size: 34px;
-        color: var(--ap-primary);
-        letter-spacing: 0.3px;
-      }
-      .subtitle {
-        margin: 6px 0 0;
-        color: #4b5563;
-      }
-
-      /* Topbar acciones */
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-top: 18px;
-        flex-wrap: wrap;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        border-radius: 14px;
-        padding: 10px 14px;
-        font-weight: 600;
-        box-shadow: var(--shadow-soft);
-        border: 1px solid transparent;
-        cursor: pointer;
-        user-select: none;
-        transition: transform 0.05s ease, box-shadow 0.25s ease,
-          opacity 0.2s ease;
-        background: var(--ap-secondary);
-        color: #fff;
-      }
-      .btn:active {
-        transform: translateY(1px);
-      }
-      .btn:hover {
-        box-shadow: var(--shadow-lift);
-      }
-      .tag-muted {
-        color: #64748b;
-        font-size: 13px;
-      }
-
-      /* Flashes */
-      .flash {
-        margin-top: 16px;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid #a7f3d0;
-        background: #ecfdf5;
-        color: #065f46;
-      }
-      .flash.error {
-        border-color: #fecaca;
-        background: #fef2f2;
-        color: #991b1b;
-      }
-
-      /* Card contenedor */
-      .card {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-soft);
-      }
-
-      /* Tabla (desktop) */
-      .table-wrap {
-        overflow: auto;
-        border-radius: var(--radius);
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 980px;
-      }
-      thead th {
-        text-align: left;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #0f172a;
-        background: #f1f5f9;
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-      }
-      tbody td {
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-        vertical-align: middle;
-      }
-      tbody tr:hover {
-        background: #f9fafb;
-      }
-      .thumb {
-        width: 64px;
-        height: 64px;
-        object-fit: cover;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-      }
-      .name {
-        font-weight: 700;
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 12px;
-        margin-top: 2px;
-      }
-      .chip {
-        display: inline-block;
-        background: var(--ap-neutral);
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-      }
-      .price {
-        font-weight: 700;
-        white-space: nowrap;
-      }
-
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .btn-outline {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-weight: 600;
-        font-size: 14px;
-        padding: 8px 10px;
-        border-radius: 12px;
-        border: 1px solid var(--ap-primary);
-        color: var(--ap-primary);
-      }
-      .btn-outline:hover {
-        background: rgba(10, 61, 98, 0.06);
-      }
-      .btn-danger {
-        border: none;
-        background: #dc3545;
-        color: #fff;
-        padding: 8px 10px;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      .btn-danger:hover {
-        opacity: 0.9;
-      }
-
-      /* Cards (móvil/tablet) */
-      .grid {
-        display: grid;
-        gap: 16px;
-      }
-      .service-card {
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        overflow: hidden;
-        background: #fff;
-        box-shadow: var(--shadow-soft);
-        transition: box-shadow 0.25s ease;
-      }
-      .service-card:hover {
-        box-shadow: var(--shadow-lift);
-      }
-      .cover {
-        position: relative;
-        height: 180px;
-        overflow: hidden;
-      }
-      .cover img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-      .price-badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        font-size: 12px;
-        padding: 6px 8px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid var(--line);
-      }
-      .content {
-        padding: 14px 14px 16px;
-      }
-      .title-sm {
-        font-weight: 700;
-        font-size: 18px;
-      }
-      .desc {
-        margin-top: 6px;
-        font-size: 14px;
-        color: #334155;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-      .meta {
-        margin-top: 10px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        font-size: 12px;
-        color: #334155;
-      }
-      .pill {
-        background: var(--ap-neutral);
-        padding: 6px 10px;
-        border-radius: 999px;
-      }
-      .card-actions {
-        margin-top: 12px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      /* Layout responsive: cards por defecto; tabla en ≥ 1024px */
-      .desktop-only {
-        display: none;
-      }
-      @media (min-width: 1024px) {
-        .desktop-only {
-          display: block;
-        }
-        .mobile-only {
-          display: none;
-        }
-      }
-
-      /* Footer mini */
-      .footer {
-        border-top: 1px solid var(--line);
-        color: #64748b;
-        text-align: center;
-        padding: 16px;
-        margin-top: 28px;
       }
     </style>
   </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="wrap">
-        <div class="nav">
-          <a th:href="@{/}" class="brand">
-            <img
-              src="/img/logo_aponia.png"
-              alt="Aponia"
-              width="40"
-              height="40"
-              style="border-radius: 10px"
-            />
-            <span class="brand__name">Aponia</span>
-          </a>
-          <nav class="navlinks">
-            <a th:href="@{/}">Inicio</a>
-            <a th:href="@{/servicios}" style="color: var(--ap-primary)"
-              >Servicios</a
-            >
-          </nav>
-        </div>
-      </div>
-    </header>
 
-    <main class="wrap">
+  <body class="bg-white text-slate-800">
+    <!-- HEADER -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+    <!-- MAIN -->
+    <main class="max-w-6xl mx-auto px-6 py-6">
       <!-- Encabezado -->
-      <div class="pagehead">
-        <h1 class="title">Servicios</h1>
-        <p class="subtitle">
+      <div>
+        <h1 class="text-3xl text-[#0a3d62]">Servicios</h1>
+        <p class="text-slate-600 mt-1">
           Gestiona los servicios y experiencias disponibles.
         </p>
 
-        <div class="topbar">
-          <a class="btn" th:href="@{/servicios/nuevo}">
-            <span style="font-size: 18px; line-height: 1">＋</span> Nuevo
-            servicio
+        <div class="flex flex-wrap items-center justify-between gap-4 mt-4">
+          <a
+            th:href="@{/servicios/nuevo}"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#cfa15a] px-4 py-2 font-semibold text-white shadow hover:shadow-lg active:translate-y-px"
+          >
+            <span class="text-lg leading-none">＋</span> Nuevo servicio
           </a>
-          <span class="tag-muted"
+          <span class="text-sm text-slate-500"
             >Total: <span th:text="${#lists.size(servicios)}">0</span></span
           >
         </div>
 
-        <!-- Flashes -->
-        <div th:if="${ok}" class="flash" th:text="${ok}">Operación exitosa</div>
-        <div th:if="${error}" class="flash error" th:text="${error}">
-          Ha ocurrido un error
-        </div>
+        <!-- flashes -->
+        <div
+          th:if="${ok}"
+          th:text="${ok}"
+          class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-700"
+        ></div>
+        <div
+          th:if="${error}"
+          th:text="${error}"
+          class="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-rose-700"
+        ></div>
       </div>
 
       <!-- Tabla (desktop) -->
-      <div class="desktop-only card">
-        <div class="table-wrap">
-          <table>
+      <div
+        class="hidden lg:block mt-6 rounded-2xl border border-slate-200 shadow"
+      >
+        <div class="overflow-auto rounded-2xl">
+          <table class="w-full min-w-[960px] border-collapse">
             <thead>
-              <tr>
-                <th>Imagen</th>
-                <th>Nombre y lugar</th>
-                <th>Descripción</th>
-                <th>Duración</th>
-                <th>Capacidad</th>
-                <th>Precio / persona</th>
-                <th>Acciones</th>
+              <tr
+                class="bg-slate-50 text-left text-[11px] uppercase text-slate-800"
+              >
+                <th class="p-3">Imagen</th>
+                <th class="p-3">Nombre y lugar</th>
+                <th class="p-3">Descripción</th>
+                <th class="p-3">Duración</th>
+                <th class="p-3">Capacidad</th>
+                <th class="p-3">Precio / persona</th>
+                <th class="p-3">Acciones</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- th:each idéntico al que te funciona -->
-              <tr th:each="s : ${servicios}">
-                <td>
+            <tbody class="text-sm">
+              <tr
+                th:each="s : ${servicios}"
+                class="border-t border-slate-200 hover:bg-slate-50"
+              >
+                <td class="p-3">
                   <img
-                    class="thumb"
                     th:src="${#lists.isEmpty(s.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${s.imagenes.get(0).url}"
                     alt="Imagen servicio"
+                    class="w-16 h-16 object-cover rounded-xl border border-slate-200"
                   />
                 </td>
-                <td>
-                  <div class="name" th:text="${s.nombre}">Nombre</div>
-                  <div class="muted" th:text="${s.lugar}">Lugar</div>
+                <td class="p-3">
+                  <div class="font-semibold" th:text="${s.nombre}">Nombre</div>
+                  <div class="text-xs text-slate-500" th:text="${s.lugar}">
+                    Lugar
+                  </div>
                 </td>
-                <td>
-                  <div class="desc" th:text="${s.descripcion}">Descripción</div>
+                <td class="p-3 text-slate-600" th:text="${s.descripcion}">
+                  Descripción
                 </td>
-                <td>
-                  <span class="chip" th:text="|${s.duracionMinutos} min|"
-                    >0 min</span
-                  >
-                </td>
-                <td>
+                <td class="p-3">
                   <span
-                    th:text="${s.capacidadMaxima != null ? s.capacidadMaxima : '-'}"
-                    >-</span
+                    class="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs"
+                    th:text="|${s.duracionMinutos} min|"
                   >
+                    0 min
+                  </span>
                 </td>
                 <td
-                  class="price"
+                  class="p-3"
+                  th:text="${s.capacidadMaxima != null ? s.capacidadMaxima : '-'}"
+                >
+                  -
+                </td>
+                <td
+                  class="p-3 font-semibold whitespace-nowrap"
                   th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')} COP|"
                 >
                   $ 0,00 COP
                 </td>
-                <td>
-                  <div class="actions">
+                <td class="p-3">
+                  <div class="flex gap-2">
                     <a
-                      class="btn-outline"
                       th:href="@{|/servicios/${s.id}/editar|}"
+                      class="inline-flex items-center rounded-lg border border-[#0a3d62] px-3 py-1 text-sm font-semibold text-[#0a3d62] hover:bg-[#0a3d62]/5"
                       >Editar</a
                     >
                     <form
                       th:action="@{|/servicios/${s.id}/eliminar|}"
                       method="post"
                       onsubmit="return confirm('¿Eliminar este servicio?');"
-                      style="display: inline"
                     >
-                      <button class="btn-danger" type="submit">Eliminar</button>
+                      <button
+                        type="submit"
+                        class="rounded-lg bg-rose-600 px-3 py-1 text-sm font-semibold text-white hover:bg-rose-700"
+                      >
+                        Eliminar
+                      </button>
                     </form>
                   </div>
                 </td>
               </tr>
-
-              <!-- Vacío -->
               <tr th:if="${#lists.isEmpty(servicios)}">
-                <td colspan="7" style="padding: 32px">
-                  <div style="text-align: center; color: #64748b">
-                    No hay servicios creados aún.
-                    <a
-                      th:href="@{/servicios/nuevo}"
-                      style="color: var(--ap-primary); font-weight: 600"
-                      >Crear el primero</a
-                    >.
-                  </div>
+                <td colspan="7" class="py-10 text-center text-slate-500">
+                  No hay servicios creados aún.
+                  <a
+                    th:href="@{/servicios/nuevo}"
+                    class="font-semibold text-[#0a3d62]"
+                    >Crear el primero</a
+                  >.
                 </td>
               </tr>
             </tbody>
@@ -507,43 +163,45 @@
         </div>
       </div>
 
-      <!-- Cards (móvil/tablet) -->
+      <!-- Cards (móvil) -->
       <div
-        class="mobile-only grid"
-        style="
-          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-          margin-top: 18px;
-        "
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 lg:hidden"
       >
-        <article th:each="s : ${servicios}" class="service-card">
-          <div class="cover">
+        <article
+          th:each="s : ${servicios}"
+          class="rounded-2xl border border-slate-200 shadow hover:shadow-lg overflow-hidden"
+        >
+          <div class="relative h-44">
             <img
               th:src="${#lists.isEmpty(s.imagenes)} ? @{/img/placeholder-servicio.jpg} : ${s.imagenes.get(0).url}"
               alt="Imagen servicio"
+              class="absolute inset-0 w-full h-full object-cover"
             />
-            <span class="price-badge">
-              <span
-                th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')}|"
-              ></span>
-              COP
-            </span>
+            <span
+              class="absolute top-3 right-3 rounded-lg bg-white/90 border border-slate-200 px-2 py-1 text-xs font-semibold"
+              th:text="|$ ${#numbers.formatDecimal(s.precioPorPersona,0,'POINT',2,'COMMA')}|"
+            ></span>
           </div>
-          <div class="content">
-            <div class="title-sm" th:text="${s.nombre}">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold" th:text="${s.nombre}">
               Nombre del servicio
-            </div>
-            <div class="muted" style="margin-top: 4px" th:text="${s.lugar}">
+            </h3>
+            <p class="text-sm text-slate-500 mt-1" th:text="${s.lugar}">
               Lugar
-            </div>
-            <p class="desc" th:text="${s.descripcion}">
-              Descripción corta del servicio…
             </p>
-
-            <div class="meta">
-              <span class="pill" th:text="|${s.duracionMinutos} min|"
+            <p
+              class="text-sm text-slate-600 mt-2 line-clamp-2"
+              th:text="${s.descripcion}"
+            >
+              Breve descripción…
+            </p>
+            <div class="flex flex-wrap gap-2 mt-3 text-xs text-slate-600">
+              <span
+                class="rounded-full bg-slate-100 px-3 py-1"
+                th:text="|${s.duracionMinutos} min|"
                 >0 min</span
               >
-              <span class="pill"
+              <span class="rounded-full bg-slate-100 px-3 py-1"
                 >👥
                 <span
                   th:text="${s.capacidadMaxima != null ? s.capacidadMaxima : '-'}"
@@ -551,9 +209,10 @@
                 ></span
               >
             </div>
-
-            <div class="card-actions">
-              <a class="btn-outline" th:href="@{|/servicios/${s.id}/editar|}"
+            <div class="flex gap-2 mt-4">
+              <a
+                th:href="@{|/servicios/${s.id}/editar|}"
+                class="inline-flex items-center rounded-lg border border-[#0a3d62] px-3 py-1 text-sm font-semibold text-[#0a3d62] hover:bg-[#0a3d62]/5"
                 >Editar</a
               >
               <form
@@ -561,7 +220,12 @@
                 method="post"
                 onsubmit="return confirm('¿Eliminar este servicio?');"
               >
-                <button class="btn-danger" type="submit">Eliminar</button>
+                <button
+                  type="submit"
+                  class="rounded-lg bg-rose-600 px-3 py-1 text-sm font-semibold text-white hover:bg-rose-700"
+                >
+                  Eliminar
+                </button>
               </form>
             </div>
           </div>
@@ -569,20 +233,19 @@
 
         <div
           th:if="${#lists.isEmpty(servicios)}"
-          class="card"
-          style="padding: 24px; text-align: center; color: #64748b"
+          class="border rounded-xl p-6 text-center text-slate-500"
         >
           No hay servicios creados aún.
-          <a
-            th:href="@{/servicios/nuevo}"
-            style="color: var(--ap-primary); font-weight: 600"
+          <a th:href="@{/servicios/nuevo}" class="font-semibold text-[#0a3d62]"
             >Crear el primero</a
           >.
         </div>
       </div>
     </main>
 
-    <footer class="footer">
+    <footer
+      class="border-t border-slate-200 text-center text-slate-500 text-sm py-4 mt-8"
+    >
       © <span id="year"></span> Aponia. Todos los derechos reservados.
     </footer>
 

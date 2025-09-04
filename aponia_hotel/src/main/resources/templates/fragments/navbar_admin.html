@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            aponia: {
+              primary: "#0A3D62",
+              secondary: "#CFA15A",
+              beige: "#F4E3C1",
+              neutral: "#F5F5F5",
+              white: "#FFFFFF",
+            },
+          },
+          fontFamily: {
+            display: ["Playfair Display", "serif"],
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 10px 30px rgba(0,0,0,0.08)",
+            lift: "0 12px 40px rgba(10,61,98,0.15)",
+          },
+        },
+      },
+    };
+  </script>
+  <body>
+    <!-- templates/fragments/navbar_admin.html -->
+    <header
+      th:fragment="navbar_admin"
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center"
+      >
+        <!-- Logo / Inicio -->
+        <a th:href="@{/admin/dashboard}" class="flex items-center gap-2">
+          <img src="/img/logo_aponia.png" class="h-10 w-10" alt="Aponia" />
+          <span class="font-display text-xl tracking-wide text-aponia-primary"
+            >Admin</span
+          >
+        </a>
+
+        <!-- Links -->
+        <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-700">
+          <a th:href="@{/usuarios}" class="hover:text-aponia-primary"
+            >Usuarios</a
+          >
+          <a th:href="@{/habitaciones}" class="hover:text-aponia-primary"
+            >Habitaciones</a
+          >
+          <a th:href="@{/habitaciones-tipos}" class="hover:text-aponia-primary"
+            >Tipos</a
+          >
+          <a th:href="@{/servicios}" class="hover:text-aponia-primary"
+            >Servicios</a
+          >
+        </nav>
+
+        <!-- Perfil -->
+        <div class="relative hidden md:block">
+          <button
+            id="adminMenuBtn"
+            class="w-10 h-10 rounded-full border border-aponia-primary bg-slate-700 text-white flex items-center justify-center"
+          >
+            <span
+              th:text="${#strings.substring(session.AUTH_USER_EMAIL,0,1).toUpperCase()}"
+              >A</span
+            >
+          </button>
+          <div
+            id="adminMenu"
+            class="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-lg hidden"
+          >
+            <div class="px-4 py-3 border-b border-gray-200">
+              <strong
+                th:text="${session.AUTH_USER_EMAIL}"
+                class="block text-aponia-primary"
+              ></strong>
+              <small th:text="${session.AUTH_USER_ROLE}" class="text-gray-500"
+                >ADMIN</small
+              >
+            </div>
+            <a
+              th:href="@{/logout}"
+              class="block px-4 py-2 hover:bg-gray-50 rounded-md"
+              >Cerrar sesión</a
+            >
+          </div>
+        </div>
+
+        <!-- Botón menú móvil -->
+        <button
+          id="menuBtn"
+          class="md:hidden p-2 border rounded-lg"
+          aria-label="Abrir menú"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menú móvil -->
+      <div
+        id="mobileMenu"
+        class="md:hidden hidden border-t border-slate-200 bg-white"
+      >
+        <nav class="px-4 py-3 grid gap-3 text-sm">
+          <a th:href="@{/usuarios}" class="py-2">Usuarios</a>
+          <a th:href="@{/habitaciones}" class="py-2">Habitaciones</a>
+          <a th:href="@{/habitaciones-tipos}" class="py-2">Tipos</a>
+          <a th:href="@{/servicios}" class="py-2">Servicios</a>
+          <a th:href="@{/logout}" class="py-2 border-t border-slate-100"
+            >Cerrar sesión</a
+          >
+        </nav>
+      </div>
+
+      <script>
+        // Dropdown perfil
+        const adminBtn = document.getElementById("adminMenuBtn");
+        const adminMenu = document.getElementById("adminMenu");
+        if (adminBtn)
+          adminBtn.addEventListener("click", () =>
+            adminMenu.classList.toggle("hidden")
+          );
+
+        // Menú móvil
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        if (menuBtn)
+          menuBtn.addEventListener("click", () =>
+            mobileMenu.classList.toggle("hidden")
+          );
+      </script>
+    </header>
+  </body>
+</html>

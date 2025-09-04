@@ -15,196 +15,58 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap"
       rel="stylesheet"
     />
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      :root {
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --ink: #243444;
-        --muted: #6b7280;
-        --line: #e8edf1;
-        --radius: 16px;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-      * {
-        box-sizing: border-box;
-      }
       body {
-        margin: 0;
-        background: #fff;
-        color: var(--ink);
         font-family: Inter, system-ui, sans-serif;
       }
-      .wrap {
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      .header {
-        position: sticky;
-        top: 0;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav {
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
+      h1,
       .brand__name {
         font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        font-size: 20px;
-      }
-
-      h1 {
-        font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        margin: 22px 0 6px;
-      }
-      .subtitle {
-        color: #4b5563;
-        margin: 0 0 10px;
-      }
-
-      .card {
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        background: #fff;
-        margin-top: 12px;
-      }
-      .body {
-        padding: 18px;
-      }
-      .footer {
-        padding: 14px 18px;
-        border-top: 1px solid var(--line);
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-      }
-
-      .grid {
-        display: grid;
-        gap: 14px;
-      }
-      @media (min-width: 900px) {
-        .two {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      label {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      input,
-      textarea {
-        padding: 10px 12px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        font: inherit;
-      }
-      textarea {
-        min-height: 110px;
-        resize: vertical;
-      }
-      .hint {
-        font-size: 12px;
-        color: #64748b;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid transparent;
-      }
-      .btn.ghost {
-        background: #fff;
-        border: 1px solid var(--line);
-      }
-      .btn.primary {
-        background: var(--ap-secondary);
-        color: #fff;
-        box-shadow: var(--shadow);
-      }
-      .check {
-        display: flex;
-        align-items: center;
-        gap: 10px;
       }
     </style>
   </head>
-  <body>
-    <header class="header">
-      <div class="wrap nav">
-        <a th:href="@{/habitaciones-tipos}" class="brand">
-          <img
-            src="/img/logo_aponia.png"
-            alt="Aponia"
-            width="36"
-            height="36"
-            style="border-radius: 8px"
-          />
-          <span class="brand__name">Aponia</span>
-        </a>
-        <a
-          th:href="@{/habitaciones-tipos}"
-          style="color: var(--ap-primary); font-weight: 600"
-          >↩ Volver</a
-        >
-      </div>
-    </header>
+  <body class="bg-white text-slate-800">
+    <!-- HEADER -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
 
-    <main class="wrap">
+    <!-- MAIN -->
+    <main class="max-w-3xl mx-auto px-6 py-6">
       <h1
         th:text="${tipoHabitacion.id} != null ? 'Editar tipo de habitación' : 'Nuevo tipo de habitación'"
+        class="text-2xl text-blue-900 mb-1"
       >
         Tipo
       </h1>
-      <p class="subtitle">Completa la información y guarda.</p>
+      <p class="text-slate-600 mb-4">Completa la información y guarda.</p>
 
-      <div class="card">
-        <div class="body">
-          <!-- crear: POST /habitaciones-tipos; editar: POST /habitaciones-tipos/{id} -->
+      <!-- CARD -->
+      <div class="rounded-2xl border border-slate-200 shadow">
+        <div class="p-6">
           <form
             th:object="${tipoHabitacion}"
             th:action="@{${tipoHabitacion.id} != null ? '/habitaciones-tipos/' + ${tipoHabitacion.id} : '/habitaciones-tipos'}"
             method="post"
+            class="space-y-6"
           >
             <input type="hidden" th:field="*{id}" />
 
-            <div class="grid two">
-              <div class="field">
-                <label for="nombre">Nombre</label>
+            <!-- GRID Nombre / Aforo -->
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="flex flex-col gap-1">
+                <label for="nombre" class="text-sm font-semibold">Nombre</label>
                 <input
                   id="nombre"
                   th:field="*{nombre}"
                   placeholder="Ej: Superior, Deluxe"
                   required
+                  class="rounded-xl border border-slate-200 px-3 py-2"
                 />
               </div>
-              <div class="field">
-                <label for="aforo">Aforo máximo</label>
+              <div class="flex flex-col gap-1">
+                <label for="aforo" class="text-sm font-semibold"
+                  >Aforo máximo</label
+                >
                 <input
                   id="aforo"
                   type="number"
@@ -212,24 +74,30 @@
                   step="1"
                   th:field="*{aforoMaximo}"
                   required
+                  class="rounded-xl border border-slate-200 px-3 py-2"
                 />
               </div>
             </div>
 
-            <div class="grid">
-              <div class="field">
-                <label for="descripcion">Descripción</label>
-                <textarea
-                  id="descripcion"
-                  th:field="*{descripcion}"
-                  placeholder="Resumen de comodidades y características"
-                ></textarea>
-              </div>
+            <!-- DESCRIPCIÓN -->
+            <div class="flex flex-col gap-1">
+              <label for="descripcion" class="text-sm font-semibold"
+                >Descripción</label
+              >
+              <textarea
+                id="descripcion"
+                th:field="*{descripcion}"
+                placeholder="Resumen de comodidades y características"
+                class="rounded-xl border border-slate-200 px-3 py-2 min-h-[110px] resize-y"
+              ></textarea>
             </div>
 
-            <div class="grid two">
-              <div class="field">
-                <label for="precio">Precio por noche (COP)</label>
+            <!-- GRID Precio -->
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="flex flex-col gap-1">
+                <label for="precio" class="text-sm font-semibold"
+                  >Precio por noche (COP)</label
+                >
                 <input
                   id="precio"
                   type="number"
@@ -237,47 +105,36 @@
                   min="0"
                   th:field="*{precioPorNoche}"
                   required
+                  class="rounded-xl border border-slate-200 px-3 py-2"
                 />
-                <div class="hint">
+                <div class="text-xs text-slate-500">
                   Se formatea en listado. Usa punto para decimales.
                 </div>
               </div>
-              <!-- <div class="field">
-                <label>Rango (inicio – fin)</label>
-                <div class="grid two">
-                  <input
-                    type="number"
-                    min="0"
-                    step="1"
-                    th:field="*{rangoInicio}"
-                    placeholder="Inicio"
-                    required
-                  />
-                  <input
-                    type="number"
-                    min="1"
-                    step="1"
-                    th:field="*{rangoFin}"
-                    placeholder="Fin"
-                    required
-                  />
-                </div>
-                <div class="hint">El fin debe ser mayor que el inicio.</div>
-              </div> -->
             </div>
 
-            <div class="grid">
-              <div class="check">
-                <input id="activa" type="checkbox" th:field="*{activa}" />
-                <label for="activa">Activa</label>
-              </div>
+            <!-- ACTIVA -->
+            <div class="flex items-center gap-2">
+              <input
+                id="activa"
+                type="checkbox"
+                th:field="*{activa}"
+                class="h-4 w-4 border-slate-300 rounded"
+              />
+              <label for="activa" class="text-sm font-medium">Activa</label>
             </div>
 
-            <div class="footer">
-              <a th:href="@{/habitaciones-tipos}" class="btn ghost">Cancelar</a>
+            <!-- FOOTER -->
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
+              <a
+                th:href="@{/habitaciones-tipos}"
+                class="inline-flex items-center rounded-xl border border-slate-200 px-4 py-2 text-sm"
+              >
+                Cancelar
+              </a>
               <button
                 type="submit"
-                class="btn primary"
+                class="inline-flex items-center rounded-xl bg-amber-600 text-white font-semibold px-4 py-2 shadow hover:bg-amber-700"
                 th:text="${tipoHabitacion.id} != null ? 'Guardar cambios' : 'Crear tipo'"
               >
                 Guardar
@@ -286,8 +143,6 @@
           </form>
         </div>
       </div>
-
-      <div style="height: 16px"></div>
     </main>
   </body>
 </html>

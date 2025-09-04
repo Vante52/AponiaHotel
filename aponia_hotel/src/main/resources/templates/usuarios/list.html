@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Aponia – Usuarios</title>
 
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,227 +17,120 @@
     />
 
     <style>
-      :root {
-        --ap-primary: #0a3d62;
-        --ap-secondary: #cfa15a;
-        --line: #e8edf1;
-        --ink: #243444;
-        --muted: #6b7280;
-        --radius: 16px;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
-      * {
-        box-sizing: border-box;
-      }
       body {
-        margin: 0;
-        background: #fff;
-        color: var(--ink);
-        font-family: Inter, system-ui, sans-serif;
+        font-family: "Inter", system-ui, sans-serif;
       }
-      .wrap {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-      .header {
-        position: sticky;
-        top: 0;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav {
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
+      h1,
       .brand__name {
         font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        font-size: 20px;
-      }
-      h1 {
-        font-family: "Playfair Display", serif;
-        color: var(--ap-primary);
-        margin: 22px 0 6px;
-      }
-      .subtitle {
-        color: #4b5563;
-        margin: 0 0 10px;
-      }
-      .topbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 12px 0;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        text-decoration: none;
-        cursor: pointer;
-        border: 1px solid transparent;
-        box-shadow: var(--shadow);
-        background: var(--ap-secondary);
-        color: #fff;
-      }
-      .flash {
-        margin: 10px 0;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid #a7f3d0;
-        background: #ecfdf5;
-        color: #065f46;
-      }
-      .flash.error {
-        border-color: #fecaca;
-        background: #fef2f2;
-        color: #991b1b;
-      }
-      .card {
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        background: #fff;
-        overflow: hidden;
-      }
-      .table-wrap {
-        overflow: auto;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 720px;
-      }
-      thead th {
-        background: #f1f5f9;
-        color: #0f172a;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        text-align: left;
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-      }
-      tbody td {
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-        vertical-align: middle;
-      }
-      tbody tr:hover {
-        background: #f9fafb;
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 12px;
-      }
-      .role {
-        display: inline-block;
-        background: #f5f5f5;
-        border: 1px solid var(--line);
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-      }
-      .actions {
-        display: flex;
-        gap: 8px;
-      }
-      .btn-outline {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 10px;
-        border-radius: 10px;
-        border: 1px solid var(--ap-primary);
-        color: var(--ap-primary);
-        text-decoration: none;
-      }
-      .btn-danger {
-        border: none;
-        background: #dc3545;
-        color: #fff;
-        padding: 8px 10px;
-        border-radius: 10px;
-        cursor: pointer;
       }
     </style>
   </head>
-  <body>
-    <header class="header">
-      <div class="wrap nav">
-        <a th:href="@{/}" class="brand">
-          <img
-            src="/img/logo_aponia.png"
-            alt="Aponia"
-            width="36"
-            height="36"
-            style="border-radius: 8px"
-          />
-          <span class="brand__name">Aponia</span>
-        </a>
-        <a th:href="@{/usuarios/nuevo}" class="btn">＋ Nuevo usuario</a>
+  <body class="bg-white text-[#243444] m-0">
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+    <main class="max-w-5xl mx-auto px-6">
+      <!-- <div
+        th:if="${ok}"
+        class="my-3 px-4 py-3 rounded-xl border border-green-200 bg-green-50 text-green-800"
+        th:text="${ok}"
+      >
+        Operación exitosa
       </div>
-    </header>
 
-    <main class="wrap">
-      <h1>Usuarios</h1>
-      <p class="subtitle">Gestiona cuentas: email y rol.</p>
+      <div
+        th:if="${error}"
+        class="my-3 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-red-800"
+        th:text="${error}"
+      >
+        Error
+      </div> -->
+      <div class="w-full flex items-center justify-between py-4">
+        <div>
+          <h1 class="text-[#0a3d62] text-2xl mt-6 mb-1">Usuarios</h1>
+          <p class="text-gray-600 mb-3">Gestiona cuentas: email y rol.</p>
+        </div>
 
-      <div th:if="${ok}" class="flash" th:text="${ok}">Operación exitosa</div>
-      <div th:if="${error}" class="flash error" th:text="${error}">Error</div>
+        <a
+          th:href="@{/usuarios/nuevo}"
+          class="rounded-xl px-4 py-2 font-semibold shadow text-white bg-amber-600 hover:bg-[#b88e4e]"
+        >
+          ＋ Nuevo usuario
+        </a>
+      </div>
 
-      <div class="card">
-        <div class="table-wrap">
-          <table>
+      <div
+        class="border border-[#e8edf1] rounded-2xl shadow bg-white overflow-hidden"
+      >
+        <div class="overflow-auto">
+          <table class="w-full min-w-[720px] border-collapse">
             <thead>
               <tr>
-                <th>Email</th>
-                <th>Rol</th>
-                <th class="muted">ID</th>
-                <th>Acciones</th>
+                <th
+                  class="bg-gray-100 text-slate-900 text-xs uppercase tracking-wider text-left px-4 py-3 border-b border-[#e8edf1]"
+                >
+                  Email
+                </th>
+                <th
+                  class="bg-gray-100 text-slate-900 text-xs uppercase tracking-wider text-left px-4 py-3 border-b border-[#e8edf1]"
+                >
+                  Rol
+                </th>
+                <th
+                  class="bg-gray-100 text-slate-900 text-xs uppercase tracking-wider text-left px-4 py-3 border-b border-[#e8edf1] text-gray-500"
+                >
+                  ID
+                </th>
+                <th
+                  class="bg-gray-100 text-slate-900 text-xs uppercase tracking-wider text-left px-4 py-3 border-b border-[#e8edf1]"
+                >
+                  Acciones
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="u : ${usuarios}">
-                <td th:text="${u.email}">email@example.com</td>
-                <td><span class="role" th:text="${u.rol}">CLIENTE</span></td>
-                <td class="muted" th:text="${u.id}">uuid</td>
-                <td>
-                  <div class="actions">
+              <tr th:each="u : ${usuarios}" class="hover:bg-gray-50">
+                <td class="px-4 py-3" th:text="${u.email}">
+                  email@example.com
+                </td>
+                <td class="px-4 py-3">
+                  <span
+                    class="inline-block bg-gray-100 border border-[#e8edf1] px-3 py-1 rounded-full text-xs"
+                    th:text="${u.rol}"
+                  >
+                    CLIENTE
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-xs text-gray-500" th:text="${u.id}">
+                  uuid
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex gap-2">
                     <a
-                      class="btn-outline"
+                      class="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-[#0a3d62] text-[#0a3d62] text-sm hover:bg-[#0a3d62]/10"
                       th:href="@{|/usuarios/${u.id}/editar|}"
-                      >Editar</a
                     >
+                      Editar
+                    </a>
                     <form
                       th:action="@{|/usuarios/${u.id}/eliminar|}"
                       method="post"
                       onsubmit="return confirm('¿Eliminar este usuario?');"
                     >
-                      <button class="btn-danger" type="submit">Eliminar</button>
+                      <button
+                        type="submit"
+                        class="px-3 py-2 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700"
+                      >
+                        Eliminar
+                      </button>
                     </form>
                   </div>
                 </td>
               </tr>
 
               <tr th:if="${#lists.isEmpty(usuarios)}">
-                <td
-                  colspan="4"
-                  style="padding: 28px; text-align: center; color: #64748b"
-                >
+                <td colspan="4" class="py-7 text-center text-slate-500 text-sm">
                   No hay usuarios creados.
                 </td>
               </tr>
