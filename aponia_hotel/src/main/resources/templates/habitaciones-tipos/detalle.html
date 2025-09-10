@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title th:text="|Aponia – ${habitacionTipo.nombre}|">Aponia – Habitación</title>
+    <meta name="description" th:content="${habitacionTipo.descripcion}" />
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#0a3d62",
+              secondary: "#cfa15a",
+              beige: "#f4e3c1",
+              ink: "#243444",
+              muted: "#6b7280",
+              line: "#e8edf1",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-white text-ink font-sans">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-line"
+    >
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+          <a th:href="@{/}" class="flex items-center gap-2">
+            <img
+              src="/img/logo_aponia.png"
+              alt="Aponia"
+              width="40"
+              height="40"
+              class="rounded-lg"
+            />
+            <span class="font-serif text-xl font-bold text-primary"
+              >Aponia</span
+            >
+          </a>
+          <a
+            th:href="@{/habitaciones/cards}"
+            class="text-primary font-medium hover:underline"
+            >↩ Volver a habitaciones</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6">
+      <!-- Head -->
+      <div class="py-6">
+        <div class="text-sm text-muted">
+          <a th:href="@{/}" class="text-primary hover:underline">Inicio</a> ·
+          <a
+            th:href="@{/habitaciones/cards}"
+            class="text-primary hover:underline"
+            >Habitaciones</a
+          >
+          · <span th:text="${habitacionTipo.nombre}">Tipo de Habitación</span>
+        </div>
+        <h1
+          class="mt-2 font-serif text-3xl text-primary font-semibold tracking-tight"
+          th:text="${habitacionTipo.nombre}"
+        >
+          Nombre Habitación
+        </h1>
+        <p class="mt-1 text-muted" th:text="'Capacidad: ' + ${habitacionTipo.aforoMaximo} + ' personas'">
+          Capacidad: 0 personas
+        </p>
+      </div>
+
+      <!-- Contenido -->
+      <div class="grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+        <!-- Galería -->
+        <section
+          class="bg-white border border-line rounded-2xl shadow-sm p-3"
+        >
+          <div
+            class="h-[420px] rounded-xl overflow-hidden bg-gray-100 grid place-items-center"
+            id="hero"
+          >
+            <img
+              th:src="${#lists.isEmpty(habitacionTipo.imagenes)} ? @{/img/placeholder-habitacion.jpg} : ${habitacionTipo.imagenes.get(0).url}"
+              alt="Imagen principal de la habitación"
+              id="heroImg"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Thumbs -->
+          <div
+            class="flex gap-2 mt-3 overflow-x-auto pb-1"
+            id="thumbs"
+          >
+            <img
+              class="thumb w-24 h-16 object-cover rounded-md border-2 border-transparent cursor-pointer flex-shrink-0 hover:border-secondary"
+              th:if="${!#lists.isEmpty(habitacionTipo.imagenes)}"
+              th:each="img, it : ${habitacionTipo.imagenes}"
+              th:src="${img.url}"
+              th:alt="|Imagen ${it.index + 1}|"
+              th:attr="data-src=${img.url}"
+            />
+          </div>
+        </section>
+
+        <!-- Panel reserva/info -->
+        <aside
+          class="bg-white border border-line rounded-2xl shadow-sm p-5 flex flex-col gap-4 sticky top-24 h-fit"
+        >
+          <div
+            class="text-2xl font-extrabold text-ink"
+            th:text="|$ ${#numbers.formatDecimal(habitacionTipo.precioPorNoche,0,'POINT',2,'COMMA')} COP /noche|"
+          >
+            $ 0,00 COP /noche
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <span
+              class="px-3 py-1 rounded-full bg-gray-100 text-ink text-xs font-medium"
+              th:text="|👥 Hasta ${habitacionTipo.aforoMaximo} personas|"
+              >👥 Hasta 0 personas</span
+            >
+            <span
+              th:if="${habitacionTipo.activa}"
+              class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium"
+            >
+              Disponible
+            </span>
+            <span
+              th:unless="${habitacionTipo.activa}"
+              class="px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-medium"
+            >
+              No disponible
+            </span>
+          </div>
+
+          <!-- Formulario de reserva -->
+          <form th:action="@{/reservas/nueva/habitacion}" method="get" class="space-y-4">
+            <input type="hidden" name="tipoHabitacionId" th:value="${habitacionTipo.id}" />
+            
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1">Fechas de estadía</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input
+                  type="date"
+                  name="checkIn"
+                  required
+                  class="w-full px-3 py-2 border border-line rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  min=""
+                />
+                <input
+                  type="date"
+                  name="checkOut"
+                  required
+                  class="w-full px-3 py-2 border border-line rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  min=""
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-ink mb-1">Número de huéspedes</label>
+              <select
+                name="numeroHuespedes"
+                required
+                class="w-full px-3 py-2 border border-line rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30"
+              >
+                <option
+                  th:each="i : ${#numbers.sequence(1, habitacionTipo.aforoMaximo)}"
+                  th:value="${i}"
+                  th:text="${i}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <button
+                type="submit"
+                th:disabled="${!habitacionTipo.activa}"
+                class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold border border-primary bg-primary text-white shadow-sm hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Reservar ahora
+              </button>
+              <a
+                class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold border border-primary text-primary bg-white hover:bg-gray-50 transition"
+                th:href="@{/habitaciones/cards}"
+              >
+                Ver otras opciones
+              </a>
+            </div>
+          </form>
+
+          <div class="text-sm text-muted">
+            Cancelación flexible · Mejor precio garantizado
+          </div>
+        </aside>
+      </div>
+
+      <!-- Descripción -->
+      <section
+        class="mt-6 bg-white border border-line rounded-2xl shadow-sm p-6"
+      >
+        <h2 class="text-xl font-semibold mb-2">Descripción</h2>
+        <div
+          class="text-ink leading-relaxed"
+          th:text="${habitacionTipo.descripcion}"
+        >
+          Texto descriptivo de la habitación…
+        </div>
+      </section>
+
+      <!-- Habitaciones disponibles de este tipo -->
+      <section
+        class="mt-6 bg-white border border-line rounded-2xl shadow-sm p-6"
+        th:if="${!#lists.isEmpty(habitacionTipo.habitaciones)}"
+      >
+        <h2 class="text-xl font-semibold mb-4">Habitaciones disponibles</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div
+            th:each="hab : ${habitacionTipo.habitaciones}"
+            th:if="${hab.activa}"
+            class="border border-line rounded-lg p-3 text-center"
+          >
+            <div class="text-lg font-bold" th:text="'Habitación ' + ${hab.numero}"></div>
+            <div class="text-sm text-muted" th:text="${hab.activa} ? 'Disponible' : 'No disponible'"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="border-t border-line text-muted text-center text-sm py-4 mt-8"
+    >
+      © <span id="year"></span> Aponia. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Galería: cambiar imagen principal al hacer click en una miniatura
+      (function () {
+        const heroImg = document.getElementById("heroImg");
+        const thumbs = document.querySelectorAll("#thumbs .thumb");
+        thumbs.forEach((t) => {
+          t.addEventListener("click", () => {
+            const src = t.getAttribute("data-src") || t.getAttribute("src");
+            if (!src) return;
+            heroImg.src = src;
+            thumbs.forEach((x) => x.classList.remove("border-secondary"));
+            t.classList.add("border-secondary");
+          });
+        });
+      })();
+
+      // Validación de fechas
+      const checkInInput = document.querySelector('input[name="checkIn"]');
+      const checkOutInput = document.querySelector('input[name="checkOut"]');
+      
+      checkInInput?.addEventListener('change', () => {
+        if (checkInInput.value) {
+          const nextDay = new Date(checkInInput.value);
+          nextDay.setDate(nextDay.getDate() + 1);
+          checkOutInput.min = nextDay.toISOString().split('T')[0];
+          
+          if (checkOutInput.value && checkOutInput.value <= checkInInput.value) {
+            checkOutInput.value = '';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
