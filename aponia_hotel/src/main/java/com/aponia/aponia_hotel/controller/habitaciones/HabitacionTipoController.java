@@ -1,7 +1,10 @@
 package com.aponia.aponia_hotel.controller.habitaciones;
 
 import com.aponia.aponia_hotel.entities.habitaciones.HabitacionTipo;
+import com.aponia.aponia_hotel.service.habitaciones.HabitacionService;
 import com.aponia.aponia_hotel.service.habitaciones.HabitacionTipoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +19,16 @@ import java.util.UUID;
 @RequestMapping("/habitaciones-tipos")
 public class HabitacionTipoController {
 
-    private final HabitacionTipoService service;
+    @Autowired
+    private HabitacionTipoService service;
 
-    public HabitacionTipoController(HabitacionTipoService service) {
-        this.service = service;
-    }
+    @Autowired
+    private HabitacionService habitacionService;
 
-    // @GetMapping
-    // public String listar(Model model,
-    //                      @ModelAttribute("ok") String ok,
-    //                      @ModelAttribute("error") String error,
-    //                      HttpSession session) {
-    //     model.addAttribute("tiposHabitacion", service.listar());
-    //     Object rol = session.getAttribute("AUTH_USER_ROLE");
-    //     if (rol != null && rol.toString().equals("ADMIN")) {
-    //         return "habitaciones-tipos/list";
-    //     } else {
-    //         return "habitaciones-tipos/cards";
-    //     }
+    // public HabitacionTipoController(HabitacionTipoService service) {
+    //     this.service = service;
     // }
 
-    // @GetMapping("/habitaciones-tipos")
-    // public String listar(Model model) {
-    //     return new String();
-    
 
     @GetMapping
     public String listar(Model model) {
@@ -112,8 +101,14 @@ public class HabitacionTipoController {
     @PostMapping("/{id}/eliminar")
     public String eliminar(@PathVariable String id, RedirectAttributes ra) {
         try {
-            service.eliminar(id);
-            ra.addFlashAttribute("ok", "Tipo de habitación eliminado");
+            if(habitacionService.listarPorTipo(id).size() > 0) {
+                ra.addFlashAttribute("error", "No se puede eliminar el tipo de habitación porque tiene habitaciones asociadas");
+                return "redirect:/habitaciones-tipos";
+            } else {
+                service.eliminar(id);
+                ra.addFlashAttribute("ok", "Tipo de habitación eliminado");
+            }
+            
         } catch (Exception e) {
             ra.addFlashAttribute("error", "No se pudo eliminar: " + e.getMessage());
         }

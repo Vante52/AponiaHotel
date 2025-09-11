@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Aponia – Tipos de habitación</title>
 
-    <!-- Tailwind CDN (o compílalo si usas build) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: Inter, system-ui, sans-serif;
-      }
-      h1,
-      .brand__name {
-        font-family: "Playfair Display", serif;
-      }
-    </style>
-  </head>
-  <body class="bg-white text-slate-800">
-    <!-- HEADER -->
-    <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aponia – Tipos de habitación</title>
 
-    <main class="max-w-6xl mx-auto px-6 py-6">
-      <div class="w-full flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl text-blue-900 mb-1">Tipos de habitación</h1>
-          <p class="text-slate-500 mb-4">
-            Administra los tipos: aforo, rangos y precio por noche.
-          </p>
-        </div>
-        <a
-          th:href="@{/habitaciones-tipos/nuevo}"
-          class="inline-flex items-center gap-1 rounded-xl bg-amber-600 text-white font-semibold px-4 py-2 shadow hover:bg-amber-500"
-          >＋ Nuevo tipo</a
-        >
+  <!-- Tailwind CDN (o compílalo si usas build) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet" />
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    h1,
+    .brand__name {
+      font-family: "Playfair Display", serif;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-slate-800">
+  <!-- HEADER -->
+  <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+
+  <main class="max-w-6xl mx-auto px-6 py-6">
+    <div class="w-full flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl text-blue-900 mb-1">Tipos de habitación</h1>
+        <p class="text-slate-500 mb-4">
+          Administra los tipos: aforo, rangos y precio por noche.
+        </p>
       </div>
+      <a th:href="@{/habitaciones-tipos/nuevo}"
+        class="inline-flex items-center gap-1 rounded-xl bg-amber-600 text-white font-semibold px-4 py-2 shadow hover:bg-amber-500">＋
+        Nuevo tipo</a>
+    </div>
 
-      <!-- Flash -->
-      <!-- <div
+    <!-- Flash -->
+    <!-- <div
         th:if="${ok}"
         th:text="${ok}"
         class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 px-4 py-2"
@@ -52,82 +51,113 @@
         class="mb-4 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 px-4 py-2"
       ></div> -->
 
-      <!-- Card -->
-      <div class="border border-slate-200 rounded-2xl shadow">
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[820px] border-collapse">
-            <thead>
-              <tr
-                class="bg-slate-50 text-slate-800 text-xs uppercase tracking-wider"
-              >
-                <th class="text-left px-4 py-3">Nombre</th>
-                <th class="text-left px-4 py-3">Aforo</th>
-                <th class="text-left px-4 py-3">Precio/noche</th>
-                <th class="text-left px-4 py-3">Activa</th>
-                <th class="text-left px-4 py-3">Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="text-sm">
-              <tr
-                th:each="t : ${tiposHabitacion}"
-                class="border-b border-slate-100 hover:bg-slate-50"
-              >
-                <td class="px-4 py-3">
-                  <div class="font-semibold" th:text="${t.nombre}">Nombre</div>
-                  <div
-                    class="text-slate-500 text-xs"
-                    th:text="${#strings.abbreviate(t.descripcion, 80)}"
-                  >
-                    Descripción
-                  </div>
-                </td>
-                <td class="px-4 py-3" th:text="${t.aforoMaximo}">0</td>
-                <td
-                  class="px-4 py-3"
-                  th:text="${#numbers.formatDecimal(t.precioPorNoche,1,2)} + ' COP'"
-                >
-                  0,00 COP
-                </td>
-                <td class="px-4 py-3">
-                  <span
-                    class="inline-block rounded-full border px-3 py-1 text-xs font-medium"
-                    th:classappend="${t.activa} ? ' bg-emerald-50 border-emerald-200 text-emerald-700' : ' bg-rose-50 border-rose-200 text-rose-700'"
-                    th:text="${t.activa} ? 'Sí' : 'No'"
-                    >Sí</span
-                  >
-                </td>
-                <td class="px-4 py-3">
-                  <div class="flex gap-2">
-                    <a
-                      class="inline-flex items-center rounded-lg border border-blue-900 text-blue-900 px-3 py-1 text-sm hover:bg-blue-50"
-                      th:href="@{|/habitaciones-tipos/${t.id}/editar|}"
-                      >Editar</a
-                    >
-                    <form
-                      th:action="@{|/habitaciones-tipos/${t.id}/eliminar|}"
-                      method="post"
-                      onsubmit="return confirm('¿Eliminar este tipo?');"
-                    >
-                      <button
-                        type="submit"
-                        class="rounded-lg bg-rose-600 text-white px-3 py-1 text-sm hover:bg-rose-500"
-                      >
-                        Eliminar
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-
-              <tr th:if="${#lists.isEmpty(tiposHabitacion)}">
-                <td colspan="6" class="px-6 py-8 text-center text-slate-400">
-                  No hay tipos creados.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- Flash (Tailwind, autodesvanecido a 5s) -->
+    <div id="flash-container" class="fixed top-4 right-4 z-50 space-y-2">
+      <!-- OK -->
+      <div th:if="${ok}" role="alert" data-flash
+        class="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 px-4 py-3 shadow transition-opacity duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 10-1.214-.882l-3.21 4.414-1.64-1.64a.75.75 0 10-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.794-5.108z"
+            clip-rule="evenodd" />
+        </svg>
+        <div class="min-w-[240px]" th:text="${ok}">Acción exitosa</div>
+        <button type="button" class="ml-2 -mr-1 rounded p-1/2 hover:bg-emerald-100" aria-label="Cerrar"
+          data-flash-close>
+          ✕
+        </button>
       </div>
-    </main>
-  </body>
+
+      <!-- ERROR -->
+      <div th:if="${error}" role="alert" data-flash
+        class="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 px-4 py-3 shadow transition-opacity duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9 2a1 1 0 011 1v6a1 1 0 01-2 0V3a1 1 0 011-1zm0 12a1 1 0 100 2 1 1 0 000-2z"
+            clip-rule="evenodd" />
+        </svg>
+        <div class="min-w-[240px]" th:text="${error}">Hubo un problema</div>
+        <button type="button" class="ml-2 -mr-1 rounded p-1/2 hover:bg-rose-100" aria-label="Cerrar" data-flash-close>
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Autocierre a los 5s + cierre manual
+      (function () {
+        const close = (el) => {
+          if (!el) return;
+          el.style.opacity = '0';              // usa transition-opacity de Tailwind
+          setTimeout(() => el.remove(), 500);  // coincide con duration-500
+        };
+
+        // Cierre automático
+        document.querySelectorAll('[data-flash]').forEach((el) => {
+          setTimeout(() => close(el), 5000);
+        });
+
+        // Cierre manual
+        document.querySelectorAll('[data-flash-close]').forEach((btn) => {
+          btn.addEventListener('click', (e) => close(e.currentTarget.closest('[data-flash]')));
+        });
+      })();
+    </script>
+
+
+    <!-- Card -->
+    <div class="border border-slate-200 rounded-2xl shadow">
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[820px] border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-800 text-xs uppercase tracking-wider">
+              <th class="text-left px-4 py-3">Nombre</th>
+              <th class="text-left px-4 py-3">Aforo</th>
+              <th class="text-left px-4 py-3">Precio/noche</th>
+              <th class="text-left px-4 py-3">Activa</th>
+              <th class="text-left px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr th:each="t : ${tiposHabitacion}" class="border-b border-slate-100 hover:bg-slate-50">
+              <td class="px-4 py-3">
+                <div class="font-semibold" th:text="${t.nombre}">Nombre</div>
+                <div class="text-slate-500 text-xs" th:text="${#strings.abbreviate(t.descripcion, 80)}">
+                  Descripción
+                </div>
+              </td>
+              <td class="px-4 py-3" th:text="${t.aforoMaximo}">0</td>
+              <td class="px-4 py-3" th:text="${#numbers.formatDecimal(t.precioPorNoche,1,2)} + ' COP'">
+                0,00 COP
+              </td>
+              <td class="px-4 py-3">
+                <span class="inline-block rounded-full border px-3 py-1 text-xs font-medium"
+                  th:classappend="${t.activa} ? ' bg-emerald-50 border-emerald-200 text-emerald-700' : ' bg-rose-50 border-rose-200 text-rose-700'"
+                  th:text="${t.activa} ? 'Sí' : 'No'">Sí</span>
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <a class="inline-flex items-center rounded-lg border border-blue-900 text-blue-900 px-3 py-1 text-sm hover:bg-blue-50"
+                    th:href="@{|/habitaciones-tipos/${t.id}/editar|}">Editar</a>
+                  <form th:action="@{|/habitaciones-tipos/${t.id}/eliminar|}" method="post"
+                    onsubmit="return confirm('¿Eliminar este tipo?');">
+                    <button type="submit" class="rounded-lg bg-rose-600 text-white px-3 py-1 text-sm hover:bg-rose-500">
+                      Eliminar
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(tiposHabitacion)}">
+              <td colspan="6" class="px-6 py-8 text-center text-slate-400">
+                No hay tipos creados.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>
