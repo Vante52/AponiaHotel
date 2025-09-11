@@ -29,13 +29,13 @@ import org.slf4j.LoggerFactory;
 public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
-    
+
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
     private ClientePerfilService clientePerfilService;
-    
+
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
         if (session.getAttribute("AUTH_USER_ID") == null) {
@@ -52,7 +52,6 @@ public class HomeController {
         // System.out.println(uInfo.getNombreCompleto());
         model.addAttribute("usuario", u);
         model.addAttribute("clientePerfil", uInfo);
-        
 
         // Puedes cargar aquí datos para cards rápidas, reservas, etc.
         return "app/dashboard";
@@ -60,12 +59,12 @@ public class HomeController {
 
     // @GetMapping("/perfil")
     // public String perfil(HttpSession session, Model model) {
-    //     if (session.getAttribute("AUTH_USER_ID") == null) {
-    //         return "redirect:/login";
-    //     }
-    //     // Puedes cargar aquí datos para cards rápidas, reservas, etc.
-    //     return "app/perfil";
-    // }    
+    // if (session.getAttribute("AUTH_USER_ID") == null) {
+    // return "redirect:/login";
+    // }
+    // // Puedes cargar aquí datos para cards rápidas, reservas, etc.
+    // return "app/perfil";
+    // }
     @GetMapping("/user_info/{email}")
     public String userInfo(Model model, @PathVariable String email) {
         Optional<Usuario> opt = usuarioService.findByEmail(email);
@@ -81,38 +80,53 @@ public class HomeController {
         return "app/user_info";
     }
 
-    
-
     @PostMapping("/user_info/{email}")
-public String updateUserInfo(
-        @PathVariable String email,
-        @ModelAttribute("clientePerfil") ClientePerfil clientePerfilForm,
-        Model model) {
+    public String updateUserInfo(
+            @PathVariable String email,
+            @ModelAttribute("clientePerfil") ClientePerfil clientePerfilForm,
+            Model model) {
 
-    Optional<Usuario> opt = usuarioService.findByEmail(email);
-    if (opt.isEmpty()) {
-        return "redirect:/usuarios";
+        Optional<Usuario> opt = usuarioService.findByEmail(email);
+        if (opt.isEmpty()) {
+            return "redirect:/usuarios";
+        }
+
+        var usuario = opt.get();
+        var clientePerfilExistenteOpt = clientePerfilService.obtener(usuario.getId());
+        if (clientePerfilExistenteOpt.isEmpty()) {
+            return "redirect:/usuarios";
+        }
+
+        var clientePerfilExistente = clientePerfilExistenteOpt.get();
+
+        // Copiamos los datos del formulario al objeto existente
+        clientePerfilExistente.setNombreCompleto(clientePerfilForm.getNombreCompleto());
+        clientePerfilExistente.setTelefono(clientePerfilForm.getTelefono());
+        // 👆 aquí setea todos los campos que vengan del form
+
+        // Guardamos con el service
+        clientePerfilService.actualizar(clientePerfilExistente);
+
+        return "redirect:/home/user_info/" + email;
     }
 
-    var usuario = opt.get();
-    var clientePerfilExistenteOpt = clientePerfilService.obtener(usuario.getId());
-    if (clientePerfilExistenteOpt.isEmpty()) {
-        return "redirect:/usuarios";
+    @PostMapping("/user_info/{email}/delete")
+    public String deleteUserInfo(@PathVariable String email, RedirectAttributes ra) {
+        Optional<Usuario> opt = usuarioService.findByEmail(email);
+        if (opt.isEmpty()) {
+            return "redirect:/usuarios";
+        }
+        var u = opt.get();
+        String id = u.getId();
+
+        try {
+            usuarioService.eliminar(id);
+            clientePerfilService.eliminar(id);
+            ra.addFlashAttribute("ok", "Usuario eliminado");
+            return "redirect:/";
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "No se pudo eliminar: " + e.getMessage());
+            return "redirect:/";
+        }
     }
-
-    var clientePerfilExistente = clientePerfilExistenteOpt.get();
-
-    // Copiamos los datos del formulario al objeto existente
-    clientePerfilExistente.setNombreCompleto(clientePerfilForm.getNombreCompleto());
-    clientePerfilExistente.setTelefono(clientePerfilForm.getTelefono());
-    // 👆 aquí setea todos los campos que vengan del form
-
-    // Guardamos con el service
-    clientePerfilService.actualizar(clientePerfilExistente);
-
-    return "redirect:/home/user_info/" + email;
-}
-
-
-
 }

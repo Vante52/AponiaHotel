@@ -236,7 +236,7 @@
                   </p>
                 </div>
                 <form
-                  th:action="@{/usuarios/{id}/eliminar(id=${usuario.id})}"
+                  th:action="@{/home/user_info/{email}/delete(email=${usuario.email})}"
                   method="post"
                 >
                   <button
