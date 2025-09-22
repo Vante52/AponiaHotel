@@ -1,32 +1,43 @@
 package com.aponia.aponia_hotel.controller.habitaciones;
 
 import com.aponia.aponia_hotel.entities.habitaciones.HabitacionTipo;
+import com.aponia.aponia_hotel.service.habitaciones.HabitacionService;
 import com.aponia.aponia_hotel.service.habitaciones.HabitacionTipoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.UUID;
+
 
 @Controller
 @RequestMapping("/habitaciones-tipos")
 public class HabitacionTipoController {
 
-    private final HabitacionTipoService service;
+    @Autowired
+    private HabitacionTipoService service;
 
-    public HabitacionTipoController(HabitacionTipoService service) {
-        this.service = service;
-    }
+    @Autowired
+    private HabitacionService habitacionService;
+
+    // public HabitacionTipoController(HabitacionTipoService service) {
+    //     this.service = service;
+    // }
+
 
     @GetMapping
-    public String listar(Model model,
-                         @ModelAttribute("ok") String ok,
-                         @ModelAttribute("error") String error) {
+    public String listar(Model model) {
         model.addAttribute("tiposHabitacion", service.listar());
-        return "habitaciones-tipos/list";
+        return "habitaciones-tipos/list"; // -> templates/servicios/list.html
     }
+    
+
+
 
     @GetMapping("/nuevo")
     public String nuevoForm(Model model) {
@@ -37,6 +48,12 @@ public class HabitacionTipoController {
         // Por si tu validación exige ambos rangos:
         model.addAttribute("tipoHabitacion", tipo);
         return "habitaciones-tipos/form";
+    }
+
+    @GetMapping("/cards")
+    public String listarCards(Model model) {
+        model.addAttribute("habitacionesTipos", service.listar());
+        return "habitaciones-tipos/cards"; // si también usas vista en tarjetas
     }
 
     @PostMapping
@@ -84,11 +101,30 @@ public class HabitacionTipoController {
     @PostMapping("/{id}/eliminar")
     public String eliminar(@PathVariable String id, RedirectAttributes ra) {
         try {
-            service.eliminar(id);
-            ra.addFlashAttribute("ok", "Tipo de habitación eliminado");
+            if(habitacionService.listarPorTipo(id).size() > 0) {
+                ra.addFlashAttribute("error", "No se puede eliminar el tipo de habitación porque tiene habitaciones asociadas");
+                return "redirect:/habitaciones-tipos";
+            } else {
+                service.eliminar(id);
+                ra.addFlashAttribute("ok", "Tipo de habitación eliminado");
+            }
+            
         } catch (Exception e) {
             ra.addFlashAttribute("error", "No se pudo eliminar: " + e.getMessage());
         }
         return "redirect:/habitaciones-tipos";
     }
+    @GetMapping("/{id}")
+    public String detallePublico(@PathVariable String id, Model model, org.springframework.web.servlet.mvc.support.RedirectAttributes ra) {
+        return service.obtener(id)
+            .map(s -> {
+                model.addAttribute("habitacionTipo", s);
+                return "habitaciones-tipos/detalle";
+            })
+            .orElseGet(() -> {
+                ra.addFlashAttribute("error", "El servicio no existe");
+                return "redirect:/habitaciones-tipo/cards";
+            });
+    }
+
 }

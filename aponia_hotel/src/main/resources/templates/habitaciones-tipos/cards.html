@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aponia – Habitaciones</title>
+    <meta
+      name="description"
+      content="Explora nuestras habitaciones y suites en Aponia."
+    />
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#0a3d62",
+              secondary: "#cfa15a",
+              beige: "#f4e3c1",
+              ink: "#243444",
+              muted: "#6b7280",
+              line: "#e8edf1",
+            },
+            boxShadow: {
+              soft: "0 6px 18px rgba(10,61,98,0.08)",
+              lift: "0 12px 32px rgba(10,61,98,0.18)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-ink font-sans">
+    <!-- Header -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Hero -->
+    <section
+      class="relative min-h-[240px] grid place-items-center bg-gradient-to-tr from-primary/5 to-secondary/10 border-b border-line"
+    >
+      <div class="max-w-2xl mx-auto text-center px-4 py-12">
+        <h1 class="font-serif text-3xl md:text-4xl font-bold text-primary">
+          Habitaciones & Suites
+        </h1>
+        <p class="mt-2 text-muted">
+          Descubre nuestro amplio catálogo de habitaciones para tu estancia perfecta.
+        </p>
+      </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-5">
+      <!-- Toolbar -->
+      <div class="flex flex-wrap gap-3 items-center justify-between mt-6 mb-3">
+        <!-- Search -->
+        <div class="relative flex-1 max-w-md">
+          <svg
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="11" cy="11" r="7" stroke-width="2"></circle>
+            <path
+              d="M20 20L17 17"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+          <input
+            id="q"
+            type="search"
+            placeholder="Buscar tipo de habitación, descripción…"
+            aria-label="Buscar habitaciones"
+            class="w-full border border-line rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
+          />
+        </div>
+
+        <div class="text-sm text-muted">
+          <span th:text="'Encontradas: ' + ${#lists.size(habitacionesTipos)}"
+            >Encontradas: 0</span
+          >
+        </div>
+      </div>
+
+      <!-- Grid de tarjetas -->
+      <section
+        id="cards"
+        class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr"
+      >
+        <article
+          th:each="ht : ${habitacionesTipos}"
+          data-card
+          th:attr="data-name=${ht.nombre}, data-desc=${ht.descripcion}"
+          class="flex flex-col bg-white border border-line rounded-2xl shadow-soft hover:shadow-lift hover:border-secondary/50 transition"
+        >
+          <!-- Imagen -->
+          <div class="relative h-44 overflow-hidden rounded-t-2xl">
+            <img
+              th:src="${#lists.isEmpty(ht.imagenes)} ? @{/img/placeholder-habitacion.jpg} : ${ht.imagenes.get(0).url}"
+              alt="Imagen habitación"
+              class="w-full h-full object-cover"
+            />
+            <span
+              class="absolute top-3 right-3 bg-white/90 border border-line text-[13px] px-2.5 py-1 rounded-full font-semibold shadow-sm"
+            >
+              <span
+                th:text="|$ ${#numbers.formatDecimal(ht.precioPorNoche,0,'POINT',2,'COMMA')}|"
+                >$ 0,00</span
+              >
+              /noche
+            </span>
+          </div>
+
+          <!-- Contenido -->
+          <div class="flex flex-col flex-1 p-4 gap-2">
+            <h3
+              th:text="${ht.nombre}"
+              class="font-semibold text-lg text-primary"
+            >
+              Tipo de habitación
+            </h3>
+            
+            <p
+              th:text="${ht.descripcion}"
+              class="text-sm text-ink/80 line-clamp-2"
+            >
+              Descripción breve…
+            </p>
+
+            <div class="flex flex-wrap gap-2 mt-1">
+              <span
+                class="px-2.5 py-1 bg-gray-100 rounded-full text-xs"
+                th:text="|👥 Hasta ${ht.aforoMaximo} personas|"
+                >👥 Hasta 0 personas</span
+              >
+              <span 
+                th:if="${ht.activa}"
+                class="px-2.5 py-1 bg-green-100 text-green-800 rounded-full text-xs"
+              >
+                Disponible
+              </span>
+              <span 
+                th:unless="${ht.activa}"
+                class="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs"
+              >
+                No disponible
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between mt-auto pt-2">
+              <a
+                th:href="@{|/habitaciones-tipos/${ht.id}|}"
+                class="px-4 py-2 border border-primary text-primary rounded-xl font-medium text-sm hover:bg-primary hover:text-white transition"
+                >Ver detalle</a
+              >
+              <span
+                th:text="|$ ${#numbers.formatDecimal(ht.precioPorNoche,0,'POINT',2,'COMMA')} COP|"
+                class="font-bold text-sm text-ink whitespace-nowrap"
+                >$ 0,00 COP</span
+              >
+            </div>
+          </div>
+        </article>
+
+        <!-- Empty -->
+        <div
+          th:if="${#lists.isEmpty(habitacionesTipos)}"
+          class="col-span-full text-center text-muted border border-dashed border-line rounded-xl py-10"
+        >
+          No hay tipos de habitación disponibles por ahora. Vuelve pronto.
+        </div>
+      </section>
+
+      <div class="h-8"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="border-t border-line text-muted text-center text-sm py-5 mt-6"
+    >
+      © <span id="year"></span> Aponia. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Filtro rápido
+      const q = document.getElementById("q");
+      const cards = Array.from(document.querySelectorAll("[data-card]"));
+      q?.addEventListener("input", () => {
+        const term = q.value.trim().toLowerCase();
+        cards.forEach((c) => {
+          const hay =
+            (c.dataset.name || "").toLowerCase().includes(term) ||
+            (c.dataset.desc || "").toLowerCase().includes(term);
+          c.style.display = hay ? "" : "none";
+        });
+      });
+    </script>
+  </body>
+</html>
