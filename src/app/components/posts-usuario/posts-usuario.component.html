@@ -1,0 +1,53 @@
+<section class="posts-section" *ngIf="posts.length > 0">
+  <div class="posts-container">
+    <h3 class="posts-title">Publicaciones</h3>
+    
+    <div class="posts-list">
+      <div class="post-card" *ngFor="let post of posts">
+        <div class="post-header">
+          <img [src]="user?.image || 'assets/default-avatar.png'" 
+               [alt]="user?.firstName" 
+               class="post-avatar">
+          <div class="post-user-info">
+            <span class="post-author">{{ user?.firstName }} {{ user?.lastName }}</span>
+            <span class="post-username">@{{ user?.username }}</span>
+          </div>
+        </div>
+        
+        <div class="post-content">
+          <p class="post-text">{{ post.body }}</p>
+        </div>
+        
+        <div class="post-stats">
+          <div class="reactions">
+            <span class="reaction">
+              <span class="reaction-icon">👍</span>
+              {{ getTotalReactions(post.reactions) }}
+            </span>
+          </div>
+          
+          <button 
+            *ngIf="!hasComments(post.id) && !isLoadingComments(post.id)"
+            (click)="loadCommentsForPost(post.id)" 
+            class="comments-button">
+            Ver comentarios
+          </button>
+        </div>
+        
+        <!-- Comentarios -->
+        <div *ngIf="hasComments(post.id)" class="comments-section">
+          <div class="comment" *ngFor="let comment of getComments(post.id)">
+            <div class="comment-header">
+              <span class="comment-author">@{{ comment.user.username }}</span>
+            </div>
+            <p class="comment-text">{{ comment.body }}</p>
+          </div>
+        </div>
+        
+        <div *ngIf="isLoadingComments(post.id)" class="comments-loading">
+          Cargando comentarios...
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

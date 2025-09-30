@@ -1,0 +1,82 @@
+.app-container {
+  min-height: 100vh;
+  background-color: var(--primary-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ← Centrar horizontalmente */
+}
+
+.app-header {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-gray);
+  width: 100%;
+  max-width: 600px; /* ← Mismo ancho que la búsqueda */
+}
+
+.app-title {
+  color: var(--pure-white);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.app-main {
+  padding: 20px 0;
+  width: 100%;
+  max-width: 600px; /* ← Limitar ancho máximo */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ← Centrar contenido */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--medium-gray);
+  width: 100%;
+}
+
+.loading-state .spinner {
+  border: 3px solid var(--medium-gray);
+  border-top: 3px solid var(--primary-blue);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-state {
+  background-color: rgba(244, 33, 46, 0.1);
+  border: 1px solid rgba(244, 33, 46, 0.3);
+  color: var(--pure-white);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.welcome-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--medium-gray);
+  width: 100%;
+}
+
+.welcome-state h2 {
+  color: var(--pure-white);
+  margin-bottom: 10px;
+}

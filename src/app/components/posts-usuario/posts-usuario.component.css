@@ -1,0 +1,148 @@
+.posts-section {
+  margin-bottom: 20px;
+  width: 100%; /* ← Ocupar todo el ancho disponible */
+}
+
+.posts-container {
+  width: 100%; /* ← Ocupar todo el ancho disponible */
+}
+
+.posts-title {
+  color: var(--pure-white);
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%; /* ← Ocupar todo el ancho disponible */
+}
+
+.post-card {
+  background: var(--dark-gray);
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%; /* ← Ocupar todo el ancho disponible */
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.post-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-author {
+  color: var(--pure-white);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.post-username {
+  color: var(--medium-gray);
+  font-size: 14px;
+}
+
+.post-content {
+  margin-bottom: 12px;
+}
+
+.post-text {
+  color: var(--pure-white);
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.post-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-gray);
+}
+
+.reactions {
+  display: flex;
+  gap: 15px;
+}
+
+.reaction {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--medium-gray);
+  font-size: 13px;
+}
+
+.reaction-icon {
+  font-size: 14px;
+}
+
+.comments-button {
+  background: transparent;
+  border: 1px solid var(--medium-gray);
+  color: var(--medium-gray);
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.comments-button:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.comments-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-gray);
+}
+
+.comment {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.comment-header {
+  margin-bottom: 6px;
+}
+
+.comment-author {
+  color: var(--primary-blue);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.comment-text {
+  color: var(--pure-white);
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.comments-loading {
+  color: var(--medium-gray);
+  font-size: 13px;
+  text-align: center;
+  padding: 10px;
+}

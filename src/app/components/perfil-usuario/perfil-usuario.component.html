@@ -1,0 +1,30 @@
+<section class="profile-section" *ngIf="user">
+  <div class="profile-card">
+    <div class="profile-header">
+      <img [src]="user.image" [alt]="user.firstName" class="profile-avatar">
+      <div class="profile-info">
+        <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
+        <p class="profile-username">@{{ user.username }}</p>
+      </div>
+    </div>
+    
+    <div class="profile-details">
+      <p class="profile-email">{{ user.email }}</p>
+      
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-value">{{ user.age || 'N/A' }}</span>
+          <span class="stat-label">Edad</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ user.phone ? 'Sí' : 'No' }}</span>
+          <span class="stat-label">Teléfono</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ user.gender || 'N/A' }}</span>
+          <span class="stat-label">Género</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
